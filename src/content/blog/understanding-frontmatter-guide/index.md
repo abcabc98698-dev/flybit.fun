@@ -1,18 +1,18 @@
 ---
-title: "Understanding Frontmatter in Minrock: The Complete Metadata Reference"
-description: "A deep-dive explanation of all YAML frontmatter options available when creating notes in Obsidian for Minrock."
+title: "Understanding Frontmatter in Flybit: The Complete Metadata Reference"
+description: "A deep-dive explanation of all YAML frontmatter options available when creating notes in Obsidian for Flybit."
 pubDate: 2026-09-16
 tags: ["frontmatter", "obsidian", "astro", "guide"]
 draft: false
 ---
 
-Every article published in **Minrock** starts with a block of structured metadata at the very top of the file called **YAML Frontmatter**. 
+Every article published in **Flybit** starts with a block of structured metadata at the very top of the file called **YAML Frontmatter**. 
 
 Enclosed between two sets of triple hyphens (`---`), frontmatter provides the Astro static compiler with essential attributes—such as title, publication date, taxonomy tags, and OpenGraph social previews—without cluttering the article's prose.
 
 ---
 
-## The Standard Minrock Frontmatter Template
+## The Standard Flybit Frontmatter Template
 
 When creating a new note inside Obsidian (or typing `Ctrl + N` inside `src/content/blog/`), your note starts with this schema:
 
@@ -80,13 +80,13 @@ draft: true
 ```
 
 > [!TIP]
-> When `draft: true` is set, Minrock's build engine ignores the file during `npm run build`, ensuring incomplete thoughts never leak to the public web.
+> When `draft: true` is set, Flybit's build engine ignores the file during `npm run build`, ensuring incomplete thoughts never leak to the public web.
 
 ---
 
 ## Enhancing Frontmatter with Obsidian Plugins
 
-Because Minrock's content folder is a native Obsidian vault, you can take advantage of powerful visual tools:
+Because Flybit's content folder is a native Obsidian vault, you can take advantage of powerful visual tools:
 
 1. **Obsidian Properties Core Plugin**: Enable Obsidian's native *"Properties"* view in settings to edit your frontmatter using clean input fields, tag pickers, and calendar widgets instead of typing raw YAML.
 2. **Vault CMS Setup**: Vault CMS automatically maps the fields declared in `src/content.config.ts`, so when you click *"New Post"*, all fields are filled with sensible defaults.
@@ -96,7 +96,7 @@ Because Minrock's content folder is a native Obsidian vault, you can take advant
 
 ## Type Safety with Astro & Zod
 
-Minrock defines its content schema using **Zod** in `src/content.config.ts`:
+Flybit defines its content schema using **Zod** in `src/content.config.ts`:
 
 ```typescript
 const blog = defineCollection({

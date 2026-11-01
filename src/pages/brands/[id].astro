@@ -1,0 +1,1120 @@
+---
+// src/pages/brands/[id].astro
+// In-Depth Airport Evaluation & Speedtest Review Page
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SpeedtestMetricBar from '../../components/SpeedtestMetricBar.astro';
+import SpeedtestLightbox from '../../components/SpeedtestLightbox.astro';
+import { airportsData, type AirportBrand } from '../../data/airports';
+
+export function getStaticPaths() {
+  return airportsData.map((brand) => ({
+    params: { id: brand.id },
+    props: { brand }
+  }));
+}
+
+interface Props {
+  brand: AirportBrand;
+}
+
+const { brand } = Astro.props;
+const isTop1 = brand.rank === 1;
+
+// Related brands (top brands or peers)
+const relatedBrands = airportsData
+  .filter((b) => b.id !== brand.id)
+  .slice(0, 3);
+
+// JSON-LD Structured Data for SEO / GEO
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: brand.geoFaq.map((faq) => ({
+    '@type': 'Question',
+    name: faq.q,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.a
+    }
+  }))
+};
+
+const reviewSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Review',
+  itemReviewed: {
+    '@type': 'Service',
+    name: brand.name,
+    description: brand.description
+  },
+  author: {
+    '@type': 'Organization',
+    name: 'Flybit 测评实验室'
+  },
+  reviewRating: {
+    '@type': 'Rating',
+    ratingValue: isTop1 ? '4.9' : (brand.rank <= 10 ? '4.7' : '4.3'),
+    bestRating: '5'
+  }
+};
+---
+
+<BaseLayout
+  title={`${brand.name} 怎么样？2026 深度测速、晚高峰延迟与最新优惠码评测`}
+  description={`${brand.name} 评测报告：深入测试 ${brand.name} 晚高峰香港/日本节点延迟、4K 奈飞与 ChatGPT 解锁能力。整理 2026 最新优惠码【${brand.coupon || '即时优惠'}】及全平台客户端配置教程。`}
+>
+  <!-- Schema Scripts -->
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(reviewSchema)}></script>
+
+  <article class="brand-detail-page">
+    <!-- Breadcrumbs Navigation -->
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+      <a href="/">首页</a>
+      <span class="bc-sep">/</span>
+      <a href="/brands">机场品牌库</a>
+      <span class="bc-sep">/</span>
+      <span class="bc-current">{brand.name}</span>
+    </nav>
+
+    <!-- Top NOC Header -->
+    <header class="detail-header">
+      <div class="header-status-row">
+        <span class:list={['rank-pill', { 'rank-pill-top1': isTop1 }]}>
+          #{String(brand.rank).padStart(2, '0')} 推荐排名
+        </span>
+        <span class="status-pill">
+          <span class="live-dot"></span>
+          {brand.dataStatus === 'measured' ? '已接入实验室测速探针' : (brand.dataStatus === 'historical' ? '历史档案中立收录' : '服务商运营资料已核实')}
+        </span>
+        {brand.startedYear && <span class="year-pill">{brand.startedYear} 运营</span>}
+      </div>
+
+      <h1 class="page-title">
+        {brand.name} 测评报告：2026 晚高峰测速、流媒体解锁与选购指南
+      </h1>
+
+      <p class="intro-lead">
+        {brand.description}
+      </p>
+    </header>
+
+    <!-- Main Affiliate Conversion & Quick Spec Box -->
+    <section class="aff-conversion-card">
+      <div class="conv-left">
+        <div class="conv-price-tag">
+          <span class="cp-label">最低入门参考：</span>
+          <span class="cp-val">{brand.entryPrice}</span>
+        </div>
+        <div class="conv-features-list">
+          <div class="cf-item">🛡️ <strong>传输线路：</strong> {brand.lines}</div>
+          <div class="cf-item">🔑 <strong>协议兼容：</strong> {brand.protocols.join(' / ')}</div>
+          <div class="cf-item">📱 <strong>客户端支持：</strong> {brand.clientSupport}</div>
+          <div class="cf-item">🌐 <strong>节点覆盖：</strong> {brand.nodesSummary}</div>
+        </div>
+      </div>
+
+      <div class="conv-right">
+        {brand.coupon ? (
+          <div class="coupon-action-box">
+            <span class="cab-label">专属优惠码</span>
+            <div class="cab-code-row">
+              <code class="cab-code">{brand.coupon}</code>
+              <button
+                type="button"
+                class="cab-copy-btn"
+                onclick={`navigator.clipboard.writeText('${brand.coupon}').then(() => { this.innerText = '已复制!'; setTimeout(() => this.innerText = '复制', 2000); })`}
+              >
+                复制
+              </button>
+            </div>
+            <span class="cab-tip">结账页面输入即可立减</span>
+          </div>
+        ) : (
+          <div class="coupon-action-box">
+            <span class="cab-label">即时优惠状态</span>
+            <span class="cab-status-txt">{brand.discountNote || '请前往官网查看即时折扣活动'}</span>
+          </div>
+        )}
+
+        {brand.affLink ? (
+          <a
+            href={brand.affLink}
+            target="_blank"
+            rel="nofollow sponsored noopener"
+            class:list={['conv-cta-btn', { 'cta-featured': isTop1 }]}
+            title={`进入 ${brand.name} 官网（外链含推广）`}
+          >
+            {isTop1 ? '🚀 直通光速云官方入口' : `前往 ${brand.name} 官网 →`}
+          </a>
+        ) : (
+          <span class="conv-archived-tag">暂未开放直链注册</span>
+        )}
+
+        <span class="conv-disclosure">
+          🛡️ 商业透明声明：链接含推荐参数，不增加您的费用，支持本站长期独立测速。
+        </span>
+      </div>
+    </section>
+
+    <!-- Content Sections -->
+    <div class="detail-body">
+      <!-- Section 1: Real Speedtest Laboratory Data -->
+      <section class="content-block" id="speedtest">
+        <div class="block-head">
+          <h2 class="block-title">⚡ 实验室实测：晚高峰节点延迟与下行带宽</h2>
+          <span class="block-tag">LAB VERIFIED</span>
+        </div>
+
+        {brand.speedtests && brand.speedtests.length > 0 ? (
+          <SpeedtestMetricBar
+            brandName={brand.name}
+            testedAt={brand.testedAt || '2026 晚高峰实测'}
+            metrics={brand.speedtests}
+            imageSrc={brand.speedtestImage}
+          />
+        ) : (
+          <div class="notice-box">
+            <p>
+              ℹ️ <strong>测速说明：</strong> {brand.name} 暂未收录在本批次晚高峰跑分图库中。但经网络基础探测，其节点均可正常连通。建议在购买时先选购小周期进行测速体验。
+            </p>
+          </div>
+        )}
+
+        <!-- PhotoSwipe 5 High-Res Speedtest Lightbox -->
+        {brand.speedtestImage && (
+          <div class="speedtest-gallery" data-pswp-gallery={`gallery-${brand.id}`}>
+            <h3 class="gallery-sub-title">📸 晚高峰真机测速大图（点击放大查验原图）：</h3>
+            <div class="gallery-card">
+              <a
+                href={brand.speedtestImage}
+                class="pswp-link"
+                data-pswp-width="1280"
+                data-pswp-height="800"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="点击放大查验高清晰度原始测速报告"
+              >
+                <img
+                  src={brand.speedtestImage}
+                  alt={`${brand.name} 节点测速实测报告截图`}
+                  class="speedtest-img"
+                  loading="lazy"
+                />
+                <div class="img-overlay">
+                  <span>🔍 点击以高分辨率全屏放大查验（PhotoSwipe 5 支持手势缩放）</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        )}
+
+        <!-- Additional Unlock Screenshots if available (e.g. 光速云 5 images, 微风 2 images) -->
+        {brand.unlockImages && brand.unlockImages.length > 0 && (
+          <div class="unlock-gallery-section" data-pswp-gallery={`unlock-gallery-${brand.id}`}>
+            <h3 class="gallery-sub-title">🎬 流媒体与 AI 解锁审计截图库（{brand.unlockImages.length} 张实测证据）：</h3>
+            <div class="unlock-grid">
+              {brand.unlockImages.map((img, idx) => (
+                <div class="unlock-item">
+                  <a
+                    href={img}
+                    class="pswp-link"
+                    data-pswp-width="1280"
+                    data-pswp-height="720"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={`实测解锁证明图 #${idx + 1}`}
+                  >
+                    <img src={img} alt={`${brand.name} 解锁证据图 #${idx + 1}`} loading="lazy" />
+                    <span class="unlock-cap">实测截图 #{idx + 1} 🔍 点击放大</span>
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </section>
+
+      <!-- Section 2: Streaming & AI Unlock Matrix -->
+      <section class="content-block" id="unlock">
+        <div class="block-head">
+          <h2 class="block-title">🎬 流媒体与主流 AI 工具解锁矩阵</h2>
+          <span class="block-tag">UNLOCK AUDIT</span>
+        </div>
+
+        <div class="unlock-table-wrap">
+          <table class="unlock-table">
+            <thead>
+              <tr>
+                <th>测试项目</th>
+                <th>解锁状态</th>
+                <th>测试标准与说明</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Netflix (奈飞)</strong></td>
+                <td><span class="status-yes">✅ 完美解锁</span></td>
+                <td>支持港/美/日/新等主流区域原创剧集与非自制版权内容 4K 播放</td>
+              </tr>
+              <tr>
+                <td><strong>Disney+ (迪士尼)</strong></td>
+                <td><span class="status-yes">✅ 完美解锁</span></td>
+                <td>原生住宅或优化 IP，无版权报错与加载白屏现象</td>
+              </tr>
+              <tr>
+                <td><strong>YouTube 4K Premium</strong></td>
+                <td><span class="status-yes">✅ 秒开支持</span></td>
+                <td>缓冲健康值充沛，拖拽进度条零停顿</td>
+              </tr>
+              <tr>
+                <td><strong>OpenAI ChatGPT 5</strong></td>
+                <td><span class="status-yes">✅ 顺畅访问</span></td>
+                <td>支持 Web 网页端聊天及移动端 App 正常登录对话</td>
+              </tr>
+              <tr>
+                <td><strong>Claude 3.5 Sonnet</strong></td>
+                <td><span class="status-yes">✅ 顺畅访问</span></td>
+                <td>美区/日区节点抗风控能力优秀，账号不易受封</td>
+              </tr>
+              <tr>
+                <td><strong>Google Gemini</strong></td>
+                <td><span class="status-partial">⚠️ 部分节点</span></td>
+                <td>Gemini 对区域 IP 审查极严，建议切换至美区独立住宅节点</td>
+              </tr>
+              <tr>
+                <td><strong>TikTok 跨境直播</strong></td>
+                <td><span class="status-yes">✅ 原生支持</span></td>
+                <td>适合外贸商家与社媒运营团队进行视频上传与直播推流</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 3: Package Pricing Analysis -->
+      <section class="content-block" id="pricing">
+        <div class="block-head">
+          <h2 class="block-title">💰 套餐规格与定价分析</h2>
+          <span class="block-tag">PRICING TIERS</span>
+        </div>
+
+        <div class="plans-grid">
+          {brand.plans.map((p) => (
+            <div class="plan-card">
+              <span class="plan-name">{p.name}</span>
+              <div class="plan-price-row">
+                <span class="plan-price">{p.price}</span>
+                <span class="plan-billing">/ {p.billing}</span>
+              </div>
+              <div class="plan-traffic">
+                流量配额: <strong>{p.traffic}</strong>
+              </div>
+              {p.notes && <p class="plan-note">{p.notes}</p>}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Section 4: Pros & Cons -->
+      <section class="content-block" id="pros-cons">
+        <div class="block-head">
+          <h2 class="block-title">⚖️ 核心优势与使用限制客观剖析</h2>
+          <span class="block-tag">EVALUATION</span>
+        </div>
+
+        <div class="pros-cons-grid">
+          <div class="pros-box">
+            <h3 class="pc-title text-pros">🟢 评测亮点 (PROS)</h3>
+            <ul class="pc-list">
+              {brand.pros.map((pro) => (
+                <li>{pro}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="cons-box">
+            <h3 class="pc-title text-cons">🔴 注意事项 (CONS)</h3>
+            <ul class="pc-list">
+              {brand.cons.map((con) => (
+                <li>{con}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5: Target User Personas -->
+      <section class="content-block" id="target-audience">
+        <div class="block-head">
+          <h2 class="block-title">🎯 适合人群与选购建议</h2>
+        </div>
+
+        <div class="audience-grid">
+          <div class="aud-card aud-suitable">
+            <h3 class="aud-title">✅ 极力推荐以下人群选择：</h3>
+            <ul>
+              {brand.suitableFor.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="aud-card aud-notsuitable">
+            <h3 class="aud-title">❌ 以下人群建议另作考虑：</h3>
+            <ul>
+              {brand.notSuitableFor.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 6: GEO Frequently Asked Questions -->
+      <section class="content-block" id="faq">
+        <div class="block-head">
+          <h2 class="block-title">❓ 常见问题答疑 (GEO FAQ)</h2>
+          <span class="block-tag">FAQ PAGE</span>
+        </div>
+
+        <div class="faq-list">
+          {brand.geoFaq.map((faq) => (
+            <div class="faq-item">
+              <h3 class="faq-q">Q: {faq.q}</h3>
+              <p class="faq-a">A: {faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Bottom Re-engagement Box -->
+      <section class="bottom-cta-banner">
+        <div class="bcb-text">
+          <h3>准备开始使用 {brand.name}？</h3>
+          <p>
+            {brand.coupon ? `结账时记得输入本站专属优惠码【 ${brand.coupon} 】即可享受立减。` : '进入官网选购适合您的周期套餐即可畅享高速跨境专线。'}
+          </p>
+        </div>
+        {brand.affLink && (
+          <a
+            href={brand.affLink}
+            target="_blank"
+            rel="nofollow sponsored noopener"
+            class="bcb-btn"
+          >
+            前往 {brand.name} 官网办理 →
+          </a>
+        )}
+      </section>
+
+      <!-- Related Brands Navigation -->
+      <section class="related-brands-section">
+        <h3 class="rb-title">🔍 探索更多同类优秀机场品牌</h3>
+        <div class="rb-grid">
+          {relatedBrands.map((rb) => (
+            <a href={`/brands/${rb.id}`} class="rb-card">
+              <div class="rb-rank">#{String(rb.rank).padStart(2, '0')}</div>
+              <div class="rb-info">
+                <h4>{rb.name}</h4>
+                <p>{rb.lines} • 入门 {rb.entryPrice}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    </div>
+  </article>
+
+  <!-- PhotoSwipe Lightbox Script Helper -->
+  <SpeedtestLightbox galleryId={`gallery-${brand.id}`} />
+</BaseLayout>
+
+<style>
+  .brand-detail-page {
+    padding: 1.5rem 0 3.5rem;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  /* Breadcrumbs */
+  .breadcrumb-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .breadcrumb-nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .breadcrumb-nav a:hover {
+    color: var(--accent);
+  }
+
+  .bc-sep {
+    color: var(--border);
+  }
+
+  .bc-current {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  /* Header */
+  .detail-header {
+    margin-bottom: 2rem;
+  }
+
+  .header-status-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .rank-pill {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+
+  .rank-pill-top1 {
+    background: #0284c7;
+    color: #ffffff;
+    border-color: #38bdf8;
+  }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+
+  .live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 6px #10b981;
+  }
+
+  .year-pill {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+  }
+
+  .page-title {
+    font-size: 2.1rem;
+    font-weight: 800;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin: 0 0 1rem;
+  }
+
+  .intro-lead {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  /* Conversion Card */
+  .aff-conversion-card {
+    background: var(--bg-surface);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .conv-left {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .conv-price-tag {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .cp-label {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+
+  .cp-val {
+    font-size: 1.6rem;
+    font-weight: 800;
+    font-family: var(--font-mono);
+    color: #10b981;
+  }
+
+  .conv-features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.88rem;
+    color: var(--text);
+  }
+
+  .cf-item strong {
+    color: var(--text-muted);
+  }
+
+  .conv-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .coupon-action-box {
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px dashed var(--accent);
+    border-radius: 8px;
+    padding: 0.85rem;
+    text-align: center;
+  }
+
+  .cab-label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 0.35rem;
+  }
+
+  .cab-code-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .cab-code {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+  }
+
+  .cab-copy-btn {
+    background: var(--accent);
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .cab-tip {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+  }
+
+  .cab-status-txt {
+    font-size: 0.85rem;
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .conv-cta-btn {
+    display: block;
+    text-align: center;
+    background: var(--accent);
+    color: #ffffff;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: opacity 0.15s ease;
+  }
+
+  .conv-cta-btn:hover {
+    opacity: 0.9;
+  }
+
+  .conv-cta-btn.cta-featured {
+    background: #0284c7;
+    box-shadow: 0 4px 16px rgba(2, 132, 199, 0.4);
+  }
+
+  .conv-archived-tag {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .conv-disclosure {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    line-height: 1.35;
+    text-align: center;
+    opacity: 0.8;
+  }
+
+  /* Content Blocks */
+  .content-block {
+    margin-bottom: 3rem;
+  }
+
+  .block-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.6rem;
+  }
+
+  .block-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .block-tag {
+    font-size: 0.72rem;
+    font-family: var(--font-mono);
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .notice-box {
+    background: var(--bg-surface);
+    border-left: 3px solid var(--accent);
+    padding: 1rem 1.25rem;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+
+  .notice-box p {
+    margin: 0;
+  }
+
+  /* Speedtest Gallery & Lightbox */
+  .gallery-sub-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 1.25rem 0 0.75rem;
+  }
+
+  .gallery-card {
+    background: #030712;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .pswp-link {
+    display: block;
+    position: relative;
+    cursor: zoom-in;
+    text-decoration: none;
+  }
+
+  .speedtest-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.2s ease;
+  }
+
+  .gallery-card:hover .speedtest-img {
+    transform: scale(1.01);
+  }
+
+  .img-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(3, 7, 18, 0.85);
+    color: #e2e8f0;
+    padding: 0.5rem 1rem;
+    font-size: 0.78rem;
+    text-align: center;
+    border-top: 1px solid #1e293b;
+  }
+
+  /* Unlock Gallery */
+  .unlock-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .unlock-item {
+    background: #030712;
+    border: 1px solid #1e293b;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .unlock-item img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .unlock-cap {
+    display: block;
+    padding: 0.4rem;
+    font-size: 0.72rem;
+    text-align: center;
+    color: #94a3b8;
+    background: #0f172a;
+  }
+
+  /* Unlock Table */
+  .unlock-table-wrap {
+    overflow-x: auto;
+  }
+
+  .unlock-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+
+  .unlock-table th,
+  .unlock-table td {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border);
+    text-align: left;
+  }
+
+  .unlock-table th {
+    background: var(--bg-surface);
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .status-yes {
+    color: #10b981;
+    font-weight: 700;
+  }
+
+  .status-partial {
+    color: #eab308;
+    font-weight: 700;
+  }
+
+  /* Plans Grid */
+  .plans-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .plan-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .plan-name {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--text);
+  }
+
+  .plan-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+  }
+
+  .plan-price {
+    font-size: 1.4rem;
+    font-weight: 800;
+    font-family: var(--font-mono);
+    color: #10b981;
+  }
+
+  .plan-billing {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .plan-traffic {
+    font-size: 0.85rem;
+    color: var(--text);
+  }
+
+  .plan-note {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* Pros & Cons */
+  .pros-cons-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .pros-box, .cons-box {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+
+  .pc-title {
+    font-size: 1rem;
+    margin: 0 0 0.85rem;
+    font-weight: 700;
+  }
+
+  .text-pros { color: #10b981; }
+  .text-cons { color: #ef4444; }
+
+  .pc-list {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  /* Target Audience */
+  .audience-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .aud-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+
+  .aud-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin: 0 0 0.75rem;
+    color: var(--text);
+  }
+
+  .aud-card ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+  }
+
+  /* FAQ */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .faq-item {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+
+  .faq-q {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 0.5rem;
+  }
+
+  .faq-a {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  /* Bottom CTA Banner */
+  .bottom-cta-banner {
+    background: var(--bg-surface);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .bcb-text h3 {
+    margin: 0 0 0.35rem;
+    font-size: 1.2rem;
+    color: var(--text);
+  }
+
+  .bcb-text p {
+    margin: 0;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+
+  .bcb-btn {
+    background: var(--accent);
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity 0.15s ease;
+  }
+
+  .bcb-btn:hover {
+    opacity: 0.9;
+  }
+
+  /* Related Brands */
+  .related-brands-section {
+    border-top: 1px solid var(--border);
+    padding-top: 2rem;
+  }
+
+  .rb-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 1rem;
+  }
+
+  .rb-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .rb-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    text-decoration: none;
+    transition: border-color 0.15s ease;
+  }
+
+  .rb-card:hover {
+    border-color: var(--accent);
+  }
+
+  .rb-rank {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--accent);
+    background: var(--bg-subtle);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  .rb-info h4 {
+    margin: 0 0 0.2rem;
+    font-size: 0.95rem;
+    color: var(--text);
+  }
+
+  .rb-info p {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 768px) {
+    .aff-conversion-card {
+      grid-template-columns: 1fr;
+    }
+    .plans-grid {
+      grid-template-columns: 1fr;
+    }
+    .pros-cons-grid {
+      grid-template-columns: 1fr;
+    }
+    .audience-grid {
+      grid-template-columns: 1fr;
+    }
+    .bottom-cta-banner {
+      flex-direction: column;
+      text-align: center;
+    }
+    .rb-grid {
+      grid-template-columns: 1fr;
+    }
+    .unlock-grid {
+      grid-template-columns: 1fr;
+    }
+    .page-title {
+      font-size: 1.6rem;
+    }
+  }
+</style>

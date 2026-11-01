@@ -17,12 +17,14 @@ interface Props {
 const {
   title = siteConfig.title,
   description = siteConfig.description,
-  image = '/og-image.png',
+  image = '/images/flybit-design-system.svg',
   wide = false,
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://minrock.vercel.app');
+const siteBase = Astro.site?.toString() || siteConfig.siteUrl || 'https://flybit.fun';
+const canonicalURL = new URL(Astro.url.pathname, siteBase);
 const pageTitle = title === siteConfig.title ? `${siteConfig.title} — ${siteConfig.tagline}` : `${title} | ${siteConfig.title}`;
+const ogImageURL = new URL(image, canonicalURL).href;
 
 const features = siteConfig.features ?? {};
 const showSearch = features.search !== false;
@@ -35,32 +37,35 @@ const showImageZoom = features.imageZoom !== false;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪨</text></svg>" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2246%22 fill=%22%2310b981%22/><path d=%22M52 18 L28 54 L48 54 L44 82 L72 46 L52 46 Z%22 fill=%22%23ffffff%22/></svg>" />
     <link rel="canonical" href={canonicalURL} />
-    <link rel="alternate" type="application/rss+xml" title={siteConfig.title} href={new URL('/rss.xml', Astro.site || 'https://minrock.vercel.app')} />
+    <link rel="alternate" type="application/rss+xml" title={siteConfig.title} href={new URL('/rss.xml', siteBase)} />
 
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta name="author" content={siteConfig.author} />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
-    <!-- Open Graph -->
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteConfig.title} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL(image, canonicalURL)} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:locale" content="en_US" />
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content={canonicalURL} />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={new URL(image, canonicalURL)} />
+    <meta name="twitter:image" content={ogImageURL} />
 
     <!-- Anti-FOUC script: Executed synchronously before DOM render -->
     <script is:inline>
       (function () {
-        const savedTheme = localStorage.getItem('minrock_theme') || 'cream';
+        const savedTheme = localStorage.getItem('flybit_theme') || 'slate';
         document.documentElement.setAttribute('data-theme', savedTheme);
       })();
     </script>

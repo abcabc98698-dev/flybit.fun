@@ -24,7 +24,7 @@ export interface SiteFeatures {
   backToTop?: boolean;
   /** Medium-style smooth image zoom modal on click */
   imageZoom?: boolean;
-  /** Interactive blog comments powered by ScatterLeaf */
+  /** Interactive blog comments or discussion trigger */
   comments?: boolean;
 }
 
@@ -41,6 +41,7 @@ export interface SiteConfig {
     twitter?: string;
     linkedin?: string;
     email?: string;
+    telegram?: string;
   };
   navLinks: {
     title: string;
@@ -48,81 +49,46 @@ export interface SiteConfig {
   }[];
   comments?: {
     enabled: boolean;
-    provider: 'scatterleaf';
-    repo: string;
-    category?: string;
-    theme?: 'auto' | 'light' | 'dark' | 'cream' | 'midnight' | 'slate';
-    lang?: string;
-    broker?: string;
-    clientId?: string;
-    order?: 'oldest' | 'newest';
-    features?: {
-      reactions?: boolean;
-      skinTone?: boolean;
-      sorting?: boolean;
-      codeScroll?: boolean;
-      preview?: boolean;
-      search?: boolean;
-      images?: boolean;
-    };
+    provider?: string;
+    repo?: string;
   };
 }
 
 export const siteConfig: SiteConfig = {
-  title: 'Minrock',
-  tagline: 'Raw ideas from your personal vault, finely polished into an ultra-fast static blog.',
-  description: 'Minimalist, typography-first Astro 7 theme crafted for technical writers and Obsidian vaults. Pure SSG, zero bloat.',
-  author: 'Renato Rezende',
-  // Substitua pelo seu domínio de produção (usado para SEO Canônico, OpenGraph e RSS)
-  // Replace with your production domain (used for Canonical SEO, OpenGraph and RSS feeds)
-  // Can be overridden via environment variable (e.g. Vercel: SITE_URL=https://yourdomain.com)
-  siteUrl: (typeof process !== 'undefined' && process.env?.SITE_URL) || (import.meta as any).env?.SITE_URL || 'https://minrock.vercel.app',
-  defaultTheme: 'cream',
-  // Granular Feature Flags — "Complete by default, minimalist on demand"
-  // Toggle any feature to false to completely omit markup & scripts in static build
+  title: 'Flybit 测评实验室',
+  tagline: '42家主流机场实测监控、测速解锁与深度选购指南',
+  description: 'Flybit 网络实测实验室（flybit.fun）专注于 2026 主流机场专线节点实测、4K流媒体与 ChatGPT/Claude 解锁监控、优惠码整理与全平台客户端配置指南。中立硬核，拒绝云测评。',
+  author: 'Flybit 实验室',
+  siteUrl: (typeof process !== 'undefined' && process.env?.SITE_URL) || (import.meta as any).env?.SITE_URL || 'https://flybit.fun',
+  defaultTheme: 'slate',
+  // Granular Feature Flags
   features: {
     search: true,
     tableOfContents: true,
     readingTime: true,
-    audioPlayer: true,
+    audioPlayer: false,
     tags: true,
     socialShare: true,
     themeSwitcher: true,
     backToTop: true,
     imageZoom: true,
-    comments: true
+    comments: false
   },
   socialLinks: {
-    github: 'https://github.com/rnt-rez/minrock',
-    linkedin: 'https://example.com/',
-    email: 'https://example.com/'
+    github: 'https://github.com',
+    telegram: 'https://t.me',
+    email: 'contact@flybit.fun'
   },
   navLinks: [
-    { title: 'Home', href: '/' },
-    { title: 'Blog', href: '/blog' },
-    { title: 'Projects', href: '/projects' },
-    { title: 'Tags', href: '/tags' },
-    { title: 'About', href: '/about' }
+    { title: '首页', href: '/' },
+    { title: '机场品牌库', href: '/brands' },
+    { title: '实测实验室', href: '/speedtest' },
+    { title: '客户端教程', href: '/clients' },
+    { title: '专题指南', href: '/blog' },
+    { title: '评测准则', href: '/about' }
   ],
   comments: {
-    enabled: true,
-    provider: 'scatterleaf',
-    repo: 'rnt-rez/minrock',
-    category: 'General',
-    theme: 'auto',
-    lang: 'auto',
-    clientId: 'Iv23liZHApvnx6e6wtMJ',
-    // 🍃 DEFAULT: Showcase Mode (broker: '')
-    // Out of the box, broker defaults to '' (empty). ScatterLeaf runs in an interactive,
-    // safe sandbox with simulated mock comments in browser memory — zero external setup,
-    // zero tokens, and zero spam posted to your GitHub repository.
-    //
-    // 🚀 TO ENABLE LIVE DISCUSSIONS:
-    // Deploy your Cloudflare Edge Broker Worker and supply its URL via the
-    // PUBLIC_SCATTERLEAF_BROKER environment variable (e.g. in Vercel / Cloudflare project settings).
-    broker: (typeof process !== 'undefined' && process.env?.PUBLIC_SCATTERLEAF_BROKER) || (import.meta as any).env?.PUBLIC_SCATTERLEAF_BROKER || '',
-    features: {
-      images: true
-    }
+    enabled: false,
+    provider: 'local'
   }
 };

@@ -1,0 +1,37 @@
+---
+// src/components/SpeedtestLightbox.astro
+// PhotoSwipe 5 Lightbox wrapper for high-res speedtest and unlock screenshots
+interface Props {
+  galleryId: string;
+}
+
+const { galleryId } = Astro.props;
+---
+
+<script>
+  import PhotoSwipeLightbox from 'photoswipe/lightbox';
+  import 'photoswipe/style.css';
+
+  function initLightboxes() {
+    const galleries = document.querySelectorAll('[data-pswp-gallery]');
+    galleries.forEach((gallery) => {
+      if ((gallery as any)._pswpInitialized) return;
+      (gallery as any)._pswpInitialized = true;
+
+      const lightbox = new PhotoSwipeLightbox({
+        gallery: gallery as HTMLElement,
+        children: 'a.pswp-link',
+        pswpModule: () => import('photoswipe'),
+        wheelToZoom: true,
+        padding: { top: 20, bottom: 20, left: 20, right: 20 }
+      });
+      lightbox.init();
+    });
+  }
+
+  // Init on initial load and view transitions
+  if (typeof window !== 'undefined') {
+    initLightboxes();
+    document.addEventListener('astro:page-load', initLightboxes);
+  }
+</script>

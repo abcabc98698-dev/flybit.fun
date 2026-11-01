@@ -1,126 +1,283 @@
 ---
+// src/pages/about.astro
+// Flybit Observatory Review Standards, Methodology & Engineering Philosophy
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="About — Minrock Philosophy">
+<BaseLayout
+  title="评测准则与实验室方法论 — Flybit 机场测评实验室"
+  description="了解 Flybit 实验室（flybit.fun）的评测独立性承诺、晚高峰实测方法论、流媒体解锁测试标准及商业合规透明度披露。"
+>
   <article class="about-page">
     <header class="about-header">
-      <h1 class="page-title">About Minrock</h1>
-      <p class="page-subtitle">The story and philosophy behind the rock.</p>
+      <div class="about-badge">
+        <span class="live-dot"></span>
+        <span>LAB METHODOLOGY & STANDARDS // 2026</span>
+      </div>
+      <h1 class="page-title">评测准则与实验室方法论</h1>
+      <p class="page-subtitle">以网络工程为标尺，坚持客观实测，拒绝云评测与黑盒营销。</p>
     </header>
 
     <div class="about-content">
-      <h2>The Concept: Raw Ideas, Polished Rock</h2>
-      <p>
-        <strong>Minrock</strong> was born from a simple belief: personal notes in an Obsidian vault represent the raw, unshaped volcanic rock of your thoughts. When published to the web, they deserve an architecture that feels as permanent and solid as stone, yet as fast and frictionless as light.
-      </p>
+      <section class="about-sec">
+        <h2>一、核心宗旨：网络工程视角，用数据说话</h2>
+        <p>
+          <strong>Flybit 机场测评实验室（flybit.fun）</strong> 创立于对互联网代理行业充斥虚假营销、云测速套皮的不满。我们始终认为：跨境网络服务好不好，不应该取决于服务商广告打得有多响，而取决于晚高峰骨干链路的丢包率、抗封锁能力与真实吞吐带宽。
+        </p>
+        <p>
+          本实验室由资深网络工程师与系统架构师维护，所有评测项目均立足于底层网络指标（BGP 路由调度、IEPL/IPLC 物理专线抗 QoS 能力、TLS RTT 握手延时、原生住宅 IP 洁净度），为每一位对跨国网络有高要求的开发者、科研人员与外贸从业者提供真实可信的选购参考。
+        </p>
+      </section>
 
-      <blockquote>
-        "Minrock is the solid bedrock where knowledge rests; ScatterLeaf is the gentle breeze where ideas and conversations drift."
-      </blockquote>
+      <section class="about-sec">
+        <h2>二、晚高峰真机测速方法论</h2>
+        <p>
+          我们坚持<strong>“无原图不评测”</strong>，所有公开跑分均严格遵守以下测试规范：
+        </p>
+        <div class="spec-card">
+          <ul>
+            <li><strong>严苛测试时段：</strong> 统一在工作日及周末的晚高峰（20:30 ~ 22:30）执行测试，此时国际公网出口拥塞最为严重，能真实检验机场专线抗抖动能力。</li>
+            <li><strong>标准化物理环境：</strong> 采用 1000M 中国电信与中国联通家庭千兆宽带，排除本地 Wi-Fi 干扰，使用超六类网线直连千兆软路由。</li>
+            <li><strong>前沿测试核心：</strong> 使用开源 Mihomo（Clash Meta）内核及原生 Xray 客户端，启用 TUN 虚拟网卡模式，模拟真实全流量代理场景。</li>
+            <li><strong>测速源节点：</strong> 针对香港、日本、新加坡、美国、德国等骨干区域，统一选取 Speedtest.net 权威测速服务节点进行下行与时延测试。</li>
+          </ul>
+        </div>
+      </section>
 
-      <h2>The Mission: Democratizing Digital Sovereignty</h2>
-      <p>
-        At its core, Minrock exists to <strong>democratize access and empower personal positioning on the open web</strong>. In an era where digital presence is increasingly corralled into corporate walled gardens and algorithmic feeds, this project provides everyone with a sovereign space to truly call their own—without outside interference, steep technical hurdles, and at zero financial cost.
-      </p>
+      <section class="about-sec">
+        <h2>三、流媒体与 AI 工具解锁审计标准</h2>
+        <p>
+          随着全球流媒体与前沿 AI 平台对数据中心 IP 审查风控升级，我们建立了多点自动化探测机制：
+        </p>
+        <ul>
+          <li><strong>Netflix / Disney+：</strong> 必须支持播放非自制剧（原创版权内容），出现“仅限自制剧”或版权错误提示判定为未完全解锁。</li>
+          <li><strong>ChatGPT 5 / Claude 3.5：</strong> 验证官网登录鉴权、客户端 WebSockets 通信及长文本对话生成，避免风控封号。</li>
+          <li><strong>YouTube 4K Premium：</strong> 验证视频开启统计信息（Stats for nerds），连接速度需稳定维持在 80,000 Kbps 以上，拖拽缓冲零停顿。</li>
+        </ul>
+      </section>
 
-      <blockquote class="manifesto-quote">
-        <em>"A ideia do projeto é propiciar e democratizar o acesso e o posicionamento das pessoas na web, garantindo um espaço soberano para chamar de seu: sem interferências, sem grandes dificuldades e com custo zero."</em>
-        <br />
-        <span class="manifesto-author">— Renato Rezende, Creator of Minrock</span>
-      </blockquote>
+      <section class="about-sec">
+        <h2>四、数据分类与生命周期标注</h2>
+        <p>
+          为了保证信息的绝对诚实，我们在所有 42 家机场品牌库中严格执行三级数据状态标注：
+        </p>
+        <div class="tags-explain-grid">
+          <div class="te-card">
+            <span class="te-tag tag-measured">MEASURED // 实测数据</span>
+            <p>已通过本实验室千兆晚高峰测速，配有真实截图、PhotoSwipe 灯箱原图与多节点延迟明细。</p>
+          </div>
+          <div class="te-card">
+            <span class="te-tag tag-vendor">VENDOR // 服务商资料</span>
+            <p>服务商正常运营中，基础连通性正常，主要参数由服务商官方说明核实，未有单节点跑分图。</p>
+          </div>
+          <div class="te-card">
+            <span class="te-tag tag-history">HISTORICAL // 历史归档</span>
+            <p>行业历史收录品牌，部分套餐或入口可能随时间迁移变动，保留中立档案供用户对比参考。</p>
+          </div>
+        </div>
+      </section>
 
-      <h2>Core Principles</h2>
-      <ul>
-        <li><strong>Pure SSG (Zero Bloat):</strong> Every page is pre-rendered at build time. No database calls, no client-side runtime bloat, and instant CDN delivery worldwide.</li>
-        <li><strong>Typography-First:</strong> Words are the interface. We optimize measure, line height, and font contrast so readers can stay immersed for hours.</li>
-        <li><strong>Four Handcrafted Palettes:</strong> Whether you prefer the warmth of aged paper (<em>Cream</em>), the focus of <em>Slate Navy</em>, clean editorial <em>White</em>, or battery-saving <em>Midnight OLED</em>, the design adapts effortlessly.</li>
-        <li><strong>Obsidian Native:</strong> Drop your Markdown files directly into <code>src/content/blog/</code> and watch them publish without custom plugin dependencies.</li>
-      </ul>
-
-      <h2>Craftsmanship & Origins</h2>
-      <p>
-        Minrock was conceptualized, designed, and engineered with pride in Brazil 🇧🇷 by <strong><a href="https://github.com/rnt-rez" target="_blank" rel="noopener noreferrer">Renato Rezende</a></strong>. It represents a commitment to high-standard software craftsmanship tailored for the global open-source ecosystem.
-      </p>
-
-      <h2>Tech Stack</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Layer</th>
-            <th>Technology</th>
-            <th>Purpose</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Framework</td>
-            <td>Astro 7</td>
-            <td>Zero-JS static site generation</td>
-          </tr>
-          <tr>
-            <td>Styling</td>
-            <td>Vanilla Modern CSS</td>
-            <td>4 theme palettes with custom properties</td>
-          </tr>
-          <tr>
-            <td>Content</td>
-            <td>Obsidian Vault (Markdown)</td>
-            <td>Content collections with Zod schema</td>
-          </tr>
-          <tr>
-            <td>Discussions</td>
-            <td>ScatterLeaf</td>
-            <td>Iframe-free native comments Web Component</td>
-          </tr>
-        </tbody>
-      </table>
+      <section class="about-sec">
+        <h2>五、合规声明与商业推广透明度披露 (Affiliate Disclosure)</h2>
+        <div class="disclosure-box">
+          <p>
+            根据全球 FTC 互联网透明度指引与广告合规要求，Flybit 实验室郑重声明：
+          </p>
+          <p>
+            1. <strong>推广链接机制：</strong> 本站部分外部链接带有推广分成参数（已全站规范采用 <code>target="_blank" rel="nofollow sponsored noopener"</code>）。当您通过本站链接注册或使用专属优惠码时，我们可能获得微薄佣金。
+          </p>
+          <p>
+            2. <strong>用户无额外成本：</strong> 通过推广链接购买不会增加您的任何付款金额；相反，使用本站收录的独家专属优惠码（如光速云优惠码 <code>AMM</code>）通常能享受到直接的折扣立减。
+          </p>
+          <p>
+            3. <strong>实测独立性不受影响：</strong> 所有佣金收入仅用于支付实验室测速服务器、千兆宽带月租与测试订阅开销。无论服务商是否提供推广合作，均不影响实测结果的发布与真实客观性。
+          </p>
+        </div>
+      </section>
     </div>
   </article>
 </BaseLayout>
 
 <style>
   .about-page {
-    padding-top: 1rem;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 1.5rem 0 3.5rem;
   }
 
   .about-header {
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border);
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .about-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.85rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+  }
+
+  .live-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
   }
 
   .page-title {
-    margin-top: 0;
-    margin-bottom: 0.5rem;
-    font-size: 2.25rem;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--text);
+    margin: 0 0 0.85rem;
+    letter-spacing: -0.02em;
   }
 
   .page-subtitle {
+    font-size: 1.05rem;
+    line-height: 1.6;
     color: var(--text-muted);
-    font-size: 1.1rem;
     margin: 0;
   }
 
   .about-content {
-    font-size: 1.05rem;
-    line-height: 1.8;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
   }
 
-  .manifesto-quote {
-    margin: 1.75rem 0;
-    padding: 1.25rem 1.5rem;
-    border-left: 3px solid var(--accent);
-    background: var(--bg-surface);
-    border-radius: 0 8px 8px 0;
-    font-style: normal;
+  .about-sec h2 {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text);
+    margin: 0 0 1rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
   }
 
-  .manifesto-author {
-    display: inline-block;
-    margin-top: 0.6rem;
-    font-size: 0.85rem;
-    font-family: var(--font-mono);
+  .about-sec p {
+    font-size: 0.95rem;
+    line-height: 1.7;
     color: var(--text-muted);
+    margin: 0 0 1rem;
+  }
+
+  .about-sec strong {
+    color: var(--text);
+  }
+
+  .spec-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+
+  .spec-card ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .about-sec ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .tags-explain-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .te-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .te-tag {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    display: inline-block;
+    align-self: flex-start;
+  }
+
+  .tag-measured {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+  }
+
+  .tag-vendor {
+    background: rgba(56, 189, 248, 0.15);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+  }
+
+  .tag-history {
+    background: var(--bg-subtle);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+
+  .te-card p {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .disclosure-box {
+    background: var(--bg-surface);
+    border-left: 3px solid var(--accent);
+    padding: 1.25rem 1.5rem;
+    border-radius: 0 8px 8px 0;
+  }
+
+  .disclosure-box p {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--text-muted);
+    margin: 0 0 0.85rem;
+  }
+
+  .disclosure-box p:last-child {
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .tags-explain-grid {
+      grid-template-columns: 1fr;
+    }
+    .page-title {
+      font-size: 1.8rem;
+    }
   }
 </style>

@@ -1,15 +1,15 @@
 ---
 title: "Visual Gallery & Deep Zoom Demo"
-description: "Exploring Minrock's native PhotoSwipe 5 lightbox integration with interactive diagrams, fluid pinch-to-zoom, and responsive galleries."
+description: "Exploring Flybit's native PhotoSwipe 5 lightbox integration with interactive diagrams, fluid pinch-to-zoom, and responsive galleries."
 pubDate: 2026-09-16
 tags: ["design", "showcase", "typography", "obsidian"]
 draft: false
-image: "/images/minrock-design-system.svg"
+image: "/images/flybit-design-system.svg"
 ---
 
 Welcome to the interactive visual gallery demo. In technical publications and architecture documentation, high-fidelity images, diagrams, and schematics require smooth, distraction-free inspection.
 
-Minrock now integrates **PhotoSwipe 5** natively—giving your readers instant click-to-zoom, pinch gestures on mobile, mouse wheel zoom on desktop, and keyboard gallery navigation (`←` / `→` / `Esc`).
+Flybit now integrates **PhotoSwipe 5** natively—giving your readers instant click-to-zoom, pinch gestures on mobile, mouse wheel zoom on desktop, and keyboard gallery navigation (`←` / `→` / `Esc`).
 
 ---
 
@@ -17,17 +17,17 @@ Minrock now integrates **PhotoSwipe 5** natively—giving your readers instant c
 
 Click on the diagram below to open it in full-resolution zoom. Notice how SVG graphics automatically scale up to crisp 1920px rendering:
 
-![Vault CMS and Minrock Architecture](/images/vaultcms-architecture.svg)
+![Vault CMS and Flybit Architecture](/images/flybit-architecture.svg)
 
 > **Pro Tip**: When PhotoSwipe opens, you can double-click or pinch to zoom deeper into fine-grained labels and connections.
 
 ---
 
-## The Four Minrock Palettes
+## The Four Flybit Palettes
 
 Our theme system offers four harmonious palettes crafted specifically for long-form reading comfort:
 
-![Minrock Design System & Palettes](/images/minrock-design-system.svg)
+![Flybit Design System & Palettes](/images/flybit-design-system.svg)
 
 ### Key Features of the Lightbox
 

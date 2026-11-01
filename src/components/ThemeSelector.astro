@@ -1,6 +1,6 @@
 ---
 // src/components/ThemeSelector.astro
-// Dropdown menu for Minrock themes (Clean White, Warm Paper, Slate Navy, Midnight OLED, Auto)
+// Dropdown menu for Flybit themes (Clean White, Warm Paper, Slate Navy, Midnight OLED, Auto)
 ---
 
 <div class="theme-selector" id="theme-selector">
@@ -10,9 +10,9 @@
     aria-label="Select color theme"
     aria-haspopup="true"
     aria-expanded="false"
-    title="Color theme / Tema visual"
+    title="Color theme"
   >
-    <span id="theme-active-icon" class="theme-active-icon">📜</span>
+    <span id="theme-active-icon" class="theme-active-icon">⚓</span>
     <svg class="theme-chevron" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <polyline points="6 9 12 15 18 9"></polyline>
     </svg>
@@ -257,13 +257,11 @@
 
     function updateThemeUI(storedTheme: string) {
       const effectiveTheme = getEffectiveTheme(storedTheme);
-      
-      // Update icon on the button
+
       if (activeIcon) {
-        activeIcon.textContent = storedTheme === 'auto' ? '💻' : (themeIcons[effectiveTheme] || '📜');
+        activeIcon.textContent = storedTheme === 'auto' ? '💻' : (themeIcons[effectiveTheme] || '⚓');
       }
 
-      // Update active checks in dropdown
       document.querySelectorAll<HTMLButtonElement>('.theme-option').forEach((opt) => {
         const val = opt.getAttribute('data-theme-val');
         if (val === storedTheme) {
@@ -277,14 +275,12 @@
     }
 
     function applyTheme(mode: string) {
-      localStorage.setItem('minrock_theme', mode);
+      localStorage.setItem('flybit_theme', mode);
       const effective = getEffectiveTheme(mode);
       document.documentElement.setAttribute('data-theme', effective);
 
       updateThemeUI(mode);
-
-      // Dispatch event for reactive components (like ScatterLeaf chameleon mode)
-      window.dispatchEvent(new CustomEvent('minrock-theme-change', { detail: { theme: effective, mode } }));
+      window.dispatchEvent(new CustomEvent('flybit-theme-change', { detail: { theme: effective, mode } }));
     }
 
     function positionDropdown() {
@@ -310,14 +306,11 @@
       }
     }
 
-    // Initialize UI on mount
-    const saved = localStorage.getItem('minrock_theme') || 'cream';
+    const saved = localStorage.getItem('flybit_theme') || 'slate';
     updateThemeUI(saved);
 
-    // Toggle dropdown
     btn?.addEventListener('click', (e) => {
       e.stopPropagation();
-      // Close other dropdowns if open
       document.querySelectorAll('.lang-dropdown.open, .social-dropdown-menu.open').forEach(d => d.classList.remove('open'));
       document.querySelectorAll('#lang-btn, #social-menu-btn').forEach(b => b.setAttribute('aria-expanded', 'false'));
 
@@ -335,7 +328,6 @@
       }
     });
 
-    // Option clicks
     document.querySelectorAll<HTMLButtonElement>('.theme-option').forEach((opt) => {
       opt.addEventListener('click', () => {
         const val = opt.getAttribute('data-theme-val');
@@ -346,7 +338,6 @@
       });
     });
 
-    // Close on click outside
     document.addEventListener('click', (e) => {
       if (!selector?.contains(e.target as Node)) {
         dropdown?.classList.remove('open');
@@ -354,7 +345,6 @@
       }
     });
 
-    // Close on Escape
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && dropdown?.classList.contains('open')) {
         dropdown.classList.remove('open');
@@ -363,9 +353,8 @@
       }
     });
 
-    // Listen to OS theme changes if on auto
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-      const current = localStorage.getItem('minrock_theme') || 'cream';
+      const current = localStorage.getItem('flybit_theme') || 'slate';
       if (current === 'auto') {
         applyTheme('auto');
       }

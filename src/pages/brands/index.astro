@@ -1,0 +1,565 @@
+---
+// src/pages/brands/index.astro
+// Airport Brands Observatory Directory
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AirportCard from '../../components/AirportCard.astro';
+import { airportsData } from '../../data/airports';
+
+const totalCount = airportsData.length;
+const testedCount = airportsData.filter((b) => b.speedtestImage).length;
+const couponCount = airportsData.filter((b) => b.coupon).length;
+---
+
+<BaseLayout
+  title="42家主流机场品牌库 — 2026 节点测速、优惠码与价格对比"
+  description="收录 42 家主流机场品牌，涵盖光速云、微风网络、暮光加速、飞猫云等。提供真实晚高峰测速、4K流媒体解锁、IEPL专线与月付优惠码中立查询。"
+>
+  <div class="brands-directory">
+    <!-- Directory Hero -->
+    <header class="dir-header">
+      <div class="dir-badge">
+        <span class="live-pulse"></span>
+        <span>AIRPORT OBSERVATORY DIRECTORY // 42 BRANDS INDEXED</span>
+      </div>
+      <h1 class="dir-title">42 家机场品牌实测数据库</h1>
+      <p class="dir-desc">
+        依托 Flybit 实验室晚高峰真实测速与流媒体解锁探针，对收录的 42 家机场进行多维度建档。支持按专线架构、平价入门、测速原图和专属优惠码实时筛选。
+      </p>
+
+      <!-- Stat Pill Row -->
+      <div class="dir-stats">
+        <div class="d-stat">
+          <strong>{totalCount}</strong> 家收录品牌
+        </div>
+        <div class="d-stat">
+          <strong>{testedCount}</strong> 份实验室测速图
+        </div>
+        <div class="d-stat">
+          <strong>{couponCount}</strong> 个立减优惠码
+        </div>
+        <div class="d-stat">
+          <strong>100%</strong> 标明数据来源
+        </div>
+      </div>
+    </header>
+
+    <!-- Interactive Filtering & Search Control Bar -->
+    <div class="control-panel">
+      <!-- Search Input -->
+      <div class="search-box">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="search-icon">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input
+          type="text"
+          id="brand-search"
+          placeholder="搜索品牌名称（如 光速云、微风、IEPL、VLESS、AMM）..."
+          autocomplete="off"
+        />
+        <button type="button" id="search-clear-btn" class="clear-btn" style="display: none;">✕</button>
+      </div>
+
+      <!-- Tier Filter Tabs -->
+      <div class="filter-tabs" id="tier-tabs">
+        <button type="button" class="tab-btn active" data-tier="all">全部品牌 ({totalCount})</button>
+        <button type="button" class="tab-btn" data-tier="featured">主推旗舰 (1)</button>
+        <button type="button" class="tab-btn" data-tier="top10">Top 10 推荐 (9)</button>
+        <button type="button" class="tab-btn" data-tier="standard">标准收录 (18)</button>
+        <button type="button" class="tab-btn" data-tier="archive">历史档案 (14)</button>
+      </div>
+
+      <!-- Fast Feature Filter Chips -->
+      <div class="filter-chips">
+        <span class="chips-label">快速筛选:</span>
+        <button type="button" class="chip-toggle" data-filter="speedtest">⚡ 仅看含测速图 ({testedCount})</button>
+        <button type="button" class="chip-toggle" data-filter="budget">💰 10元内月付</button>
+        <button type="button" class="chip-toggle" data-filter="coupon">🎟️ 含优惠码 ({couponCount})</button>
+        <button type="button" class="chip-toggle" data-filter="iepl">🚀 IEPL/IPLC 专线</button>
+      </div>
+    </div>
+
+    <!-- Active Filter Counter -->
+    <div class="results-summary">
+      <span>正在显示 <strong id="visible-count">{totalCount}</strong> 家品牌</span>
+      <span class="results-hint">提示：点击卡片可查看对应机场的深度测速原图与套餐详情</span>
+    </div>
+
+    <!-- Airport Brands Grid -->
+    <h2 class="sr-only">42家机场品牌列表与监控数据</h2>
+    <div class="brands-grid" id="brands-container">
+      {airportsData.map((brand) => (
+        <div
+          class="brand-wrapper"
+          data-id={brand.id}
+          data-name={brand.name.toLowerCase()}
+          data-alias={(brand.alias || '').toLowerCase()}
+          data-tier={brand.tier}
+          data-price={brand.minMonthlyPrice}
+          data-has-speedtest={brand.speedtestImage ? 'true' : 'false'}
+          data-has-coupon={brand.coupon ? 'true' : 'false'}
+          data-is-iepl={brand.lines.includes('IEPL') || brand.lines.includes('IPLC') ? 'true' : 'false'}
+          data-protocols={brand.protocols.join(' ').toLowerCase()}
+        >
+          <AirportCard brand={brand} />
+        </div>
+      ))}
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" id="empty-state" style="display: none;">
+      <div class="empty-icon">🔍</div>
+      <h3>未匹配到符合条件的机场品牌</h3>
+      <p>请尝试减少筛选条件或清空搜索框关键字</p>
+      <button type="button" id="reset-filters-btn" class="reset-btn">重置所有筛选</button>
+    </div>
+
+    <!-- Compliance Note -->
+    <div class="directory-disclosure">
+      <p>
+        🛡️ <strong>商业透明度说明</strong>：本目录部分链接为附带推广参数的外部链接，购买时填入本站专属优惠码可享受立减优惠。所有品牌排序与评测结论均基于网络工程实测标准建立，不以佣金比例高低调整排名。
+      </p>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  function setupFilters() {
+    const searchInput = document.getElementById('brand-search') as HTMLInputElement | null;
+    const clearBtn = document.getElementById('search-clear-btn');
+    const tabBtns = document.querySelectorAll('#tier-tabs .tab-btn');
+    const chipBtns = document.querySelectorAll('.chip-toggle');
+    const brandWrappers = document.querySelectorAll('.brand-wrapper') as NodeListOf<HTMLElement>;
+    const visibleCountEl = document.getElementById('visible-count');
+    const emptyStateEl = document.getElementById('empty-state');
+    const resetBtn = document.getElementById('reset-filters-btn');
+
+    let currentTier = 'all';
+    let filterSpeedtest = false;
+    let filterBudget = false;
+    let filterCoupon = false;
+    let filterIepl = false;
+    let searchQuery = '';
+
+    function applyFilters() {
+      let count = 0;
+
+      brandWrappers.forEach((el) => {
+        const name = el.getAttribute('data-name') || '';
+        const alias = el.getAttribute('data-alias') || '';
+        const tier = el.getAttribute('data-tier') || '';
+        const price = parseFloat(el.getAttribute('data-price') || '999');
+        const hasSpeedtest = el.getAttribute('data-has-speedtest') === 'true';
+        const hasCoupon = el.getAttribute('data-has-coupon') === 'true';
+        const isIepl = el.getAttribute('data-is-iepl') === 'true';
+        const protocols = el.getAttribute('data-protocols') || '';
+
+        // Check Tier
+        if (currentTier !== 'all' && tier !== currentTier) {
+          el.style.display = 'none';
+          return;
+        }
+
+        // Check fast chips
+        if (filterSpeedtest && !hasSpeedtest) {
+          el.style.display = 'none';
+          return;
+        }
+        if (filterBudget && price > 10) {
+          el.style.display = 'none';
+          return;
+        }
+        if (filterCoupon && !hasCoupon) {
+          el.style.display = 'none';
+          return;
+        }
+        if (filterIepl && !isIepl) {
+          el.style.display = 'none';
+          return;
+        }
+
+        // Check Search Query
+        if (searchQuery) {
+          const match =
+            name.includes(searchQuery) ||
+            alias.includes(searchQuery) ||
+            protocols.includes(searchQuery) ||
+            el.getAttribute('data-id')?.includes(searchQuery);
+          if (!match) {
+            el.style.display = 'none';
+            return;
+          }
+        }
+
+        el.style.display = 'block';
+        count++;
+      });
+
+      if (visibleCountEl) visibleCountEl.innerText = String(count);
+      if (emptyStateEl) emptyStateEl.style.display = count === 0 ? 'block' : 'none';
+      if (clearBtn && searchInput) {
+        clearBtn.style.display = searchInput.value ? 'inline-flex' : 'none';
+      }
+    }
+
+    // Tier Tabs Click
+    tabBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentTier = btn.getAttribute('data-tier') || 'all';
+        applyFilters();
+      });
+    });
+
+    // Chip Toggles Click
+    chipBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        btn.classList.toggle('active');
+        const filterType = btn.getAttribute('data-filter');
+        const isActive = btn.classList.contains('active');
+
+        if (filterType === 'speedtest') filterSpeedtest = isActive;
+        if (filterType === 'budget') filterBudget = isActive;
+        if (filterType === 'coupon') filterCoupon = isActive;
+        if (filterType === 'iepl') filterIepl = isActive;
+
+        applyFilters();
+      });
+    });
+
+    // Search Input
+    if (searchInput) {
+      searchInput.addEventListener('input', () => {
+        searchQuery = searchInput.value.trim().toLowerCase();
+        applyFilters();
+      });
+    }
+
+    // Clear Search
+    if (clearBtn && searchInput) {
+      clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        searchQuery = '';
+        applyFilters();
+        searchInput.focus();
+      });
+    }
+
+    // Reset All Filters
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        if (searchInput) searchInput.value = '';
+        searchQuery = '';
+        currentTier = 'all';
+        filterSpeedtest = false;
+        filterBudget = false;
+        filterCoupon = false;
+        filterIepl = false;
+
+        tabBtns.forEach((b) => b.classList.toggle('active', b.getAttribute('data-tier') === 'all'));
+        chipBtns.forEach((b) => b.classList.remove('active'));
+
+        applyFilters();
+      });
+    }
+  }
+
+  if (typeof window !== 'undefined') {
+    setupFilters();
+    document.addEventListener('astro:page-load', setupFilters);
+  }
+</script>
+
+<style>
+  .brands-directory {
+    padding: 1.5rem 0 3rem;
+  }
+
+  .dir-header {
+    text-align: center;
+    max-width: 820px;
+    margin: 0 auto 2.5rem;
+  }
+
+  .dir-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.85rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+  }
+
+  .live-pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+  }
+
+  .dir-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--text);
+    margin: 0 0 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .dir-desc {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin: 0 0 1.75rem;
+  }
+
+  .dir-stats {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .d-stat {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    padding: 0.35rem 0.85rem;
+    border-radius: 6px;
+  }
+
+  .d-stat strong {
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 1.05rem;
+  }
+
+  /* Control Panel */
+  .control-panel {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 1rem;
+    color: var(--text-muted);
+    pointer-events: none;
+  }
+
+  #brand-search {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.75rem 2.5rem 0.75rem 2.6rem;
+    font-size: 0.95rem;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+
+  #brand-search:focus {
+    border-color: var(--accent);
+  }
+
+  .clear-btn {
+    position: absolute;
+    right: 0.85rem;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 0.3rem;
+  }
+
+  .filter-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tab-btn {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.45rem 0.85rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .tab-btn:hover {
+    color: var(--text);
+    border-color: var(--text-muted);
+  }
+
+  .tab-btn.active {
+    background: var(--accent);
+    color: #ffffff;
+    border-color: var(--accent);
+  }
+
+  .filter-chips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .chips-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .chip-toggle {
+    background: var(--bg);
+    border: 1px dashed var(--border);
+    border-radius: 999px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .chip-toggle:hover {
+    color: var(--text);
+    border-color: var(--accent);
+  }
+
+  .chip-toggle.active {
+    background: rgba(56, 189, 248, 0.15);
+    border-color: var(--accent);
+    border-style: solid;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .results-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+    padding: 0 0.25rem;
+  }
+
+  .results-summary strong {
+    color: var(--text);
+    font-family: var(--font-mono);
+  }
+
+  .results-hint {
+    font-size: 0.78rem;
+  }
+
+  .brands-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 3rem;
+  }
+
+  .brand-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Empty State */
+  .empty-state {
+    text-align: center;
+    padding: 4rem 1rem;
+    background: var(--bg-surface);
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    margin-bottom: 3rem;
+  }
+
+  .empty-icon {
+    font-size: 3rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .empty-state h3 {
+    margin: 0 0 0.5rem;
+    color: var(--text);
+  }
+
+  .empty-state p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin: 0 0 1.25rem;
+  }
+
+  .reset-btn {
+    background: var(--accent);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1.25rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .directory-disclosure {
+    background: var(--bg-surface);
+    border-left: 3px solid var(--accent);
+    padding: 1rem 1.25rem;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .directory-disclosure p {
+    margin: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .brands-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .brands-grid {
+      grid-template-columns: 1fr;
+    }
+    .results-summary {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+    }
+    .dir-title {
+      font-size: 1.8rem;
+    }
+  }
+</style>

@@ -1,15 +1,15 @@
 ---
-title: "Connecting Your Obsidian Vault to Minrock"
-description: "A complete technical walkthrough on integrating Vault CMS and Obsidian as a local, frictionless CMS for Minrock."
+title: "Connecting Your Obsidian Vault to Flybit"
+description: "A complete technical walkthrough on integrating Vault CMS and Obsidian as a local, frictionless CMS for Flybit."
 pubDate: 2026-09-16
 tags: ["obsidian", "vault", "workflow", "astro"]
 draft: false
-image: "/images/vaultcms-architecture.svg"
+image: "/images/flybit-architecture.svg"
 ---
 
-One of the foundational architectural goals of **Minrock** is to eliminate the friction between private note-taking in [Obsidian](https://obsidian.md) and public publishing on the web.
+One of the foundational architectural goals of **Flybit** is to eliminate the friction between private note-taking in [Obsidian](https://obsidian.md) and public publishing on the web.
 
-Instead of dealing with proprietary headless CMS services, cloud databases, or slow web dashboards, Minrock treats your local Markdown repository as the single source of truth. By combining Minrock with [Vault CMS](https://vaultcms.org/) ([GitHub](https://github.com/davidvkimball/vaultcms)), your `src/content/` directory transforms into a dedicated desktop publishing studio.
+Instead of dealing with proprietary headless CMS services, cloud databases, or slow web dashboards, Flybit treats your local Markdown repository as the single source of truth. By combining Flybit with [Vault CMS](https://vaultcms.org/) ([GitHub](https://github.com/davidvkimball/vaultcms)), your `src/content/` directory transforms into a dedicated desktop publishing studio.
 
 ---
 
@@ -18,10 +18,10 @@ Instead of dealing with proprietary headless CMS services, cloud databases, or s
 Depending on your goals and familiarity with Obsidian, choose the path that best suits you:
 
 > [!TIP] Path 1 (Recommended / Plug & Play)
-> Minrock **already comes with the `.obsidian/` folder pre-configured** inside `src/content/`. If you simply want to write posts and publish them without any setup, you don't need to follow this manual tutorial!
+> Flybit **already comes with the `.obsidian/` folder pre-configured** inside `src/content/`. If you simply want to write posts and publish them without any setup, you don't need to follow this manual tutorial!
 > 
 > Simply open the `src/content` folder in Obsidian and press `Ctrl + N`.
-> 👉 **[Follow the Quickstart Guide (Getting Started) →](/blog/getting-started-with-minrock)**
+> 👉 **[Follow the Quickstart Guide (Getting Started) →](/blog/getting-started-with-flybit)**
 
 > [!NOTE] Path 2 (Manual / From Scratch with Wizard)
 > If you want to understand the under-the-hood architecture, are setting up Vault CMS from scratch on an existing Astro project via `npx create-vaultcms`, or need to re-run the graphical setup wizard following David Kimball's video, read the step-by-step technical guide below.
@@ -30,7 +30,7 @@ Depending on your goals and familiarity with Obsidian, choose the path that best
 
 ## Step 1: Running the Command-Line Installer
 
-In the root directory of your Minrock project, execute the official Vault CMS installer:
+In the root directory of your Flybit project, execute the official Vault CMS installer:
 
 ```bash
 npx create-vaultcms
@@ -44,7 +44,7 @@ This command inspects your workspace and installs the curated suite of Obsidian 
 
 Launch Obsidian on your computer:
 1. Click **"Open folder as vault"** (or **"Open"**).
-2. Navigate into your Minrock project directory and select the **`src/content`** folder.
+2. Navigate into your Flybit project directory and select the **`src/content`** folder.
 3. Trust the author and enable community plugins when prompted.
 
 The **Vault CMS Setup Wizard** modal will appear automatically on your screen.
@@ -54,24 +54,24 @@ The **Vault CMS Setup Wizard** modal will appear automatically on your screen.
 
 ---
 
-## Step 3: Calibrating the Setup Wizard for Minrock
+## Step 3: Calibrating the Setup Wizard for Flybit
 
-The default Vault CMS tutorial is built around general themes (like Axis), which often use flat Markdown files (`blog/post.md`) and generic property names. Minrock, however, uses an **Atomic Folder-Based Page Bundle** architecture and strict Zod schemas.
+The default Vault CMS tutorial is built around general themes (like Axis), which often use flat Markdown files (`blog/post.md`) and generic property names. Flybit, however, uses an **Atomic Folder-Based Page Bundle** architecture and strict Zod schemas.
 
-Here is the exact field-by-field mapping required for Minrock:
+Here is the exact field-by-field mapping required for Flybit:
 
-| Wizard Step | Setting Name | Minrock Value | Why This Matters |
+| Wizard Step | Setting Name | Flybit Value | Why This Matters |
 | :--- | :--- | :--- | :--- |
-| **1. Welcome** | Setup Mode | **`Get started`** | Never select community presets (e.g. *Slate*, *Chiri*), as they overwrite Minrock's custom layout and styles. |
+| **1. Welcome** | Setup Mode | **`Get started`** | Never select community presets (e.g. *Slate*, *Chiri*), as they overwrite Flybit's custom layout and styles. |
 | **2. Detection** | Project Root | **`../..`** | Points 2 levels up from `src/content` to find your `package.json` and `astro.config.mjs`. |
-| **2. Detection** | Extended Types | **Disabled** | Minrock uses standard Markdown and MDX; raw data files are not needed. |
+| **2. Detection** | Extended Types | **Disabled** | Flybit uses standard Markdown and MDX; raw data files are not needed. |
 | **3. Content Type**| Type Name | **`Blog`** | Matches your Astro content collection declared in `src/content.config.ts`. |
 | **3. Content Type**| Folder | **`blog`** | Directory path inside `src/content/`. |
 | **3. Content Type**| File Organization | **`folder` (*Folder-based*)** | Crucial: ensures every post is generated as `blog/<slug>/index.md`. |
 | **3. Content Type**| Index File Name | **`index`** | Matches Astro's page bundle convention (`index.md`). |
 | **3. Content Type**| Link Base Path | **`/blog/`** | The public URL prefix for reading posts. |
 | **4. Frontmatter** | Title Property | **`title`** | The article's main heading. |
-| **4. Frontmatter** | Date Property | **`pubDate`** | **Important:** Minrock uses `pubDate` (not `date`) formatted as `YYYY-MM-DD`. |
+| **4. Frontmatter** | Date Property | **`pubDate`** | **Important:** Flybit uses `pubDate` (not `date`) formatted as `YYYY-MM-DD`. |
 | **4. Frontmatter** | Description | **`description`** | Concise meta summary used for SEO and OpenGraph cards. |
 | **4. Frontmatter** | Tags Property | **`tags`** | List of tags for categorizing articles. |
 | **4. Frontmatter** | Draft Property | **`draft`** | Logic: `true-draft` (marking `draft: true` hides the post in production). |
@@ -83,7 +83,7 @@ Here is the exact field-by-field mapping required for Minrock:
 
 ## Step 4: The Page Bundle Architecture Explained
 
-Why does Minrock insist on the **Folder-Based (Page Bundle)** pattern over flat Markdown files?
+Why does Flybit insist on the **Folder-Based (Page Bundle)** pattern over flat Markdown files?
 
 ```text
 src/content/blog/
@@ -91,7 +91,7 @@ src/content/blog/
 │   ├── index.md             # The article text and frontmatter
 │   ├── wizard-step-3.png    # Screenshot pasted via Ctrl + V
 │   └── architecture.svg     # Vector diagram
-└── getting-started-with-minrock/
+└── getting-started-with-flybit/
     ├── index.md
     └── cover.jpg
 ```
@@ -125,7 +125,7 @@ draft: false
 ---
 ```
 
-When saved, Minrock's Astro engine automatically generates the clean route at `/blog/your-post-title-here/`.
+When saved, Flybit's Astro engine automatically generates the clean route at `/blog/your-post-title-here/`.
 
 ---
 
@@ -146,7 +146,7 @@ Obsidian fetches the newest releases for Vault CMS, Astro Composer, and Obsidian
 
 ## Step 7: Publishing to the Web via Git
 
-Because Minrock is a pure **Static Site Generation (SSG)** engine, publishing is as simple as pushing your Git commits:
+Because Flybit is a pure **Static Site Generation (SSG)** engine, publishing is as simple as pushing your Git commits:
 
 1. **Inside Obsidian (1-Click Automagic)**: Click the **Git Push / Up Arrow (`↑`)** icon in Obsidian's bottom status bar (or run `Ctrl + P` → `Git: Push`). Obsidian automatically drafts the commit message and pushes to GitHub without opening a terminal or typing any commands.
 2. **Via Terminal**:
@@ -162,7 +162,7 @@ Your hosting provider (Vercel, Cloudflare Pages, Netlify, or GitHub Pages) detec
 
 ## Step 8: Video Walkthrough
 
-To see the installation process in action, watch David Kimball's setup walkthrough below. While the video uses the Axis theme as a reference, you can follow along visually and simply use the **Minrock-specific fields from our table in Step 3**:
+To see the installation process in action, watch David Kimball's setup walkthrough below. While the video uses the Axis theme as a reference, you can follow along visually and simply use the **Flybit-specific fields from our table in Step 3**:
 
 <div class="video-container">
   <iframe 

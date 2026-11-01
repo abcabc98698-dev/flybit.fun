@@ -14,7 +14,7 @@ In reality, the modern web has made digital independence more accessible than ev
 
 ## Why Buy Your Own Domain?
 
-While platforms often provide free subdomains (like `username.vercel.app` or `username.github.io`), investing in your own domain name (such as `yourname.com`, `yourname.dev`, or `yourname.com.br`) transforms your presence from a temporary project into a permanent home:
+While platforms often provide free subdomains (like `username.example.app` or `username.github.io`), investing in your own domain name (such as `yourname.com`, `yourname.dev`, or `yourname.com.br`) transforms your presence from a temporary project into a permanent home:
 
 1. **Digital Sovereignty**: You own your address. If you ever switch from Vercel to Cloudflare, Netlify, or AWS, your URL never changes and your visitors never lose you.
 2. **Professional Credibility**: Sharing `yourname.com` on resumes, GitHub bios, and LinkedIn signals intention and personal craft.
@@ -36,30 +36,30 @@ Many people assume a domain is a subscription service that costs dozens of dolla
 
 Historically, having a custom domain meant paying $10 to $30 every month for shared Apache or cPanel hosting.
 
-Today, static architecture themes like **Minrock** turn that model on its head:
+Today, static architecture themes like **Flybit** turn that model on its head:
 
 | Capability | Old Hosting Model | Modern JAMstack / SSG |
 | :--- | :--- | :--- |
-| **Monthly Cost** | $10 – $35 / month | **$0.00 / month (Free Tier)** |
+| **Monthly Cost** | $10 �?$35 / month | **$0.00 / month (Free Tier)** |
 | **Global CDN** | Expensive add-on | **Included out of the box** |
 | **SSL / HTTPS** | Paid certificates ($50/yr) | **Free, automated Let's Encrypt** |
 | **Deployment** | Manual FTP uploads | **Automatic on `git push`** |
 | **Downtime / Maintenance** | Database crashes & updates | **Zero servers to maintain** |
 
-Because Minrock compiles into pure static HTML, CSS, and SVG files, platforms like **Vercel** and **Cloudflare Pages** can cache your entire website on edge servers in hundreds of cities around the world without incurring server compute charges.
+Because Flybit compiles into pure static HTML, CSS, and SVG files, platforms like **Vercel** and **Cloudflare Pages** can cache your entire website on edge servers in hundreds of cities around the world without incurring server compute charges.
 
 ---
 
 ## A High-Level Overview: How Connection Works
 
-You don't need to be a network engineer to hook your custom domain up to your Minrock repository. The entire process consists of three straightforward steps:
+You don't need to be a network engineer to hook your custom domain up to your Flybit repository. The entire process consists of three straightforward steps:
 
 ### 1. Purchase Your Domain
 Pick a clean, memorable name on a reputable registrar (e.g., Cloudflare Registrar or Porkbun).
 
 ### 2. Add Domain to Your Hosting Dashboard
 In your **Vercel** or **Cloudflare Pages** project settings:
-* Navigate to **Settings** → **Domains**.
+* Navigate to **Settings** �?**Domains**.
 * Type your domain name (e.g., `yourdomain.com` and `www.yourdomain.com`).
 
 ### 3. Point Your DNS Records
@@ -70,10 +70,10 @@ Your host will give you two simple DNS values:
 Once saved in your registrar's dashboard, the host automatically issues a free SSL certificate within minutes. Your website is now live worldwide under your own personal domain!
 
 ### 4. Set Your `SITE_URL` Environment Variable
-In your host settings (**Settings** → **Environment Variables**), add `SITE_URL=https://yourdomain.com` and trigger a redeploy. This ensures Minrock compiles your sitemap, canonical SEO tags, OpenGraph cards, and RSS feed with your custom domain instead of the demo fallback.
+In your host settings (**Settings** �?**Environment Variables**), add `SITE_URL=https://yourdomain.com` and trigger a redeploy. This ensures Flybit compiles your sitemap, canonical SEO tags, OpenGraph cards, and RSS feed with your custom domain instead of the demo fallback.
 
 ---
 
 ## Take Ownership of Your Corner of the Web
 
-The open web was designed to be decentralized. By combining an affordable personal domain with Minrock's pure SSG speed and free edge hosting, you give yourself a lasting, sovereign platform for your ideas, articles, and code—built on rock, completely under your own control.
+The open web was designed to be decentralized. By combining an affordable personal domain with Flybit's pure SSG speed and free edge hosting, you give yourself a lasting, sovereign platform for your ideas, articles, and code—built on rock, completely under your own control.

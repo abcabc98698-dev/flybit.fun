@@ -1,21 +1,21 @@
-# 🪨 Minrock — Obsidian Vault Quickstart Guide
+# 🪨 Flybit �?Obsidian Vault Quickstart Guide
 
-Welcome to your local content management vault! Minrock is designed to provide an ultra-clean, frictionless writing environment in **Obsidian** that directly powers your public Astro blog.
+Welcome to your local content management vault! Flybit is designed to provide an ultra-clean, frictionless writing environment in **Obsidian** that directly powers your public Astro blog.
 
 ---
 
-## ⚡ Instant Writing Workflow
+## �?Instant Writing Workflow
 
 When you open `src/content` as a vault in Obsidian:
 - **New Article**: Press `Ctrl / Cmd + N` (or click **+ New** in the Blog view).
 - **Pasting Images**: Press `Ctrl + V` inside any note. Screenshots and diagrams are automatically saved directly beside your post in the same folder.
-- **Publishing**: Use the Git status bar icon (or `Ctrl / Cmd + P` → `Git: Push`) to send your changes live to Vercel, Cloudflare, or GitHub.
+- **Publishing**: Use the Git status bar icon (or `Ctrl / Cmd + P` �?`Git: Push`) to send your changes live to Vercel, Cloudflare, or GitHub.
 
 ---
 
 ## 📁 The Page Bundle Architecture
 
-Minrock uses the **Folder-Based (Page Bundle)** structure:
+Flybit uses the **Folder-Based (Page Bundle)** structure:
 
 ```text
 src/content/blog/
@@ -28,17 +28,17 @@ src/content/blog/
 ### Why this is optimal:
 1. **Self-Contained**: If you delete or move the post folder, all related media files move with it (zero orphaned images).
 2. **Native Preview**: Markdown image links like `![Architecture](architecture.png)` work both inside Obsidian and on your live Astro site.
-3. **Clean URLs**: Minrock generates the route `/blog/my-awesome-post/` automatically.
+3. **Clean URLs**: Flybit generates the route `/blog/my-awesome-post/` automatically.
 
 ---
 
-## 🛠️ Vault CMS Wizard Mapping (If Starting From Scratch)
+## 🛠�?Vault CMS Wizard Mapping (If Starting From Scratch)
 
-If you ever run the **Vault CMS Setup Wizard** (`Ctrl / Cmd + P` → `Vault CMS: Open Wizard`), use these exact settings for Minrock:
+If you ever run the **Vault CMS Setup Wizard** (`Ctrl / Cmd + P` �?`Vault CMS: Open Wizard`), use these exact settings for Flybit:
 
-| Wizard Field | Recommended Value for Minrock | Note |
+| Wizard Field | Recommended Value for Flybit | Note |
 | :--- | :--- | :--- |
-| **Welcome / Preset** | `Get started` (Do not apply theme presets) | Preserves Minrock's custom design |
+| **Welcome / Preset** | `Get started` (Do not apply theme presets) | Preserves Flybit's custom design |
 | **Project Root** | `../..` | Auto-detected relative to `src/content` |
 | **Config File** | `../../astro.config.mjs` | Astro configuration file |
 | **Content Type Name** | `Blog` | Name of your primary collection |
@@ -58,10 +58,10 @@ If you ever run the **Vault CMS Setup Wizard** (`Ctrl / Cmd + P` → `Vault CMS:
 ## 💡 Pro-Tips & Verification
 
 1. **Obsidian Attachment Setting**:
-   - Go to **Settings** (`Ctrl + ,`) → **Files and links** → **Default location for new attachments**.
+   - Go to **Settings** (`Ctrl + ,`) �?**Files and links** �?**Default location for new attachments**.
    - Set it to: **"Same folder as current file"** (or in subfolder `./`).
 2. **Astro Composer Creation Mode**:
-   - In **Settings** → **Community plugins** → **Astro Composer** → **Blog**.
+   - In **Settings** �?**Community plugins** �?**Astro Composer** �?**Blog**.
    - Confirm that **Creation mode** is set to `Folder-based (content-title/index.md)`.
 3. **Frontmatter Template**:
    ```markdown
@@ -74,12 +74,12 @@ If you ever run the **Vault CMS Setup Wizard** (`Ctrl / Cmd + P` → `Vault CMS:
    ---
    ```
 4. **Updating Community Plugins**:
-   - Keep plugins up to date with 1 click: **Settings** (`Ctrl + ,`) → **Community plugins** → **Check for updates** → **Update all**. Your Minrock settings are preserved automatically.
+   - Keep plugins up to date with 1 click: **Settings** (`Ctrl + ,`) �?**Community plugins** �?**Check for updates** �?**Update all**. Your Flybit settings are preserved automatically.
 
 ---
 
 ## 🔗 External Resources & Walkthrough
 
-- **Comprehensive Online Guide**: [minrock.vercel.app/blog/obsidian-vault-guide](https://minrock.vercel.app/blog/obsidian-vault-guide)
+- **Comprehensive Online Guide**: [flybit.fun/blog/obsidian-vault-guide](https://flybit.fun/blog/obsidian-vault-guide)
 - **Vault CMS Official Website**: [vaultcms.org](https://vaultcms.org/)
 - **David Kimball's Walkthrough Video**: [YouTube (55s setup demo)](https://www.youtube.com/watch?v=MnXoikTajfI&t=55s)

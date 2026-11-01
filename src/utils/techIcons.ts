@@ -15,7 +15,8 @@ export function getTechIconSvg(tagOrName?: string | null, size = 16): string {
     case 'ssg':
       return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor" class="tech-svg" style="color: #FF5D01;" aria-hidden="true"><path d="M12 2a1 1 0 0 1 .89.55l3.5 7a1 1 0 0 1-.13 1.15l-3.5 4a1 1 0 0 1-1.52 0l-3.5-4a1 1 0 0 1-.13-1.15l3.5-7A1 1 0 0 1 12 2z"/><path d="M7 16c-.55 0-1 .45-1 1a5 5 0 0 0 10 0c0-.55-.45-1-1-1a3 3 0 0 1-6 0c0-.55-.45-1-1-1z" fill="#9333ea"/></svg>`;
 
-    case 'scatterleaf':
+    case 'performance':
+    case 'speed':
     case 'comments':
       return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor" class="tech-svg" style="color: #10B981;" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12c0 2.85 1.2 5.42 3.12 7.24L4 22l3.43-1.03C8.75 21.6 10.33 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/><path d="M17 8c-2 0-4 1.5-4 4s2 4 4 4c0-2-1-4-2-5 1 0 2 0 2-3z" fill="#fff" opacity="0.6"/></svg>`;
 

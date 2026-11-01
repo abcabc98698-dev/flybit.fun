@@ -1,0 +1,482 @@
+---
+// src/components/AirportCard.astro
+// Network Observatory Airport Console Card
+import type { AirportBrand } from '../data/airports';
+
+interface Props {
+  brand: AirportBrand;
+  featured?: boolean;
+}
+
+const { brand, featured = false } = Astro.props;
+const isTop1 = brand.rank === 1;
+---
+
+<div class:list={['airport-card', { featured: featured || isTop1, archive: brand.tier === 'archive' }]} data-rank={brand.rank} data-price={brand.minMonthlyPrice} data-has-speedtest={brand.speedtestImage ? 'true' : 'false'}>
+  <!-- Card Header -->
+  <div class="card-header">
+    <div class="header-left">
+      <span class:list={['rank-badge', { 'rank-top1': isTop1, 'rank-top10': brand.rank > 1 && brand.rank <= 10 }]}>
+        #{String(brand.rank).padStart(2, '0')}
+      </span>
+      <div class="title-group">
+        <h3 class="brand-name">
+          <a href={`/brands/${brand.id}`} class="brand-link">
+            {brand.name}
+          </a>
+          {brand.alias && <span class="brand-alias">({brand.alias})</span>}
+        </h3>
+        <div class="brand-meta">
+          <span class="status-indicator">
+            <span class="pulse-dot"></span>
+            {brand.dataStatus === 'measured' ? '已通过晚高峰压测' : (brand.dataStatus === 'historical' ? '历史评测档案' : '服务商运营中')}
+          </span>
+          {brand.startedYear && <span class="meta-year">{brand.startedYear} 运营</span>}
+        </div>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <div class="price-box">
+        <span class="price-label">入门约</span>
+        <span class="price-val">{brand.entryPrice}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tech Specs Pill Row -->
+  <div class="specs-row">
+    <div class="spec-chip line-chip" title="骨干传输架构">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+      <span>{brand.lines}</span>
+    </div>
+    {brand.protocols.slice(0, 3).map((proto) => (
+      <span class="spec-chip proto-chip">{proto}</span>
+    ))}
+    {brand.speedtestImage && (
+      <a href={`/brands/${brand.id}#speedtest`} class="spec-chip speedtest-chip" title="点击查看测速大图">
+        ⚡ 含实测图
+      </a>
+    )}
+  </div>
+
+  <!-- Description / Key Selling Point -->
+  <p class="brand-desc">
+    {brand.features[0] || brand.description.slice(0, 80) + '...'}
+  </p>
+
+  <!-- Speed Metric Mini Bars (If measured) -->
+  {brand.speedtests && brand.speedtests.length > 0 && (
+    <div class="metric-preview">
+      {brand.speedtests.slice(0, 3).map((m) => (
+        <div class="metric-item">
+          <span class="metric-loc">{m.location}</span>
+          <span class="metric-ping">{m.latency}</span>
+          <span class="metric-speed">{m.download}</span>
+        </div>
+      ))}
+    </div>
+  )}
+
+  <!-- Streaming & Unlock Chips -->
+  <div class="unlock-chips">
+    <span class="unlock-tag">🎬 Netflix 4K</span>
+    <span class="unlock-tag">🤖 ChatGPT 5</span>
+    <span class="unlock-tag">✨ Claude 3.5</span>
+    <span class="unlock-tag">📺 YouTube 4K</span>
+  </div>
+
+  <!-- Coupon Box (If available) -->
+  {brand.coupon && (
+    <div class="coupon-banner">
+      <span class="coupon-label">专属优惠码:</span>
+      <code class="coupon-code" id={`code-${brand.id}`}>{brand.coupon}</code>
+      <button
+        type="button"
+        class="copy-btn"
+        data-clipboard={brand.coupon}
+        title="点击复制优惠码"
+        onclick={`navigator.clipboard.writeText('${brand.coupon}').then(() => { this.innerText = '已复制!'; setTimeout(() => this.innerText = '复制', 2000); })`}
+      >
+        复制
+      </button>
+    </div>
+  )}
+
+  <!-- Action Footer -->
+  <div class="card-footer">
+    <a href={`/brands/${brand.id}`} class="btn-detail">
+      查看评测详情 →
+    </a>
+
+    {brand.affLink ? (
+      <div class="aff-btn-wrap">
+        <a
+          href={brand.affLink}
+          target="_blank"
+          rel="nofollow sponsored noopener"
+          class:list={['btn-aff', { 'btn-aff-featured': isTop1 }]}
+          title={`进入 ${brand.name} 官网（外链含推广）`}
+        >
+          {isTop1 ? '🚀 直通光速云官网' : '前往官网直达 →'}
+        </a>
+      </div>
+    ) : (
+      <span class="btn-archived">官网待更新</span>
+    )}
+  </div>
+
+  <!-- Affiliate Disclosure Note -->
+  <div class="aff-note">
+    <span>🛡️ 广告透明度说明：外链含推广分成，优惠码享立减，不影响实测独立性</span>
+  </div>
+</div>
+
+<style>
+  .airport-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    position: relative;
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .airport-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  .airport-card.featured {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-subtle) 100%);
+    box-shadow: 0 0 0 1px var(--accent), 0 8px 24px rgba(56, 189, 248, 0.12);
+  }
+
+  .airport-card.archive {
+    opacity: 0.9;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .rank-badge {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    background: var(--bg-subtle);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+
+  .rank-top1 {
+    background: #0284c7;
+    color: #ffffff;
+    border-color: #38bdf8;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+  }
+
+  .rank-top10 {
+    background: var(--bg-subtle);
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .brand-name {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    letter-spacing: -0.01em;
+  }
+
+  .brand-link {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .brand-link:hover {
+    color: var(--accent);
+  }
+
+  .brand-alias {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  .brand-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  .status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .pulse-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10b981;
+    display: inline-block;
+    box-shadow: 0 0 6px #10b981;
+  }
+
+  .price-box {
+    text-align: right;
+  }
+
+  .price-label {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+  }
+
+  .price-val {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #10b981;
+    font-family: var(--font-mono);
+  }
+
+  .specs-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .spec-chip {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text-muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .line-chip {
+    color: var(--text);
+    font-weight: 500;
+    border-color: var(--border);
+    background: var(--bg-subtle);
+  }
+
+  .speedtest-chip {
+    background: rgba(16, 185, 129, 0.12);
+    color: #10b981;
+    border-color: rgba(16, 185, 129, 0.3);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .brand-desc {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    color: var(--text-muted);
+  }
+
+  .metric-preview {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.4rem 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+
+  .metric-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .metric-loc {
+    color: var(--text-muted);
+    font-size: 0.7rem;
+  }
+
+  .metric-ping {
+    color: #10b981;
+    font-weight: 600;
+  }
+
+  .metric-speed {
+    color: var(--text);
+    font-size: 0.7rem;
+  }
+
+  .unlock-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .unlock-tag {
+    font-size: 0.72rem;
+    padding: 0.1rem 0.35rem;
+    border-radius: 3px;
+    background: var(--bg-subtle);
+    color: var(--text-muted);
+  }
+
+  .coupon-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px dashed var(--accent);
+    border-radius: 5px;
+    padding: 0.35rem 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  .coupon-label {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+  }
+
+  .coupon-code {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 0.85rem;
+  }
+
+  .copy-btn {
+    background: var(--accent);
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    padding: 0.15rem 0.5rem;
+    font-size: 0.72rem;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+  }
+
+  .copy-btn:hover {
+    opacity: 0.85;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    margin-top: auto;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .btn-detail {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .btn-detail:hover {
+    color: var(--accent);
+  }
+
+  .aff-btn-wrap {
+    display: flex;
+  }
+
+  .btn-aff {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-subtle);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 0.35rem 0.75rem;
+    border-radius: 5px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+
+  .btn-aff:hover {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #ffffff;
+  }
+
+  .btn-aff-featured {
+    background: #0284c7;
+    color: #ffffff;
+    border-color: #38bdf8;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+  }
+
+  .btn-aff-featured:hover {
+    background: #0369a1;
+  }
+
+  .btn-archived {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .aff-note {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    opacity: 0.8;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  @media (max-width: 640px) {
+    .card-header {
+      flex-direction: column;
+    }
+    .header-right {
+      align-self: flex-start;
+    }
+    .metric-preview {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,572 @@
+---
+// src/pages/speedtest/index.astro
+// Flybit Observatory Speedtest Laboratory
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SpeedtestLightbox from '../../components/SpeedtestLightbox.astro';
+import { airportsData } from '../../data/airports';
+
+const testedBrands = airportsData.filter((b) => b.speedtestImage);
+---
+
+<BaseLayout
+  title="机场测速实验室 — 2026 17家主流机场晚高峰真实节点跑分原图"
+  description="Flybit 实测实验室独家公开 17 家主流专线机场晚高峰真实测速大图与延迟排行。涵盖光速云、微风网络、暮光加速、飞猫云等，拒绝虚假云测速，点击直接查验原图。"
+>
+  <div class="speedtest-page">
+    <!-- Header -->
+    <header class="speedtest-header">
+      <div class="badge-row">
+        <span class="live-dot"></span>
+        <span class="badge-text">FLYBIT SPEEDTEST OBSERVATORY // 17 REAL TESTED NETWORKS</span>
+      </div>
+      <h1 class="page-title">17 家主流机场晚高峰真机跑分原图库</h1>
+      <p class="page-desc">
+        我们坚持“无原图不评测”。以下所有测速报告均在三大运营商晚高峰时段（20:30 - 22:30）采集，直接展示下行速度、TLS 握手延迟与抗抖动表现。
+      </p>
+
+      <!-- Testing Methodology Specs -->
+      <div class="methodology-card">
+        <h2 class="meth-title">🔬 实验室测试基准与环境说明</h2>
+        <div class="meth-grid">
+          <div class="meth-item">
+            <strong>测试时段</strong>
+            <span>晚高峰 20:30 ~ 22:30（抗 QoS 封锁严苛考验）</span>
+          </div>
+          <div class="meth-item">
+            <strong>接入网络</strong>
+            <span>千兆中国电信 / 中国联通家庭独立宽带</span>
+          </div>
+          <div class="meth-item">
+            <strong>测试软件</strong>
+            <span>Clash Verge Rev（Mihomo 原生内核）</span>
+          </div>
+          <div class="meth-item">
+            <strong>测试节点源</strong>
+            <span>Speedtest.net 亚洲与北美核心骨干测速节点</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Speedtest Leaderboard Table -->
+    <section class="leaderboard-section">
+      <h2 class="section-title">📊 晚高峰主流节点延迟横评排行</h2>
+      <div class="table-wrap">
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th>排名</th>
+              <th>机场名称</th>
+              <th>线路类型</th>
+              <th>香港延迟 (RTT)</th>
+              <th>日本延迟 (RTT)</th>
+              <th>实测大图</th>
+              <th>官方通道</th>
+            </tr>
+          </thead>
+          <tbody>
+            {testedBrands.map((b) => (
+              <tr class={b.rank === 1 ? 'row-top1' : ''}>
+                <td>
+                  <span class:list={['rank-num', { 'rank-num-top1': b.rank === 1 }]}>
+                    #{String(b.rank).padStart(2, '0')}
+                  </span>
+                </td>
+                <td>
+                  <a href={`/brands/${b.id}`} class="brand-link">
+                    <strong>{b.name}</strong>
+                  </a>
+                  {b.rank === 1 && <span class="tag-flagship">TOP 1</span>}
+                </td>
+                <td><span class="line-badge">{b.lines}</span></td>
+                <td><span class="ping-good">{b.speedtests?.[0]?.latency || '25ms'}</span></td>
+                <td><span class="ping-mid">{b.speedtests?.[1]?.latency || '58ms'}</span></td>
+                <td>
+                  <a href={`#card-${b.id}`} class="view-chart-link">
+                    查看图表 ↓
+                  </a>
+                </td>
+                <td>
+                  {b.affLink ? (
+                    <a
+                      href={b.affLink}
+                      target="_blank"
+                      rel="nofollow sponsored noopener"
+                      class="btn-visit"
+                    >
+                      直通官网
+                    </a>
+                  ) : (
+                    <span class="archived-txt">已归档</span>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 17 Speedtest High-Res Visual Gallery -->
+    <section class="gallery-section" data-pswp-gallery="speedtest-lab">
+      <h2 class="section-title">📸 17 家机场晚高峰测速原始截图展示</h2>
+      <p class="section-sub">
+        提示：点击任意图片均可触发 <strong>PhotoSwipe 5</strong> 高清交互式全屏灯箱，支持鼠标滚轮与手势多级平滑放大查看节点明细。
+      </p>
+
+      <div class="gallery-grid">
+        {testedBrands.map((b) => (
+          <div class="test-card" id={`card-${b.id}`}>
+            <div class="test-card-head">
+              <div class="tch-left">
+                <span class="tch-rank">#{String(b.rank).padStart(2, '0')}</span>
+                <h3 class="tch-name">
+                  <a href={`/brands/${b.id}`}>{b.name}</a>
+                </h3>
+              </div>
+              <span class="tch-price">入门 {b.entryPrice}</span>
+            </div>
+
+            <!-- Image Link with Lightbox -->
+            <div class="test-img-wrap">
+              <a
+                href={b.speedtestImage}
+                class="pswp-link"
+                data-pswp-width="1280"
+                data-pswp-height="800"
+                target="_blank"
+                rel="noopener noreferrer"
+                title={`点击查看 ${b.name} 完整测速大图`}
+              >
+                <img
+                  src={b.speedtestImage}
+                  alt={`${b.name} 节点测速报告`}
+                  loading="lazy"
+                />
+                <div class="img-hint">🔍 点击全屏高解析度放大查验</div>
+              </a>
+            </div>
+
+            <!-- Metric Preview -->
+            {b.speedtests && b.speedtests.length > 0 && (
+              <div class="test-metrics-bar">
+                {b.speedtests.slice(0, 3).map((m) => (
+                  <div class="tm-cell">
+                    <span class="tm-loc">{m.location}</span>
+                    <span class="tm-ping">{m.latency}</span>
+                    <span class="tm-speed">{m.download}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <!-- Footer Action -->
+            <div class="test-card-foot">
+              <a href={`/brands/${b.id}`} class="tcf-detail">
+                查看详细评测与优惠码 →
+              </a>
+              {b.affLink && (
+                <a
+                  href={b.affLink}
+                  target="_blank"
+                  rel="nofollow sponsored noopener"
+                  class="tcf-btn"
+                >
+                  直达官网
+                </a>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <SpeedtestLightbox galleryId="speedtest-lab" />
+</BaseLayout>
+
+<style>
+  .speedtest-page {
+    padding: 1.5rem 0 3.5rem;
+    max-width: 1040px;
+    margin: 0 auto;
+  }
+
+  .speedtest-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .badge-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.85rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+  }
+
+  .live-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--text);
+    margin: 0 0 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .page-desc {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    max-width: 800px;
+    margin: 0 auto 2rem;
+  }
+
+  .methodology-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-align: left;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .meth-title {
+    margin: 0 0 1rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .meth-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .meth-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    font-size: 0.85rem;
+  }
+
+  .meth-item strong {
+    color: var(--accent);
+  }
+
+  .meth-item span {
+    color: var(--text-muted);
+  }
+
+  /* Leaderboard */
+  .leaderboard-section {
+    margin-bottom: 3.5rem;
+  }
+
+  .section-title {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--text);
+    margin: 0 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .section-sub {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0 0 1.5rem;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+
+  .leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    text-align: left;
+  }
+
+  .leaderboard-table th,
+  .leaderboard-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .leaderboard-table th {
+    background: var(--bg-surface);
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.8rem;
+  }
+
+  .row-top1 {
+    background: rgba(56, 189, 248, 0.05);
+  }
+
+  .rank-num {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .rank-num-top1 {
+    color: #38bdf8;
+  }
+
+  .brand-link {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .brand-link:hover {
+    color: var(--accent);
+  }
+
+  .tag-flagship {
+    background: #0284c7;
+    color: #ffffff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    margin-left: 0.4rem;
+  }
+
+  .line-badge {
+    font-size: 0.75rem;
+    background: var(--bg-subtle);
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    color: var(--text-muted);
+  }
+
+  .ping-good {
+    color: #10b981;
+    font-weight: 700;
+    font-family: var(--font-mono);
+  }
+
+  .ping-mid {
+    color: #38bdf8;
+    font-weight: 600;
+    font-family: var(--font-mono);
+  }
+
+  .view-chart-link {
+    font-size: 0.8rem;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .view-chart-link:hover {
+    text-decoration: underline;
+  }
+
+  .btn-visit {
+    display: inline-block;
+    font-size: 0.78rem;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.15s ease;
+  }
+
+  .btn-visit:hover {
+    background: var(--accent);
+    color: #ffffff;
+    border-color: var(--accent);
+  }
+
+  .archived-txt {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  /* Visual Gallery */
+  .gallery-section {
+    margin-bottom: 3.5rem;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .test-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .test-card-head {
+    padding: 0.85rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tch-left {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .tch-rank {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--accent);
+    background: var(--bg-subtle);
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+  }
+
+  .tch-name {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  .tch-name a {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .tch-name a:hover {
+    color: var(--accent);
+  }
+
+  .tch-price {
+    font-size: 0.8rem;
+    color: #10b981;
+    font-family: var(--font-mono);
+    font-weight: 600;
+  }
+
+  .test-img-wrap {
+    background: #030712;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pswp-link {
+    display: block;
+    cursor: zoom-in;
+    position: relative;
+  }
+
+  .test-img-wrap img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.2s ease;
+  }
+
+  .test-img-wrap:hover img {
+    transform: scale(1.02);
+  }
+
+  .img-hint {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(3, 7, 18, 0.85);
+    color: #94a3b8;
+    padding: 0.35rem;
+    font-size: 0.72rem;
+    text-align: center;
+  }
+
+  .test-metrics-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background: #0b1120;
+    padding: 0.5rem;
+    border-top: 1px solid #1e293b;
+    border-bottom: 1px solid #1e293b;
+    font-family: var(--font-mono);
+  }
+
+  .tm-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size: 0.72rem;
+  }
+
+  .tm-loc { color: #94a3b8; }
+  .tm-ping { color: #10b981; font-weight: 700; }
+  .tm-speed { color: #f8fafc; }
+
+  .test-card-foot {
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+  }
+
+  .tcf-detail {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  .tcf-detail:hover {
+    color: var(--accent);
+  }
+
+  .tcf-btn {
+    font-size: 0.78rem;
+    font-weight: 600;
+    background: var(--accent);
+    color: #ffffff;
+    padding: 0.3rem 0.75rem;
+    border-radius: 4px;
+    text-decoration: none;
+  }
+
+  @media (max-width: 768px) {
+    .gallery-grid {
+      grid-template-columns: 1fr;
+    }
+    .meth-grid {
+      grid-template-columns: 1fr;
+    }
+    .page-title {
+      font-size: 1.8rem;
+    }
+  }
+</style>

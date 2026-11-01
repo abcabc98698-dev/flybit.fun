@@ -1,6 +1,6 @@
 ---
 title: "Mastering Technical Writing with Clean Typography"
-description: "How Minrock handles code blocks, data tables, callouts, and type hierarchy to elevate technical prose."
+description: "How Flybit handles code blocks, data tables, callouts, and type hierarchy to elevate technical prose."
 pubDate: 2026-09-14
 tags: ["writing", "typography", "code"]
 draft: false
@@ -10,7 +10,7 @@ Technical writing is an exercise in reducing cognitive load. Every styling choic
 
 ## Precision Code Blocks
 
-Minrock provides built-in syntax highlighting powered by Shiki, featuring dual light/dark compatibility and automatic line wrapping:
+Flybit provides built-in syntax highlighting powered by Shiki, featuring dual light/dark compatibility and automatic line wrapping:
 
 ```typescript
 interface CacheConfig<T> {
@@ -42,7 +42,7 @@ Data tables are essential for comparing architectures, benchmarks, and performan
 
 | Engine | Cold Start (ms) | Bundle Size (KB) | Memory Overhead |
 | :--- | :---: | :---: | :--- |
-| **Minrock SSG** | **0 ms** | **< 15 KB** | Zero runtime memory |
+| **Flybit SSG** | **0 ms** | **< 15 KB** | Zero runtime memory |
 | Traditional SPA | 450 ms | ~320 KB | High virtual DOM cost |
 | Server-Side SSR | 120 ms | Dynamic | Dependent on database latency |
 
