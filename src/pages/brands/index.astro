@@ -490,6 +490,7 @@ const couponCount = airportsData.filter((b) => b.coupon).length;
   .brand-wrapper {
     display: flex;
     flex-direction: column;
+    min-width: 0;
   }
 
   /* Empty State */
@@ -543,7 +544,10 @@ const couponCount = airportsData.filter((b) => b.coupon).length;
     margin: 0;
   }
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1140px) {
+    .brands-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
     .brands-grid {
       grid-template-columns: repeat(2, 1fr);
     }

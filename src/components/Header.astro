@@ -1,8 +1,9 @@
 ---
+// src/components/Header.astro
+// Global Top Navigation Header with responsive NOC styling
 import { siteConfig } from '../config/site';
 import ThemeSelector from './ThemeSelector.astro';
 import SocialDropdown from './SocialDropdown.astro';
-import LanguageSelector from './LanguageSelector.astro';
 
 interface Props {
   currentPath?: string;
@@ -16,13 +17,13 @@ const showThemeSwitcher = features.themeSwitcher !== false;
 
 <header class="site-header">
   <div class="container-wide header-inner">
-    <!-- Brand -->
+    <!-- Brand Title -->
     <a href="/" class="brand" aria-label="Flybit Home">
       <span class="brand-rock">⚡</span>
       <span class="brand-title">{siteConfig.title}</span>
     </a>
 
-    <!-- Main Nav -->
+    <!-- Main Navigation Bar -->
     <nav class="nav" aria-label="Main Navigation">
       {siteConfig.navLinks.map((link) => {
         const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
@@ -38,13 +39,13 @@ const showThemeSwitcher = features.themeSwitcher !== false;
     <div class="header-actions">
       <!-- Search Trigger (Desktop) -->
       {showSearch && (
-        <button id="header-search-btn" class="search-trigger desktop-only" type="button" aria-label="Search (Ctrl + K)" title="Search (Ctrl + K)">
+        <button id="header-search-btn" class="search-trigger desktop-only" type="button" aria-label="搜索 (Ctrl + K)" title="搜索 (Ctrl + K)">
           <div class="search-trigger-inner">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <circle cx="11" cy="11" r="8"></circle>
               <path d="m21 21-4.3-4.3"></path>
             </svg>
-            <span class="search-trigger-text">Search...</span>
+            <span class="search-trigger-text">搜索...</span>
           </div>
           <kbd class="search-trigger-kbd">Ctrl K</kbd>
         </button>
@@ -60,11 +61,10 @@ const showThemeSwitcher = features.themeSwitcher !== false;
         </button>
       )}
 
-      <!-- Clustered Controls: Social + Theme + Language Dropdowns -->
+      <!-- Clustered Controls: Social + Theme Dropdowns -->
       <div class="header-controls">
         <SocialDropdown />
         {showThemeSwitcher && <ThemeSelector />}
-        <LanguageSelector />
       </div>
     </div>
   </div>
@@ -76,7 +76,7 @@ const showThemeSwitcher = features.themeSwitcher !== false;
     top: 0;
     z-index: 50;
     border-bottom: 1px solid var(--border);
-    padding: 0.85rem 0;
+    padding: 0.75rem 0;
     margin-bottom: 2rem;
     background: var(--bg);
     backdrop-filter: blur(12px);
@@ -88,59 +88,68 @@ const showThemeSwitcher = features.themeSwitcher !== false;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1.5rem;
+    gap: 1.25rem;
   }
 
   .brand {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.45rem;
     font-weight: 700;
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     letter-spacing: -0.02em;
     text-decoration: none;
     color: var(--text);
+    flex-shrink: 0;
+    white-space: nowrap;
   }
 
   .brand-rock {
     font-size: 1.35rem;
+    line-height: 1;
+  }
+
+  .brand-title {
+    white-space: nowrap;
   }
 
   .nav {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
+    flex-shrink: 0;
   }
 
   .nav-link {
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     font-weight: 500;
     color: var(--text-muted);
     text-decoration: none;
-    padding: 0.2rem 0.35rem;
+    padding: 0.25rem 0.5rem;
     border-radius: 4px;
+    white-space: nowrap;
     transition: color 0.15s ease, background-color 0.15s ease;
   }
 
   .nav-link:hover {
     color: var(--text);
+    background: var(--bg-subtle);
   }
 
   .nav-link.active {
-    color: var(--text);
+    color: var(--accent);
+    background: rgba(56, 189, 248, 0.1);
     font-weight: 600;
   }
 
   .header-actions {
     display: flex;
     align-items: center;
-    gap: 0.85rem;
+    gap: 0.65rem;
+    flex-shrink: 0;
   }
 
   .header-controls {
-    /* Shared control button width and padding for uniform header toolbar symmetry */
-    --header-control-button-width: 44px;
-    --header-control-button-padding: 0 6px;
     display: flex;
     align-items: center;
     gap: 0.4rem;
@@ -151,9 +160,9 @@ const showThemeSwitcher = features.themeSwitcher !== false;
     display: inline-flex;
     align-items: center;
     justify-content: space-between;
-    gap: 0.75rem;
+    gap: 0.65rem;
     padding: 0.35rem 0.65rem;
-    min-width: 145px;
+    min-width: 130px;
     border: 1px solid var(--border);
     border-radius: 6px;
     background-color: var(--bg-surface);
@@ -212,25 +221,41 @@ const showThemeSwitcher = features.themeSwitcher !== false;
     display: none;
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 980px) {
     .desktop-only {
       display: none;
     }
     .mobile-only {
       display: inline-flex;
     }
+    .nav {
+      gap: 0.6rem;
+    }
+    .nav-link {
+      font-size: 0.88rem;
+      padding: 0.2rem 0.35rem;
+    }
   }
 
   @media (max-width: 768px) {
     .header-inner {
       flex-wrap: wrap;
-      row-gap: 0.85rem;
+      row-gap: 0.75rem;
+    }
+
+    .nav {
+      order: 3;
+      width: 100%;
+      overflow-x: auto;
+      padding-bottom: 0.25rem;
+      scrollbar-width: none;
+    }
+    .nav::-webkit-scrollbar {
+      display: none;
     }
 
     .header-actions {
-      width: 100%;
-      justify-content: center;
-      margin-top: 0.2rem;
+      margin-left: auto;
     }
   }
 </style>
