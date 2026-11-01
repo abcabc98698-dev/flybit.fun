@@ -1,0 +1,268 @@
+---
+// src/pages/clash/index.astro
+// Clash 与 Mihomo 核心栏目聚合支柱页 (Category Pillar: Clash & Mihomo)
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '首页', item: 'https://flybit.fun/' },
+    { '@type': 'ListItem', position: 2, name: 'Clash专题', item: 'https://flybit.fun/clash/' }
+  ]
+};
+
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Clash 与 Mihomo 内核全平台配置专题 — TUN 模式、分流规则与疑难解决',
+  description: '系统整理基于 Mihomo 内核的新一代 Clash 客户端教程（Clash Verge Rev、Clash Nyanpasu、Mihomo Party）。',
+  url: 'https://flybit.fun/clash/'
+};
+---
+
+<BaseLayout
+  title="Clash 与 Mihomo 内核全平台配置专题 — TUN 模式、分流规则与疑难解决 | Flybit 实验室"
+  description="系统整理基于 Mihomo 内核的新一代 Clash 客户端教程（Clash Verge Rev、Clash Nyanpasu、Mihomo Party）。涵盖订阅导入、TUN 虚拟网卡接管、DNS 泄漏排查与开机自启配置。"
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
+
+  <div class="category-page">
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+      <a href="/">首页</a>
+      <span class="bc-sep">/</span>
+      <span class="bc-current">Clash专题</span>
+    </nav>
+
+    <header class="category-header">
+      <div class="header-pill">
+        <span class="live-pulse"></span>
+        <span>CLIENT CORE // Clash 与 Mihomo 生态专题</span>
+      </div>
+      <h1 class="page-title">Clash 与 Mihomo 专题：新一代客户端选型、TUN 模式与分流实战</h1>
+      <p class="page-lead">
+        自原版 Clash 核心停止维护以来，社区已全面转向性能更强、协议支持更全的 <strong>Mihomo（Clash.Meta）内核</strong>。本专栏深入整理当前活跃、经过开源安全审计的主流 Clash 桌面端与移动端工具，提供从零基础导入到 TUN 虚拟网卡高级分流的一站式解决方案。
+      </p>
+
+      <div class="sub-nav-pills">
+        <a href="#ecosystem" class="snp-item active">🌐 Mihomo 生态全景</a>
+        <a href="#clients" class="snp-item">💻 主流客户端横向评测</a>
+        <a href="#tun" class="snp-item">⚡ TUN 虚拟网卡实战</a>
+        <a href="#troubleshooting" class="snp-item">🔧 常见连接报错速查</a>
+        <a href="/blog/clash-verge-rev-tutorial" class="snp-item highlight">📖 阅读全文版 Verge 教程 →</a>
+      </div>
+    </header>
+
+    <!-- Section 1: Mihomo Ecosystem -->
+    <section class="cat-section" id="ecosystem">
+      <div class="section-head">
+        <h2 class="section-title">🌐 为什么升级 Mihomo (Clash.Meta) 内核？</h2>
+        <span class="section-tag">ECOSYSTEM</span>
+      </div>
+      <p class="section-desc">
+        传统 Clash Premium 闭源核心已停更多年，无法支持新兴的抗审查协议。Mihomo 作为社区主导的开源重构版本，具备以下硬核技术优势：
+      </p>
+
+      <div class="feature-cards-grid">
+        <div class="feat-card">
+          <div class="feat-icon">🚀</div>
+          <h3>全协议原生支持</h3>
+          <p>原生支持 VLESS、Reality、Hysteria2、TUIC v5、Shadowsocks-2022 与 WireGuard，无缝适配最新机场节点。</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon">🛡️</div>
+          <h3>高性能 TUN 虚拟网卡</h3>
+          <p>基于 gVisor / System 协议栈，全面接管系统所有进程流量，无需软件自身支持系统代理即可无感走代理。</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon">🔍</div>
+          <h3>防 DNS 泄漏与 SmartDNS 级路由</h3>
+          <p>支持 Fake-IP 模式快速响应，配合内置 GeoIP / GeoSite 规则集，实现国内域名直连与海外精准分流。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Clients Comparison -->
+    <section class="cat-section" id="clients">
+      <div class="section-head">
+        <h2 class="section-title">💻 2026 主流新一代 Clash 客户端深度横评</h2>
+        <span class="section-tag">BENCHMARK</span>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>客户端名称</th>
+              <th>适配系统</th>
+              <th>界面框架</th>
+              <th>内核版本</th>
+              <th>特色功能</th>
+              <th>推荐指数</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Clash Verge Rev</strong></td>
+              <td>Windows / macOS / Linux</td>
+              <td>Tauri (Rust) + React</td>
+              <td>Mihomo 内核</td>
+              <td>内存占用极低（约 30MB）、内置中文、一键安装 TUN 服务模式</td>
+              <td>★★★★★ (全平台主力推荐)</td>
+            </tr>
+            <tr>
+              <td><strong>Clash Nyanpasu</strong></td>
+              <td>Windows / macOS / Linux</td>
+              <td>Tauri + Vue 3</td>
+              <td>Mihomo 内核</td>
+              <td>猫娘拟物化主题、支持规则脚本扩展与多语言自定义</td>
+              <td>★★★★☆ (偏好现代化 UI)</td>
+            </tr>
+            <tr>
+              <td><strong>Mihomo Party</strong></td>
+              <td>Windows / macOS / Linux</td>
+              <td>Electron + Vue</td>
+              <td>Mihomo 内核</td>
+              <td>开箱即用规则集管理、路由重写、节点批量测速图表直观</td>
+              <td>★★★★☆ (新手操作友好)</td>
+            </tr>
+            <tr>
+              <td><strong>Flclash</strong></td>
+              <td>Android / Windows / macOS</td>
+              <td>Flutter 跨平台</td>
+              <td>Mihomo 内核</td>
+              <td>手机电脑一套代码、UI 动效流畅，支持触控手势优化</td>
+              <td>★★★★☆ (多端统一首选)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 3: TUN Mode Guide -->
+    <section class="cat-section" id="tun">
+      <div class="section-head">
+        <h2 class="section-title">⚡ TUN 虚拟网卡模式实战指南</h2>
+        <span class="section-tag">TUN MODE</span>
+      </div>
+      <div class="steps-container">
+        <div class="step-row">
+          <div class="step-badge">步骤 1</div>
+          <div class="step-content">
+            <h3>安装服务模式（Service Mode）</h3>
+            <p>在 Clash Verge Rev 的“设置”面板中，找到“服务模式 (Service Mode)”，点击“安装”并授权管理员权限。安装成功后小图标变为绿色。</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-badge">步骤 2</div>
+          <div class="step-content">
+            <h3>开启 TUN 模式开关</h3>
+            <p>开启主界面的“TUN 模式”开关。此时系统网络适配器中将出现名为 <code>Mihomo</code> 或 <code>Meta-TUN</code> 的虚拟网络接口，全面接管网络层 UDP/TCP 数据包。</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-badge">步骤 3</div>
+          <div class="step-content">
+            <h3>验证接管状态与 DNS 泄漏测试</h3>
+            <p>打开终端运行 <code>ping -n 3 google.com</code>，若显示能够正常解析并返回数据，且访问海外网站时无需浏览器配置代理扩展，即代表 TUN 模式配置成功。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Troubleshooting -->
+    <section class="cat-section" id="troubleshooting">
+      <div class="section-head">
+        <h2 class="section-title">🔧 常见连接报错速查与排障手册</h2>
+        <span class="section-tag">TROUBLESHOOTING</span>
+      </div>
+      <div class="faq-cards">
+        <div class="faq-card">
+          <h3>Q1: 连接成功但所有网页都打不开（显示 ERR_PROXY_CONNECTION_FAILED）？</h3>
+          <p><strong>排查：</strong>检查系统设置中的“系统代理”端口是否与客户端一致（默认 7890 或 7897）。若开启了 TUN 模式，建议关闭“系统代理”开关以避免端口冲突。</p>
+        </div>
+        <div class="faq-card">
+          <h3>Q2: 订阅一键更新失败，提示 Handshake Timeout 或 Empty Content？</h3>
+          <p><strong>排查：</strong>订阅链接可能受到本地网络 DNS 污染。可在客户端设置中开启“更新订阅走代理”，或使用机场后台提供的备用免翻订阅分流转换域名。</p>
+        </div>
+        <div class="faq-card">
+          <h3>Q3: 微信或国内网银 App 频繁断线或提示异地登录？</h3>
+          <p><strong>排查：</strong>在代理规则分组中，确保 <code>Direct / 国内直连</code> 规则正常生效。若使用的是全局代理（Global），请务必切换回 <code>Rule / 规则分流</code> 模式。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Nav -->
+    <section class="cat-bottom-nav">
+      <h3>探索更多专业专题与工具指南：</h3>
+      <div class="cbn-links">
+        <a href="/tutorial">全平台客户端教程总览 →</a>
+        <a href="/jichang">2026 机场推荐大盘 →</a>
+        <a href="/nodes">节点类型与落地 IP 深度解析 →</a>
+        <a href="/tizi">梯子防坑与稳定性实测 →</a>
+        <a href="/free">免费试用与安全沙盒 →</a>
+        <a href="/faq">常见疑难解答 50 问 →</a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .category-page { max-width: 1100px; margin: 0 auto; padding: 1.5rem 0 3.5rem; }
+  .breadcrumb-nav { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+  .breadcrumb-nav a { color: var(--text-muted); text-decoration: none; }
+  .breadcrumb-nav a:hover { color: var(--accent); }
+  .bc-sep { color: var(--border); }
+  .bc-current { color: var(--text); font-weight: 500; }
+  .category-header { margin-bottom: 3rem; }
+  .header-pill {
+    display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 700;
+    color: #a855f7; background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.25);
+    padding: 0.25rem 0.75rem; border-radius: 999px; margin-bottom: 1rem; letter-spacing: 0.05em;
+  }
+  .live-pulse { width: 6px; height: 6px; border-radius: 50%; background: #a855f7; box-shadow: 0 0 6px #a855f7; }
+  .page-title { font-size: 2.25rem; font-weight: 800; line-height: 1.3; letter-spacing: -0.02em; color: var(--text); margin: 0 0 1rem; }
+  .page-lead { font-size: 1.1rem; line-height: 1.7; color: var(--text-muted); max-width: 860px; margin: 0 0 1.75rem; }
+  .sub-nav-pills { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .snp-item {
+    font-size: 0.85rem; padding: 0.4rem 0.85rem; border-radius: 6px; background: var(--bg-surface);
+    border: 1px solid var(--border); color: var(--text); text-decoration: none; transition: all 0.2s ease;
+  }
+  .snp-item:hover, .snp-item.active { border-color: #a855f7; color: #a855f7; }
+  .snp-item.highlight { background: rgba(168, 85, 247, 0.15); border-color: rgba(168, 85, 247, 0.4); color: #a855f7; font-weight: 600; }
+  .cat-section { margin-bottom: 3.5rem; }
+  .section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; }
+  .section-title { font-size: 1.5rem; font-weight: 700; color: var(--text); margin: 0; }
+  .section-tag { font-size: 0.75rem; font-family: var(--font-mono); color: var(--text-muted); background: rgba(255, 255, 255, 0.05); padding: 0.2rem 0.5rem; border-radius: 4px; }
+  .section-desc { color: var(--text-muted); line-height: 1.6; margin-bottom: 1.5rem; }
+  .feature-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1.5rem; }
+  .feat-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
+  .feat-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+  .feat-card h3 { font-size: 1.15rem; color: var(--text); margin: 0 0 0.5rem; }
+  .feat-card p { font-size: 0.9rem; line-height: 1.6; color: var(--text-muted); margin: 0; }
+  .table-wrap { overflow-x: auto; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left; }
+  .data-table th, .data-table td { padding: 0.85rem 1rem; border: 1px solid var(--border); }
+  .data-table th { background: rgba(255, 255, 255, 0.03); color: var(--text); font-weight: 600; }
+  .data-table td { color: var(--text-muted); }
+  .data-table tr:hover td { background: rgba(255, 255, 255, 0.02); }
+  .steps-container { display: flex; flex-direction: column; gap: 1rem; }
+  .step-row { display: flex; gap: 1.25rem; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; }
+  .step-badge {
+    background: rgba(168, 85, 247, 0.1); color: #a855f7; border: 1px solid rgba(168, 85, 247, 0.3);
+    font-size: 0.85rem; font-weight: 700; padding: 0.4rem 0.75rem; border-radius: 6px; height: fit-content; white-space: nowrap;
+  }
+  .step-content h3 { font-size: 1.1rem; color: var(--text); margin: 0 0 0.4rem; }
+  .step-content p { font-size: 0.9rem; line-height: 1.6; color: var(--text-muted); margin: 0; }
+  .faq-cards { display: flex; flex-direction: column; gap: 1rem; }
+  .faq-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; }
+  .faq-card h3 { font-size: 1.05rem; color: var(--text); margin: 0 0 0.5rem; }
+  .faq-card p { font-size: 0.9rem; line-height: 1.6; color: var(--text-muted); margin: 0; }
+  .cat-bottom-nav { border-top: 1px solid var(--border); padding-top: 2rem; }
+  .cat-bottom-nav h3 { font-size: 1.1rem; color: var(--text); margin: 0 0 1rem; }
+  .cbn-links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .cbn-links a {
+    font-size: 0.9rem; color: #a855f7; text-decoration: none; background: rgba(168, 85, 247, 0.08); padding: 0.4rem 0.8rem; border-radius: 6px;
+  }
+  .cbn-links a:hover { background: rgba(168, 85, 247, 0.16); }
+</style>

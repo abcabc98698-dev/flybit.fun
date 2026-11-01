@@ -2,16 +2,23 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="404 — Page Not Found" description="The page you are looking for does not exist.">
+<BaseLayout
+  title="404 — 页面未找到 | Flybit 测评实验室"
+  description="抱歉，您访问的节点或评测页面不存在或已被迁移。"
+  noindex={true}
+>
   <div class="not-found-container">
     <div class="not-found-badge">404</div>
-    <h1 class="not-found-title">Page Not Found</h1>
+    <h1 class="not-found-title">页面未找到 (Page Not Found)</h1>
     <p class="not-found-text">
-      The note or article you are trying to access has been moved, renamed, or no longer exists in this vault.
+      抱歉，您尝试访问的节点评测、客户端教程或技术指南已被移除、重命名，或输入的 URL 地址有误。您可以尝试通过下方快捷通道返回核心栏目。
     </p>
     <div class="not-found-actions">
-      <a href="/" class="btn-primary">Return to Home</a>
-      <a href="/blog" class="btn-secondary">Browse All Articles</a>
+      <a href="/" class="btn-primary">返回首页</a>
+      <a href="/jichang" class="btn-secondary">机场推荐</a>
+      <a href="/brands" class="btn-secondary">42家品牌库</a>
+      <a href="/faq" class="btn-secondary">疑难解答 FAQ</a>
+      <a href="/tutorial" class="btn-secondary">客户端教程</a>
     </div>
   </div>
 </BaseLayout>
@@ -40,29 +47,28 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     margin: 0 0 1rem 0;
     font-size: 2rem;
     letter-spacing: -0.02em;
+    color: var(--text);
   }
 
   .not-found-text {
-    max-width: 480px;
+    max-width: 520px;
     color: var(--text-muted);
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     line-height: 1.6;
     margin: 0 0 2.5rem 0;
   }
 
   .not-found-actions {
     display: flex;
-    gap: 1rem;
+    gap: 0.85rem;
     flex-wrap: wrap;
     justify-content: center;
   }
 
   .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.65rem 1.25rem;
-    background-color: var(--accent);
-    color: #ffffff;
+    background: var(--accent);
+    color: #fff;
+    padding: 0.65rem 1.4rem;
     border-radius: 6px;
     font-weight: 600;
     font-size: 0.95rem;
@@ -72,25 +78,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   .btn-primary:hover {
     opacity: 0.9;
-    color: #ffffff;
   }
 
   .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.65rem 1.25rem;
-    background-color: var(--bg-surface);
-    color: var(--text);
+    background: var(--bg-surface);
     border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.65rem 1.2rem;
     border-radius: 6px;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 0.95rem;
     text-decoration: none;
-    transition: background-color 0.2s ease, border-color 0.2s ease;
+    transition: all 0.2s ease;
   }
 
   .btn-secondary:hover {
-    background-color: var(--bg-subtle);
     border-color: var(--accent);
+    color: var(--accent);
   }
 </style>

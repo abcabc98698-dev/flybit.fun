@@ -1,0 +1,254 @@
+---
+// src/pages/nodes/index.astro
+// 节点线路与落地拓扑核心栏目聚合支柱页 (Category Pillar: Nodes & Topologies)
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { airportsData } from '../../data/airports';
+
+const highNodeBrands = airportsData.slice(0, 4);
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '首页', item: 'https://flybit.fun/' },
+    { '@type': 'ListItem', position: 2, name: '节点线路', item: 'https://flybit.fun/nodes/' }
+  ]
+};
+
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: '节点类型与跨境线路科普 — 原生住宅 IP、落地机房与流媒体解锁',
+  description: '深入剖析机场节点的底层线路与落地类型：香港、日本、新加坡、美国常用节点特性与流媒体解锁匹配策略。',
+  url: 'https://flybit.fun/nodes/'
+};
+---
+
+<BaseLayout
+  title="节点类型与跨境线路科普 — 原生住宅 IP、落地机房与流媒体解锁 | Flybit 实验室"
+  description="深入剖析机场节点的底层线路与落地类型：香港、日本、新加坡、美国节点特性，原生住宅 IP 与机房广播 IP 区别，以及 Netflix 4K、Disney+ 与 ChatGPT 5 解锁节点匹配策略。"
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
+
+  <div class="category-page">
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+      <a href="/">首页</a>
+      <span class="bc-sep">/</span>
+      <span class="bc-current">节点线路</span>
+    </nav>
+
+    <header class="category-header">
+      <div class="header-pill">
+        <span class="live-pulse"></span>
+        <span>TOPOLOGY & GEO-IP // 节点与网络线路专栏</span>
+      </div>
+      <h1 class="page-title">节点类型与跨境网络线路科普：机房拓扑、原生 IP 与流媒体解锁</h1>
+      <p class="page-lead">
+        节点是决定代理体验的终极落脚点。许多用户以为“节点延迟低就一定快”，却忽略了入口中转、跨境专线、出口落地 ASN 以及 IP 洁净度对实际网页加载与风控审查的决定性影响。本专栏系统解构节点底层网络指标。
+      </p>
+
+      <div class="sub-nav-pills">
+        <a href="#regions" class="snp-item active">🌍 主流地区节点特性</a>
+        <a href="#residential" class="snp-item">🏠 原生住宅 IP vs 机房 IP</a>
+        <a href="#streaming" class="snp-item">🎬 流媒体与 AI 解锁策略</a>
+        <a href="#latency" class="snp-item">📉 延迟与吞吐真实关系</a>
+        <a href="/speedtest" class="snp-item highlight">⚡ 查看晚高峰测速大盘 →</a>
+      </div>
+    </header>
+
+    <!-- Section 1: Regional Nodes -->
+    <section class="cat-section" id="regions">
+      <div class="section-head">
+        <h2 class="section-title">🌍 主流国家与地区节点网络特征解析</h2>
+        <span class="section-tag">REGIONS</span>
+      </div>
+      <div class="regions-grid">
+        <div class="region-card">
+          <div class="rc-flag">🇭🇰 香港 (Hong Kong)</div>
+          <h3>物理延迟最低，网页交互首选</h3>
+          <p>
+            距离中国大陆最近，IEPL 专线延迟普遍在 <strong>25ms ~ 45ms</strong>。适合高频网页浏览、日常办公与 Google 搜索。但注意：OpenAI ChatGPT 与 TikTok 对香港 IP 默认实施区域封锁。
+          </p>
+          <div class="rc-tags">
+            <span>✅ 极低延迟</span>
+            <span>✅ 繁体中文</span>
+            <span>❌ 无法直连 ChatGPT</span>
+          </div>
+        </div>
+
+        <div class="region-card">
+          <div class="rc-flag">🇯🇵 日本 (Japan)</div>
+          <h3>流媒体兼顾，抗审查环境友好</h3>
+          <p>
+            华东（上海/青岛）出口直达日本东京/大阪机房，专线延迟在 <strong>35ms ~ 55ms</strong>。对 Netflix 日区版权、AbemaTV、DMM 支持极佳，且对 ChatGPT 与 Claude 风控判定极为温和。
+          </p>
+          <div class="rc-tags">
+            <span>✅ 奈飞独播库</span>
+            <span>✅ ChatGPT 友好</span>
+            <span>✅ 综合性能优异</span>
+          </div>
+        </div>
+
+        <div class="region-card">
+          <div class="rc-flag">🇸🇬 新加坡 (Singapore)</div>
+          <h3>东南亚枢纽，网络冗余度高</h3>
+          <p>
+            华南（深圳/广州）出口专线延迟约 <strong>45ms ~ 65ms</strong>。兼具极佳的英文/中文双语网络路由，TikTok 东南亚直播推流、Shopee 跨境电商与 Steam 东南亚服标配节点。
+          </p>
+          <div class="rc-tags">
+            <span>✅ TikTok 直播</span>
+            <span>✅ 跨境电商</span>
+            <span>✅ Google 服务顺畅</span>
+          </div>
+        </div>
+
+        <div class="region-card">
+          <div class="rc-flag">🇺🇸 美国 (United States)</div>
+          <h3>AI 工具大本营，全功能原生解锁</h3>
+          <p>
+            物理跨越太平洋，专线延迟在 <strong>130ms ~ 170ms</strong>。虽然延迟较高，但带宽管道充沛、独享原生住宅 IP 多，是 OpenAI ChatGPT 5、Claude 3.5 Sonnet 与金融外贸的核心首选。
+          </p>
+          <div class="rc-tags">
+            <span>✅ AI 权限完整</span>
+            <span>✅ 4K 缓冲充沛</span>
+            <span>⚠️ 物理延迟较高</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Residential IP vs Datacenter IP -->
+    <section class="cat-section" id="residential">
+      <div class="section-head">
+        <h2 class="section-title">🏠 原生住宅 IP vs 机房广播 IP 区别</h2>
+        <span class="section-tag">IP PURITY</span>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>对比维度</th>
+              <th>原生住宅 ISP 落地 (Residential IP)</th>
+              <th>普通机房广播 IP (Datacenter IP)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>ASN 所属机构</strong></td>
+              <td>当地家庭宽带运营商（如 AT&T, Comcast, NTT, HKT）</td>
+              <td>大型云服务商（如 AWS, DigitalOcean, Cloudflare, OVH）</td>
+            </tr>
+            <tr>
+              <td><strong>风控信任分数 (Fraud Score)</strong></td>
+              <td>极低（系统识别为正常自然人家庭网络）</td>
+              <td>较高（容易被判定为爬虫服务器或批量代理）</td>
+            </tr>
+            <tr>
+              <td><strong>流媒体解锁</strong></td>
+              <td>100% 解锁 Netflix 非自制剧集、Disney+、Hulu 4K</td>
+              <td>常出现“您似乎在使用代理”或仅能观看自制剧</td>
+            </tr>
+            <tr>
+              <td><strong>Cloudflare 验证码</strong></td>
+              <td>极少弹出，丝滑无感通行</td>
+              <td>高频触发 Turnstile 勾选框或死循环验证</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 3: Streaming Unlock -->
+    <section class="cat-section" id="streaming">
+      <div class="section-head">
+        <h2 class="section-title">🎬 流媒体与主流 AI 节点选择策略</h2>
+        <span class="section-tag">STREAMING & AI</span>
+      </div>
+      <div class="strategy-boxes">
+        <div class="strat-box">
+          <h3>OpenAI ChatGPT 5 / Claude 3.5 选节点原则</h3>
+          <ul>
+            <li>首选<strong>美国西海岸（洛杉矶/圣何塞）</strong>或<strong>日本东京</strong>住宅优化节点；</li>
+            <li>绝对避开<strong>香港、俄罗斯、中东</strong>节点，避免触发账号风控或拒绝注册；</li>
+            <li>客户端启用分流规则，锁定 AI 域名走固定低风控节点，防止会话中途 IP 跳变。</li>
+          </ul>
+        </div>
+        <div class="strat-box">
+          <h3>Netflix 4K 与 Disney+ 选节点原则</h3>
+          <ul>
+            <li>首选标有“解锁”或“住宅”字样的专线节点；</li>
+            <li>如果打开 Netflix 只能看到原创剧（如《怪奇物语》），说明落地端不是原生 IP，需切换节点；</li>
+            <li>电视盒子（Apple TV / 软路由）建议开启 Fake-IP 模式并配置专用 DNS 保证缓冲。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Nav -->
+    <section class="cat-bottom-nav">
+      <h3>探索更多专业专题与工具指南：</h3>
+      <div class="cbn-links">
+        <a href="/jichang">2026 机场推荐大盘 →</a>
+        <a href="/vpn">VPN 与网络加速指南 →</a>
+        <a href="/clash">Clash Verge 全平台上手 →</a>
+        <a href="/tizi">梯子防坑与稳定性实测 →</a>
+        <a href="/speedtest">晚高峰测速实验室 →</a>
+        <a href="/blog/streaming-ai-unlock-guide">4K 奈飞与 AI 解锁技术深度长文 →</a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .category-page { max-width: 1100px; margin: 0 auto; padding: 1.5rem 0 3.5rem; }
+  .breadcrumb-nav { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+  .breadcrumb-nav a { color: var(--text-muted); text-decoration: none; }
+  .breadcrumb-nav a:hover { color: var(--accent); }
+  .bc-sep { color: var(--border); }
+  .bc-current { color: var(--text); font-weight: 500; }
+  .category-header { margin-bottom: 3rem; }
+  .header-pill {
+    display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 700;
+    color: #f59e0b; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.25);
+    padding: 0.25rem 0.75rem; border-radius: 999px; margin-bottom: 1rem; letter-spacing: 0.05em;
+  }
+  .live-pulse { width: 6px; height: 6px; border-radius: 50%; background: #f59e0b; box-shadow: 0 0 6px #f59e0b; }
+  .page-title { font-size: 2.25rem; font-weight: 800; line-height: 1.3; letter-spacing: -0.02em; color: var(--text); margin: 0 0 1rem; }
+  .page-lead { font-size: 1.1rem; line-height: 1.7; color: var(--text-muted); max-width: 860px; margin: 0 0 1.75rem; }
+  .sub-nav-pills { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .snp-item {
+    font-size: 0.85rem; padding: 0.4rem 0.85rem; border-radius: 6px; background: var(--bg-surface);
+    border: 1px solid var(--border); color: var(--text); text-decoration: none; transition: all 0.2s ease;
+  }
+  .snp-item:hover, .snp-item.active { border-color: #f59e0b; color: #f59e0b; }
+  .snp-item.highlight { background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.4); color: #f59e0b; font-weight: 600; }
+  .cat-section { margin-bottom: 3.5rem; }
+  .section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; }
+  .section-title { font-size: 1.5rem; font-weight: 700; color: var(--text); margin: 0; }
+  .section-tag { font-size: 0.75rem; font-family: var(--font-mono); color: var(--text-muted); background: rgba(255, 255, 255, 0.05); padding: 0.2rem 0.5rem; border-radius: 4px; }
+  .regions-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.25rem; }
+  .region-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; }
+  .rc-flag { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+  .region-card h3 { font-size: 0.95rem; color: #f59e0b; margin: 0 0 0.5rem; }
+  .region-card p { font-size: 0.85rem; line-height: 1.6; color: var(--text-muted); margin: 0 0 1rem; flex: 1; }
+  .rc-tags { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.75rem; color: var(--text-muted); }
+  .table-wrap { overflow-x: auto; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left; }
+  .data-table th, .data-table td { padding: 0.85rem 1rem; border: 1px solid var(--border); }
+  .data-table th { background: rgba(255, 255, 255, 0.03); color: var(--text); font-weight: 600; }
+  .data-table td { color: var(--text-muted); }
+  .data-table tr:hover td { background: rgba(255, 255, 255, 0.02); }
+  .strategy-boxes { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+  .strat-box { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
+  .strat-box h3 { font-size: 1.15rem; color: var(--text); margin: 0 0 0.85rem; }
+  .strat-box ul { margin: 0; padding-left: 1.2rem; color: var(--text-muted); line-height: 1.65; font-size: 0.9rem; }
+  .strat-box li { margin-bottom: 0.5rem; }
+  .cat-bottom-nav { border-top: 1px solid var(--border); padding-top: 2rem; }
+  .cat-bottom-nav h3 { font-size: 1.1rem; color: var(--text); margin: 0 0 1rem; }
+  .cbn-links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .cbn-links a {
+    font-size: 0.9rem; color: #f59e0b; text-decoration: none; background: rgba(245, 158, 11, 0.08); padding: 0.4rem 0.8rem; border-radius: 6px;
+  }
+  .cbn-links a:hover { background: rgba(245, 158, 11, 0.16); }
+</style>

@@ -81,18 +81,22 @@ blogPosts.slice(0, 5).forEach((file, idx) => {
 
   let hasArticleSchema = false;
   let schemaType = 'None';
-  if (jsonLdMatch) {
+  const allJsonLd = [...html.matchAll(/<script\s+type=["']application\/ld\+json["']>([\s\S]*?)<\/script>/gi)];
+  for (const m of allJsonLd) {
     try {
-      const data = JSON.parse(jsonLdMatch[1]);
-      schemaType = data['@type'] || 'Custom';
-      if (schemaType === 'BlogPosting' || schemaType === 'Article') {
+      const data = JSON.parse(m[1]);
+      const type = data['@type'];
+      if (type === 'BlogPosting' || type === 'Article') {
         hasArticleSchema = true;
-        schemaPasses++;
+        schemaType = type;
+      } else if (!hasArticleSchema && type) {
+        schemaType = type;
       }
     } catch {
       schemaType = 'Invalid JSON';
     }
   }
+  if (hasArticleSchema) schemaPasses++;
 
   if (titleOk && descOk && canonical !== 'N/A') serpPasses++;
 

@@ -1,0 +1,223 @@
+---
+// src/pages/tutorial/index.astro
+// 使用教程与全平台上手核心栏目聚合支柱页 (Category Pillar: Tutorials & Guides)
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { platformGuides } from '../../data/clients';
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '首页', item: 'https://flybit.fun/' },
+    { '@type': 'ListItem', position: 2, name: '使用教程', item: 'https://flybit.fun/tutorial/' }
+  ]
+};
+
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: '全平台科学上网客户端使用教程大全 — Windows、Mac、iOS、Android 与软路由',
+  description: '专为新手整理的全平台客户端上手与排障教程：iOS 小火箭（Shadowrocket）、Windows/macOS（Clash Verge Rev）、软路由（OpenClash / PassWall）。',
+  url: 'https://flybit.fun/tutorial/'
+};
+---
+
+<BaseLayout
+  title="全平台科学上网客户端使用教程大全 — Windows、Mac、iOS、Android 与软路由 | Flybit 实验室"
+  description="专为新手整理的全平台客户端上手与排障教程：iOS 小火箭（Shadowrocket）、Windows/macOS（Clash Verge Rev）、软路由（OpenClash / PassWall）配置教程与订阅更新答疑。"
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
+
+  <div class="category-page">
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+      <a href="/">首页</a>
+      <span class="bc-sep">/</span>
+      <span class="bc-current">使用教程</span>
+    </nav>
+
+    <header class="category-header">
+      <div class="header-pill">
+        <span class="live-pulse"></span>
+        <span>STEP-BY-STEP GUIDES // 全平台使用教程专栏</span>
+      </div>
+      <h1 class="page-title">全平台客户端使用教程大全：新手上手、订阅导入与疑难排障</h1>
+      <p class="page-lead">
+        买了好机场，却卡在客户端配置和订阅导入？本教程专栏为您系统拆解主流操作系统（Windows、macOS、iOS、Android、Linux 与家庭软路由）的代理客户端安装、节点测速、分流规则定制与常见连接故障排查。
+      </p>
+
+      <div class="sub-nav-pills">
+        <a href="#matrix" class="snp-item active">📱 全平台客户端矩阵</a>
+        <a href="#quickstart" class="snp-item">🚀 三步通用配置流程</a>
+        <a href="#deep-articles" class="snp-item">📖 深度图文专栏</a>
+        <a href="#faq" class="snp-item">❓ 常见报错速查</a>
+        <a href="/clients" class="snp-item highlight">💻 进入客户端配置中心 →</a>
+      </div>
+    </header>
+
+    <!-- Section 1: Platform Matrix -->
+    <section class="cat-section" id="matrix">
+      <div class="section-head">
+        <h2 class="section-title">📱 全平台主流客户端推荐矩阵</h2>
+        <span class="section-tag">MATRIX</span>
+      </div>
+      <div class="platform-cards-grid">
+        {platformGuides.map((p) => (
+          <div class="plat-card">
+            <div class="plat-head">
+              <span class="plat-icon">{p.icon}</span>
+              <div>
+                <h3>{p.title}</h3>
+                <span class="plat-recom">{p.recommendedApp}</span>
+              </div>
+            </div>
+            <p>{p.intro}</p>
+            <div class="plat-steps-summary">
+              <span class="step-tag">1. 下载安装</span>
+              <span class="step-tag">2. 粘贴订阅</span>
+              <span class="step-tag">3. 开启规则分流</span>
+            </div>
+            <a href={`/clients#${p.id}`} class="plat-btn">查看该平台配置指南 →</a>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 2: Quickstart Process -->
+    <section class="cat-section" id="quickstart">
+      <div class="section-head">
+        <h2 class="section-title">🚀 科学上网客户端通用三步上手流程</h2>
+        <span class="section-tag">QUICKSTART</span>
+      </div>
+      <div class="steps-flow">
+        <div class="flow-card">
+          <div class="fc-number">01</div>
+          <h3>获取服务商订阅链接</h3>
+          <p>
+            登录机场后台，在仪表盘或“订阅中心”找到对应客户端格式（如“Clash 一键导入”或“复制通用订阅 URL”）。注意：订阅链接包含个人密钥，切勿泄露给第三方。
+          </p>
+        </div>
+        <div class="flow-card">
+          <div class="fc-number">02</div>
+          <h3>导入客户端并解析节点</h3>
+          <p>
+            打开客户端（如 Clash Verge Rev 或 Shadowrocket），粘贴订阅地址并点击“保存/下载”。客户端将自动拉取最新的中转与专线节点列表。
+          </p>
+        </div>
+        <div class="flow-card">
+          <div class="fc-number">03</div>
+          <h3>选择节点并开启规则分流</h3>
+          <p>
+            将代理模式切换为 <code>Rule (规则模式)</code>，在节点分组中选择延迟最低的香港或日本节点，开启系统代理或 TUN 模式即可实现无感跨境浏览。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Deep Technical Articles -->
+    <section class="cat-section" id="deep-articles">
+      <div class="section-head">
+        <h2 class="section-title">📖 深度图文长篇教程精选</h2>
+        <span class="section-tag">ARTICLES</span>
+      </div>
+      <div class="articles-list">
+        <article class="art-item">
+          <span class="art-cat">iOS / 苹果指南</span>
+          <h3><a href="/blog/shadowrocket-ios-guide">iOS 小火箭（Shadowrocket）美区账号注册、节点导入与日常使用答疑</a></h3>
+          <p>专为苹果 iPhone / iPad 用户整理的 Shadowrocket 终极上手指南。涵盖免信用卡美区 Apple ID 注册、礼品卡充值买断、一键唤起订阅与按域名自动分流配置。</p>
+        </article>
+
+        <article class="art-item">
+          <span class="art-cat">桌面端 / 核心教程</span>
+          <h3><a href="/blog/clash-verge-rev-tutorial">Clash Verge Rev 完整上手实操：Mihomo 内核、TUN 虚拟网卡与规则分流</a></h3>
+          <p>新一代基于 Mihomo 内核的跨平台客户端 Clash Verge Rev 详细教程。从订阅一键导入、国内直连/海外代理分流，到 TUN 模式接管终端全流量排障。</p>
+        </article>
+
+        <article class="art-item">
+          <span class="art-cat">软路由 / 全屋透明代理</span>
+          <h3><a href="/blog/openclash-vs-passwall-openwrt-guide">软路由与家庭全屋透明代理搭建：OpenClash vs PassWall 实战对比</a></h3>
+          <p>软路由上如何配置代理让全屋智能电视、游戏主机免客户端无感出海？深入对比 OpenClash 与 PassWall 2 在 CPU 占用、Fake-IP 模式与故障转移上的差异。</p>
+        </article>
+
+        <article class="art-item">
+          <span class="art-cat">流媒体与 AI 解锁</span>
+          <h3><a href="/blog/streaming-ai-unlock-guide">4K 奈飞、Disney+ 与 ChatGPT 5 解锁原理解析与节点选择策略</a></h3>
+          <p>为什么有些机场能看网页版奈飞却看不了非自制剧？深度剖析流媒体原生住宅 IP、DNS 解锁分流以及 ChatGPT、Claude 3.5 抗风控节点匹配原则。</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Bottom Nav -->
+    <section class="cat-bottom-nav">
+      <h3>探索更多专业专题与工具指南：</h3>
+      <div class="cbn-links">
+        <a href="/clash">Clash 专题教程 →</a>
+        <a href="/jichang">2026 机场推荐大盘 →</a>
+        <a href="/vpn">VPN 与网络加速指南 →</a>
+        <a href="/nodes">节点类型与落地 IP 深度解析 →</a>
+        <a href="/tizi">梯子防坑与稳定性实测 →</a>
+        <a href="/faq">常见疑难解答 50 问 →</a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .category-page { max-width: 1100px; margin: 0 auto; padding: 1.5rem 0 3.5rem; }
+  .breadcrumb-nav { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+  .breadcrumb-nav a { color: var(--text-muted); text-decoration: none; }
+  .breadcrumb-nav a:hover { color: var(--accent); }
+  .bc-sep { color: var(--border); }
+  .bc-current { color: var(--text); font-weight: 500; }
+  .category-header { margin-bottom: 3rem; }
+  .header-pill {
+    display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 700;
+    color: #06b6d4; background: rgba(6, 182, 212, 0.1); border: 1px solid rgba(6, 182, 212, 0.25);
+    padding: 0.25rem 0.75rem; border-radius: 999px; margin-bottom: 1rem; letter-spacing: 0.05em;
+  }
+  .live-pulse { width: 6px; height: 6px; border-radius: 50%; background: #06b6d4; box-shadow: 0 0 6px #06b6d4; }
+  .page-title { font-size: 2.25rem; font-weight: 800; line-height: 1.3; letter-spacing: -0.02em; color: var(--text); margin: 0 0 1rem; }
+  .page-lead { font-size: 1.1rem; line-height: 1.7; color: var(--text-muted); max-width: 860px; margin: 0 0 1.75rem; }
+  .sub-nav-pills { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .snp-item {
+    font-size: 0.85rem; padding: 0.4rem 0.85rem; border-radius: 6px; background: var(--bg-surface);
+    border: 1px solid var(--border); color: var(--text); text-decoration: none; transition: all 0.2s ease;
+  }
+  .snp-item:hover, .snp-item.active { border-color: #06b6d4; color: #06b6d4; }
+  .snp-item.highlight { background: rgba(6, 182, 212, 0.15); border-color: rgba(6, 182, 212, 0.4); color: #06b6d4; font-weight: 600; }
+  .cat-section { margin-bottom: 3.5rem; }
+  .section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; }
+  .section-title { font-size: 1.5rem; font-weight: 700; color: var(--text); margin: 0; }
+  .section-tag { font-size: 0.75rem; font-family: var(--font-mono); color: var(--text-muted); background: rgba(255, 255, 255, 0.05); padding: 0.2rem 0.5rem; border-radius: 4px; }
+  .platform-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+  .plat-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; }
+  .plat-head { display: flex; align-items: center; gap: 0.85rem; margin-bottom: 0.85rem; }
+  .plat-icon { font-size: 2rem; }
+  .plat-head h3 { font-size: 1.15rem; color: var(--text); margin: 0; }
+  .plat-recom { font-size: 0.8rem; color: #06b6d4; font-weight: 600; }
+  .plat-card p { font-size: 0.9rem; line-height: 1.6; color: var(--text-muted); margin: 0 0 1rem; flex: 1; }
+  .plat-steps-summary { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem; }
+  .step-tag { font-size: 0.75rem; background: rgba(255, 255, 255, 0.05); color: var(--text-muted); padding: 0.2rem 0.5rem; border-radius: 4px; }
+  .plat-btn {
+    text-align: center; font-size: 0.85rem; font-weight: 600; color: #06b6d4; background: rgba(6, 182, 212, 0.1);
+    padding: 0.55rem; border-radius: 6px; text-decoration: none; transition: background 0.2s;
+  }
+  .plat-btn:hover { background: rgba(6, 182, 212, 0.2); }
+  .steps-flow { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1.5rem; }
+  .flow-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
+  .fc-number { font-family: var(--font-mono); font-size: 1.75rem; font-weight: 800; color: #06b6d4; margin-bottom: 0.5rem; }
+  .flow-card h3 { font-size: 1.15rem; color: var(--text); margin: 0 0 0.5rem; }
+  .flow-card p { font-size: 0.9rem; line-height: 1.6; color: var(--text-muted); margin: 0; }
+  .articles-list { display: flex; flex-direction: column; gap: 1.25rem; }
+  .art-item { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
+  .art-cat { font-size: 0.75rem; font-weight: 600; color: #06b6d4; text-transform: uppercase; margin-bottom: 0.35rem; display: block; }
+  .art-item h3 { font-size: 1.2rem; margin: 0 0 0.6rem; }
+  .art-item h3 a { color: var(--text); text-decoration: none; }
+  .art-item h3 a:hover { color: #06b6d4; }
+  .art-item p { font-size: 0.9rem; line-height: 1.6; color: var(--text-muted); margin: 0; }
+  .cat-bottom-nav { border-top: 1px solid var(--border); padding-top: 2rem; }
+  .cat-bottom-nav h3 { font-size: 1.1rem; color: var(--text); margin: 0 0 1rem; }
+  .cbn-links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .cbn-links a { font-size: 0.9rem; color: #06b6d4; text-decoration: none; background: rgba(6, 182, 212, 0.08); padding: 0.4rem 0.8rem; border-radius: 6px; }
+  .cbn-links a:hover { background: rgba(6, 182, 212, 0.16); }
+</style>

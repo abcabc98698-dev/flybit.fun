@@ -23,8 +23,10 @@ const {
   noindex = false,
 } = Astro.props;
 
-const siteBase = Astro.site?.toString() || siteConfig.siteUrl || 'https://flybit.fun';
-const canonicalURL = new URL(Astro.url.pathname, siteBase);
+const siteBase = 'https://flybit.fun';
+const rawPath = Astro.url.pathname.split('?')[0].split('#')[0];
+const normalizedPath = rawPath === '/' ? '/' : (rawPath.endsWith('/') ? rawPath : `${rawPath}/`);
+const canonicalURL = new URL(normalizedPath, siteBase).href;
 const pageTitle = title === siteConfig.title ? `${siteConfig.title} — ${siteConfig.tagline}` : `${title} | ${siteConfig.title}`;
 const ogImageURL = new URL(image, canonicalURL).href;
 
@@ -66,7 +68,7 @@ const showImageZoom = features.imageZoom !== false;
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImageURL} />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale" content="zh_CN" />
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -74,6 +76,36 @@ const showImageZoom = features.imageZoom !== false;
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
+
+    <!-- Search Engine Verifications (Google, Bing, Baidu, Shenma) -->
+    {siteConfig.verifications?.google && <meta name="google-site-verification" content={siteConfig.verifications.google} />}
+    {siteConfig.verifications?.bing && <meta name="msvalidate.01" content={siteConfig.verifications.bing} />}
+    {siteConfig.verifications?.baidu && <meta name="baidu-site-verification" content={siteConfig.verifications.baidu} />}
+    {siteConfig.verifications?.shenma && <meta name="shenma-site-verification" content={siteConfig.verifications.shenma} />}
+
+    <!-- Organization & WebSite Linked Entity Schema -->
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://flybit.fun/#organization",
+          "name": siteConfig.title,
+          "url": "https://flybit.fun/",
+          "logo": "https://flybit.fun/images/flybit-design-system.svg",
+          "description": siteConfig.description
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://flybit.fun/#website",
+          "url": "https://flybit.fun/",
+          "name": siteConfig.title,
+          "description": siteConfig.description,
+          "publisher": { "@id": "https://flybit.fun/#organization" },
+          "inLanguage": "zh-CN"
+        }
+      ]
+    })} />
 
     <!-- Anti-FOUC script: Executed synchronously before DOM render -->
     <script is:inline>

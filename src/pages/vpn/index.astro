@@ -1,0 +1,330 @@
+---
+// src/pages/vpn/index.astro
+// VPN 与网络加速核心栏目聚合支柱页 (Category Pillar: VPN & Network Acceleration)
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { airportsData } from '../../data/airports';
+
+const privacyBrands = airportsData.filter((b) => b.lines.includes('IEPL') || b.protocols.includes('VLESS')).slice(0, 4);
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '首页', item: 'https://flybit.fun/' },
+    { '@type': 'ListItem', position: 2, name: 'VPN加速', item: 'https://flybit.fun/vpn/' }
+  ]
+};
+
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'VPN 与网络加速选购指南 — 商业 VPN vs 代理机场协议实测对比',
+  description: '全面剖析商业 VPN（WireGuard、OpenVPN）与代理机场协议（Shadowsocks、VLESS）的技术差异与选型指南。',
+  url: 'https://flybit.fun/vpn/'
+};
+---
+
+<BaseLayout
+  title="VPN 与网络加速选购指南 — 商业 VPN vs 代理机场协议实测对比 | Flybit 实验室"
+  description="全面剖析商业 VPN（WireGuard、OpenVPN、IKEv2）与代理机场协议（Shadowsocks、VLESS、Trojan）的技术差异。外贸跨境办公、金融级隐私加密与科学上网选型实操指南。"
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
+
+  <div class="category-page">
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+      <a href="/">首页</a>
+      <span class="bc-sep">/</span>
+      <span class="bc-current">VPN加速</span>
+    </nav>
+
+    <header class="category-header">
+      <div class="header-pill">
+        <span class="live-pulse"></span>
+        <span>PROTOCOL AUDIT // VPN 与跨境加速专栏</span>
+      </div>
+      <h1 class="page-title">VPN 与网络加速选购指南：协议剖析、隐私安全与选型决策</h1>
+      <p class="page-lead">
+        很多用户常常将“VPN”与“代理机场”混为一谈。商业 VPN 旨在提供操作系统全局网络层（Layer 3）的端到端强加密隧道，而主流机场代理则基于应用层（Layer 7）分流规则优化跨境吞吐。本文从网络协议工程角度厘清二者本质差异。
+      </p>
+
+      <div class="sub-nav-pills">
+        <a href="#comparison" class="snp-item active">⚖️ VPN vs 机场本质差异</a>
+        <a href="#protocols" class="snp-item">🔒 核心加密协议详解</a>
+        <a href="#solutions" class="snp-item">🛡️ 推荐替代方案</a>
+        <a href="#scenarios" class="snp-item">💼 典型应用场景选型</a>
+        <a href="/jichang" class="snp-item highlight">🔥 查看专线机场大盘 →</a>
+      </div>
+    </header>
+
+    <!-- Section 1: VPN vs Proxy Architecture -->
+    <section class="cat-section" id="comparison">
+      <div class="section-head">
+        <h2 class="section-title">⚖️ 商业 VPN 与代理机场的底层技术对比</h2>
+        <span class="section-tag">COMPARISON</span>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>对比维度</th>
+              <th>传统商业 VPN (WireGuard / OpenVPN)</th>
+              <th>现代专线机场 (Shadowsocks / VLESS / Trojan)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>工作网络层级</strong></td>
+              <td>OS 虚拟网卡二/三层（全局接管，所有软件默认经由隧道）</td>
+              <td>应用层/传输层 Socks5/HTTP，可细分国内直连与海外分流</td>
+            </tr>
+            <tr>
+              <td><strong>特征识别与抗审查</strong></td>
+              <td>特征明显，握手包易被 DPI 深度包检测识别并直接阻断</td>
+              <td>具备高级特征混淆（如 Reality / WebSocket + TLS 模拟正常流量）</td>
+            </tr>
+            <tr>
+              <td><strong>晚高峰测速表现</strong></td>
+              <td>走国际公网骨干，晚高峰易遇国际出口带宽拥堵与 QoS 限速</td>
+              <td>接入物理 IEPL/IPLC 内网专线，不经过公网国际出口，延迟极低</td>
+            </tr>
+            <tr>
+              <td><strong>国内网站访问体验</strong></td>
+              <td>全局绕行海外服务器，访问淘宝、微信极慢或触发异地安全风控</td>
+              <td>智能规则分流（ACL4SSR/Mihomo），国内直连秒开，国外走代理</td>
+            </tr>
+            <tr>
+              <td><strong>最佳适用场景</strong></td>
+              <td>海外公共 Wi-Fi 绝对加密、跨国企业内网专线接入、加密货币冷钱包交互</td>
+              <td>外贸建站、4K 奈飞/迪士尼追剧、ChatGPT/Claude API 交互、游戏加速</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 2: Protocols Analysis -->
+    <section class="cat-section" id="protocols">
+      <div class="section-head">
+        <h2 class="section-title">🔒 常见网络加密协议安全性与吞吐审计</h2>
+        <span class="section-tag">DEEP DIVE</span>
+      </div>
+      <div class="protocol-cards-grid">
+        <div class="proto-card">
+          <span class="proto-badge">Layer 3 Tunnel</span>
+          <h3>WireGuard 协议</h3>
+          <p>
+            现代内核级加密协议，代码仅约 4000 行，极简高效。在海外自由网络环境中吞吐表现极佳，但在受限网络环境下，其固定的 UDP 握手特征极易在 10 分钟内被阻断。
+          </p>
+          <div class="proto-verdict">⚠️ 受限网络环境不推荐裸连</div>
+        </div>
+        <div class="proto-card">
+          <span class="proto-badge">Layer 7 Proxy</span>
+          <h3>VLESS + Reality</h3>
+          <p>
+            借用真实合规大型海外网站（如 Yahoo、Apple）的 TLS 证书签名与 SNI 特征，使中间审查探针无法与正常的 HTTPS 流量区分，抗封锁能力目前处于行业第一梯队。
+          </p>
+          <div class="proto-verdict safe">✅ 敏感时期高抗干扰推荐</div>
+        </div>
+        <div class="proto-card">
+          <span class="proto-badge">Layer 7 Proxy</span>
+          <h3>Shadowsocks-2022</h3>
+          <p>
+            全新架构的重构版 Shadowsocks，强制引入抗重放攻击机制与 Session ID 会话协商，丢弃了旧版密码学漏洞，通常部署于 IEPL 内网专线作为高速加密载体。
+          </p>
+          <div class="proto-verdict safe">✅ 专线高速传输标准协议</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Recommended Solutions -->
+    <section class="cat-section" id="solutions">
+      <div class="section-head">
+        <h2 class="section-title">🛡️ 满足办公与日常加速的精选高稳专线服务商</h2>
+        <span class="section-tag">VERIFIED PICKS</span>
+      </div>
+      <p class="section-desc">
+        对于绝大多数需要兼顾跨境网页速度、流媒体解锁与外贸开发的用户，采用“IEPL 物理专线 + 规则分流”是体验远胜传统 VPN 的最优技术解：
+      </p>
+
+      <div class="rec-grid">
+        {privacyBrands.map((brand) => (
+          <div class="rec-card">
+            <div class="rec-top">
+              <h3>{brand.name}</h3>
+              <span class="rec-price">{brand.entryPrice}</span>
+            </div>
+            <div class="rec-meta">
+              <span>{brand.lines}</span>
+              <span>{brand.protocols.join(' / ')}</span>
+            </div>
+            <p>{brand.description}</p>
+            <div class="rec-actions">
+              <a href={`/brands/${brand.id}`} class="rec-btn-info">实测报告</a>
+              {brand.affLink && <a href={brand.affLink} target="_blank" rel="nofollow sponsored noopener" class="rec-btn-aff">前往直达</a>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Bottom Nav -->
+    <section class="cat-bottom-nav">
+      <h3>延伸探索更多相关技术专题：</h3>
+      <div class="cbn-links">
+        <a href="/jichang">2026 机场推荐大盘 →</a>
+        <a href="/clash">Clash Verge 全平台上手 →</a>
+        <a href="/nodes">节点类型与落地 IP 深度解析 →</a>
+        <a href="/tizi">梯子防坑与稳定性实测 →</a>
+        <a href="/tutorial">全平台客户端使用教程 →</a>
+        <a href="/faq">常见疑问 50 问全集 →</a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .category-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1.5rem 0 3.5rem;
+  }
+  .breadcrumb-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+  }
+  .breadcrumb-nav a { color: var(--text-muted); text-decoration: none; }
+  .breadcrumb-nav a:hover { color: var(--accent); }
+  .bc-sep { color: var(--border); }
+  .bc-current { color: var(--text); font-weight: 500; }
+  .category-header { margin-bottom: 3rem; }
+  .header-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    margin-bottom: 1rem;
+    letter-spacing: 0.05em;
+  }
+  .live-pulse { width: 6px; height: 6px; border-radius: 50%; background: #38bdf8; box-shadow: 0 0 6px #38bdf8; }
+  .page-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin: 0 0 1rem;
+  }
+  .page-lead {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    max-width: 860px;
+    margin: 0 0 1.75rem;
+  }
+  .sub-nav-pills { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .snp-item {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 6px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .snp-item:hover, .snp-item.active { border-color: #38bdf8; color: #38bdf8; }
+  .snp-item.highlight { background: rgba(56, 189, 248, 0.15); border-color: rgba(56, 189, 248, 0.4); color: #38bdf8; font-weight: 600; }
+  .cat-section { margin-bottom: 3.5rem; }
+  .section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.75rem;
+  }
+  .section-title { font-size: 1.5rem; font-weight: 700; color: var(--text); margin: 0; }
+  .section-tag {
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+  }
+  .section-desc { color: var(--text-muted); line-height: 1.6; margin-bottom: 1.5rem; }
+  .table-wrap { overflow-x: auto; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left; }
+  .data-table th, .data-table td { padding: 0.85rem 1rem; border: 1px solid var(--border); }
+  .data-table th { background: rgba(255, 255, 255, 0.03); color: var(--text); font-weight: 600; }
+  .data-table td { color: var(--text-muted); }
+  .data-table tr:hover td { background: rgba(255, 255, 255, 0.02); }
+  .protocol-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 1.5rem;
+  }
+  .proto-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .proto-badge {
+    align-self: flex-start;
+    font-size: 0.75rem;
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+  }
+  .proto-card h3 { font-size: 1.2rem; color: var(--text); margin: 0 0 0.6rem; }
+  .proto-card p { font-size: 0.9rem; line-height: 1.6; color: var(--text-muted); margin: 0 0 1.25rem; flex: 1; }
+  .proto-verdict { font-size: 0.85rem; font-weight: 600; color: #f59e0b; }
+  .proto-verdict.safe { color: #10b981; }
+  .rec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.25rem;
+  }
+  .rec-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .rec-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+  .rec-top h3 { font-size: 1.1rem; color: var(--text); margin: 0; }
+  .rec-price { font-weight: 700; color: #10b981; }
+  .rec-meta { display: flex; gap: 0.4rem; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.75rem; }
+  .rec-card p { font-size: 0.85rem; line-height: 1.55; color: var(--text-muted); margin: 0 0 1rem; flex: 1; }
+  .rec-actions { display: flex; gap: 0.5rem; }
+  .rec-btn-info, .rec-btn-aff {
+    flex: 1; text-align: center; font-size: 0.8rem; font-weight: 600; padding: 0.4rem; border-radius: 4px; text-decoration: none;
+  }
+  .rec-btn-info { background: rgba(255, 255, 255, 0.06); color: var(--text); }
+  .rec-btn-aff { background: #10b981; color: #fff; }
+  .cat-bottom-nav { border-top: 1px solid var(--border); padding-top: 2rem; }
+  .cat-bottom-nav h3 { font-size: 1.1rem; color: var(--text); margin: 0 0 1rem; }
+  .cbn-links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .cbn-links a {
+    font-size: 0.9rem; color: #38bdf8; text-decoration: none; background: rgba(56, 189, 248, 0.08); padding: 0.4rem 0.8rem; border-radius: 6px;
+  }
+  .cbn-links a:hover { background: rgba(56, 189, 248, 0.16); }
+</style>

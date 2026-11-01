@@ -47,6 +47,12 @@ export interface SiteConfig {
     title: string;
     href: string;
   }[];
+  verifications?: {
+    google?: string;
+    bing?: string;
+    baidu?: string;
+    shenma?: string;
+  };
   comments?: {
     enabled: boolean;
     provider?: string;
@@ -81,14 +87,22 @@ export const siteConfig: SiteConfig = {
   },
   navLinks: [
     { title: '首页', href: '/' },
-    { title: '机场品牌库', href: '/brands' },
+    { title: '机场推荐', href: '/jichang' },
+    { title: 'VPN加速', href: '/vpn' },
+    { title: '梯子推荐', href: '/tizi' },
+    { title: 'Clash专题', href: '/clash' },
+    { title: '节点线路', href: '/nodes' },
+    { title: '使用教程', href: '/tutorial' },
     { title: '免费试用', href: '/free' },
-    { title: '避坑雷达', href: '/radar' },
-    { title: '疑难 FAQ', href: '/faq' },
-    { title: '实测实验室', href: '/speedtest' },
-    { title: '客户端教程', href: '/clients' },
-    { title: '专题指南', href: '/blog' }
+    { title: '品牌库', href: '/brands' }
   ],
+  verifications: {
+    // 留空待站长填入正式密钥，构建时自动编译输出标准静态 HTML meta 标签，禁止客户端 JS 伪造插入
+    google: (typeof process !== 'undefined' && process.env?.GOOGLE_SITE_VERIFICATION) || '',
+    bing: (typeof process !== 'undefined' && process.env?.BING_SITE_VERIFICATION) || '',
+    baidu: (typeof process !== 'undefined' && process.env?.BAIDU_SITE_VERIFICATION) || '',
+    shenma: (typeof process !== 'undefined' && process.env?.SHENMA_SITE_VERIFICATION) || ''
+  },
   comments: {
     enabled: false,
     provider: 'local'

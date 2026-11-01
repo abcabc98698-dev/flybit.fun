@@ -1,0 +1,256 @@
+---
+// src/pages/tizi/index.astro
+// 梯子推荐与避坑风控核心栏目聚合支柱页 (Category Pillar: Anti-Rugpull & Stability)
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { airportsData } from '../../data/airports';
+
+const stableBrands = airportsData.filter((b) => b.startedYear && parseInt(b.startedYear) <= 2023).slice(0, 4);
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '首页', item: 'https://flybit.fun/' },
+    { '@type': 'ListItem', position: 2, name: '梯子推荐', item: 'https://flybit.fun/tizi/' }
+  ]
+};
+
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: '科学上网梯子防坑与稳定性指南 — 跑路风险预警与高可用选型',
+  description: '科学上网梯子如何选择才不踩坑？Flybit 实验室深度揭秘梯子服务商的运营成本模型、跑路前夕特征与高可用容灾备份。',
+  url: 'https://flybit.fun/tizi/'
+};
+---
+
+<BaseLayout
+  title="科学上网梯子防坑与稳定性指南 — 跑路风险预警与高可用选型 | Flybit 实验室"
+  description="科学上网梯子如何选择才不踩坑？Flybit 实验室深度揭秘梯子服务商的运营成本模型、跑路前夕特征、年付折扣陷阱，并提供高可用双机场容灾备用策略。"
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
+
+  <div class="category-page">
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+      <a href="/">首页</a>
+      <span class="bc-sep">/</span>
+      <span class="bc-current">梯子推荐</span>
+    </nav>
+
+    <header class="category-header">
+      <div class="header-pill">
+        <span class="live-pulse"></span>
+        <span>SECURITY & RISK CONTROL // 梯子与稳定性防坑专栏</span>
+      </div>
+      <h1 class="page-title">科学上网梯子防坑指南：稳定性实测、跑路特征与容灾备份</h1>
+      <p class="page-lead">
+        “充值三年享三折”、“骨干专线只要 5 元/月”……在跨境网络代理圈中，每年都有上百家梯子服务商悄然卷款失联。Flybit 实验室以真实商业运营成本与网络监控为依据，为您梳理识别高风险梯子的核心防御策略。
+      </p>
+
+      <div class="sub-nav-pills">
+        <a href="#rugpull" class="snp-item active">🚨 跑路前夕三大特征</a>
+        <a href="#economics" class="snp-item">💰 真实带宽成本拆解</a>
+        <a href="#backup" class="snp-item">🛡️ 主备双机场容灾法则</a>
+        <a href="#whitelist" class="snp-item">✅ 长期稳定实测白名单</a>
+        <a href="/radar" class="snp-item highlight">📡 在线跑路风控雷达计算器 →</a>
+      </div>
+    </header>
+
+    <!-- Section 1: Warning Signs -->
+    <section class="cat-section" id="rugpull">
+      <div class="section-head">
+        <h2 class="section-title">🚨 梯子跑路前夕的 3 大典型危险信号</h2>
+        <span class="section-tag">WARNING SIGNS</span>
+      </div>
+      <div class="warning-grid">
+        <div class="warn-card">
+          <div class="warn-badge">危险信号 1</div>
+          <h3>非理性超低价“终身/三年付”促销</h3>
+          <p>
+            当服务商突然推出诸如“99 元包三年”、“199 元终身”等离谱折扣时，往往意味着其月流水已无法覆盖机房专线账单，企图通过最后一波大额预付款套现离场。
+          </p>
+        </div>
+
+        <div class="warn-card">
+          <div class="warn-badge">危险信号 2</div>
+          <h3>节点大面积红黄断流，客服工单失联</h3>
+          <p>
+            主力香港、日本节点频繁显示 <code>Timeout</code> 或丢包率飙升至 50% 以上，Telegram 官方公告频道开启全员禁言，客服工单多天无人响应或直接关闭。
+          </p>
+        </div>
+
+        <div class="warn-card">
+          <div class="warn-badge">危险信号 3</div>
+          <h3>频繁更换官网域名，无预警变更支付渠道</h3>
+          <p>
+            一周内连续更换数个不知名顶级域名（如 .xyz、.top、.buzz），支付网关频繁从标准企业支付宝/微信通道跳变为个人转账二维码或非合规 US 充值。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Economics -->
+    <section class="cat-section" id="economics">
+      <div class="section-head">
+        <h2 class="section-title">💰 科学上网服务商真实带宽成本拆解</h2>
+        <span class="section-tag">UNIT ECONOMICS</span>
+      </div>
+      <p class="section-desc">
+        只有看清成本底牌，才能明白为什么“5 元月付 1000G 纯专线”在数学和商业上绝对不成立：
+      </p>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>线路资源类型</th>
+              <th>骨干批发单价 (Mbps/月)</th>
+              <th>单 GB 理论保本成本</th>
+              <th>合理零售套餐定价区间</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>IEPL / IPLC 物理专线</strong></td>
+              <td>约 ¥120 ~ ¥260 / Mbps</td>
+              <td>约 ¥0.25 ~ ¥0.60 / GB</td>
+              <td>¥30 ~ ¥80 / 月 (配额 100G~300G)</td>
+            </tr>
+            <tr>
+              <td><strong>优质 BGP 跨境中转</strong></td>
+              <td>约 ¥35 ~ ¥80 / Mbps</td>
+              <td>约 ¥0.08 ~ ¥0.18 / GB</td>
+              <td>¥12 ~ ¥28 / 月 (配额 100G~500G)</td>
+            </tr>
+            <tr>
+              <td><strong>廉价公网直连 (CN2/公网)</strong></td>
+              <td>约 ¥5 ~ ¥15 / Mbps</td>
+              <td>约 ¥0.02 ~ ¥0.05 / GB</td>
+              <td>¥5 ~ ¥10 / 月 (晚高峰丢包明显)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 3: High Availability Backup -->
+    <section class="cat-section" id="backup">
+      <div class="section-head">
+        <h2 class="section-title">🛡️ 跨境工作者必须遵守的“主备双机场”法则</h2>
+        <span class="section-tag">HIGH AVAILABILITY</span>
+      </div>
+      <div class="ha-steps">
+        <div class="ha-box">
+          <h3>主力梯子（满足 90% 高频需求）</h3>
+          <p>选择口碑运营 2 年以上、采用 IEPL 内网专线的品牌，按月或按季续费。用于日常写代码、开视频会议、4K 影音与核心外贸沟通。</p>
+        </div>
+        <div class="ha-box">
+          <h3>容灾备用（满足 10% 应急救命）</h3>
+          <p>购买一个<strong>按量付费（流量不过期）</strong>或年付 ¥20 左右的轻量备用订阅，放在客户端备用分组中。一旦主力专线遇不可抗力光缆故障，可一秒无缝切换。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Verified Whitelist -->
+    <section class="cat-section" id="whitelist">
+      <div class="section-head">
+        <h2 class="section-title">✅ 长期稳定运营服务商实测推荐</h2>
+        <span class="section-tag">VERIFIED PICKS</span>
+      </div>
+      <div class="rec-grid">
+        {stableBrands.map((b) => (
+          <div class="rec-card">
+            <div class="rec-top">
+              <h3>{b.name}</h3>
+              <span class="rec-year">{b.startedYear} 稳定运营</span>
+            </div>
+            <div class="rec-meta">
+              <span>{b.lines}</span>
+              <span>{b.entryPrice}</span>
+            </div>
+            <p>{b.description}</p>
+            <div class="rec-actions">
+              <a href={`/brands/${b.id}`} class="rec-btn-info">实测报告</a>
+              {b.affLink && <a href={b.affLink} target="_blank" rel="nofollow sponsored noopener" class="rec-btn-aff">官网办理</a>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Bottom Nav -->
+    <section class="cat-bottom-nav">
+      <h3>探索更多专业专题与工具指南：</h3>
+      <div class="cbn-links">
+        <a href="/radar">跑路风险雷达在线计算器 →</a>
+        <a href="/jichang">2026 机场推荐大盘 →</a>
+        <a href="/vpn">VPN 与网络加速指南 →</a>
+        <a href="/clash">Clash Verge 全平台上手 →</a>
+        <a href="/free">免费试用与安全沙盒 →</a>
+        <a href="/faq">常见疑问 50 问全集 →</a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .category-page { max-width: 1100px; margin: 0 auto; padding: 1.5rem 0 3.5rem; }
+  .breadcrumb-nav { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+  .breadcrumb-nav a { color: var(--text-muted); text-decoration: none; }
+  .breadcrumb-nav a:hover { color: var(--accent); }
+  .bc-sep { color: var(--border); }
+  .bc-current { color: var(--text); font-weight: 500; }
+  .category-header { margin-bottom: 3rem; }
+  .header-pill {
+    display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 700;
+    color: #ef4444; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.25);
+    padding: 0.25rem 0.75rem; border-radius: 999px; margin-bottom: 1rem; letter-spacing: 0.05em;
+  }
+  .live-pulse { width: 6px; height: 6px; border-radius: 50%; background: #ef4444; box-shadow: 0 0 6px #ef4444; }
+  .page-title { font-size: 2.25rem; font-weight: 800; line-height: 1.3; letter-spacing: -0.02em; color: var(--text); margin: 0 0 1rem; }
+  .page-lead { font-size: 1.1rem; line-height: 1.7; color: var(--text-muted); max-width: 860px; margin: 0 0 1.75rem; }
+  .sub-nav-pills { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .snp-item {
+    font-size: 0.85rem; padding: 0.4rem 0.85rem; border-radius: 6px; background: var(--bg-surface);
+    border: 1px solid var(--border); color: var(--text); text-decoration: none; transition: all 0.2s ease;
+  }
+  .snp-item:hover, .snp-item.active { border-color: #ef4444; color: #ef4444; }
+  .snp-item.highlight { background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4); color: #ef4444; font-weight: 600; }
+  .cat-section { margin-bottom: 3.5rem; }
+  .section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; }
+  .section-title { font-size: 1.5rem; font-weight: 700; color: var(--text); margin: 0; }
+  .section-tag { font-size: 0.75rem; font-family: var(--font-mono); color: var(--text-muted); background: rgba(255, 255, 255, 0.05); padding: 0.2rem 0.5rem; border-radius: 4px; }
+  .section-desc { color: var(--text-muted); line-height: 1.6; margin-bottom: 1.5rem; }
+  .warning-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1.5rem; }
+  .warn-card { background: var(--bg-surface); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; }
+  .warn-badge { align-self: flex-start; font-size: 0.75rem; font-weight: 700; color: #ef4444; background: rgba(239, 68, 68, 0.1); padding: 0.2rem 0.5rem; border-radius: 4px; margin-bottom: 0.75rem; }
+  .warn-card h3 { font-size: 1.15rem; color: var(--text); margin: 0 0 0.6rem; }
+  .warn-card p { font-size: 0.9rem; line-height: 1.6; color: var(--text-muted); margin: 0; }
+  .table-wrap { overflow-x: auto; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left; }
+  .data-table th, .data-table td { padding: 0.85rem 1rem; border: 1px solid var(--border); }
+  .data-table th { background: rgba(255, 255, 255, 0.03); color: var(--text); font-weight: 600; }
+  .data-table td { color: var(--text-muted); }
+  .data-table tr:hover td { background: rgba(255, 255, 255, 0.02); }
+  .ha-steps { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+  .ha-box { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
+  .ha-box h3 { font-size: 1.15rem; color: var(--text); margin: 0 0 0.6rem; }
+  .ha-box p { font-size: 0.9rem; line-height: 1.65; color: var(--text-muted); margin: 0; }
+  .rec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.25rem; }
+  .rec-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; display: flex; flex-direction: column; }
+  .rec-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+  .rec-top h3 { font-size: 1.1rem; color: var(--text); margin: 0; }
+  .rec-year { font-size: 0.75rem; color: #10b981; }
+  .rec-meta { display: flex; gap: 0.5rem; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.75rem; }
+  .rec-card p { font-size: 0.85rem; line-height: 1.55; color: var(--text-muted); margin: 0 0 1rem; flex: 1; }
+  .rec-actions { display: flex; gap: 0.5rem; }
+  .rec-btn-info, .rec-btn-aff { flex: 1; text-align: center; font-size: 0.8rem; font-weight: 600; padding: 0.4rem; border-radius: 4px; text-decoration: none; }
+  .rec-btn-info { background: rgba(255, 255, 255, 0.06); color: var(--text); }
+  .rec-btn-aff { background: #10b981; color: #fff; }
+  .cat-bottom-nav { border-top: 1px solid var(--border); padding-top: 2rem; }
+  .cat-bottom-nav h3 { font-size: 1.1rem; color: var(--text); margin: 0 0 1rem; }
+  .cbn-links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .cbn-links a { font-size: 0.9rem; color: #ef4444; text-decoration: none; background: rgba(239, 68, 68, 0.08); padding: 0.4rem 0.8rem; border-radius: 6px; }
+  .cbn-links a:hover { background: rgba(239, 68, 68, 0.16); }
+</style>
