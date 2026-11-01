@@ -82,6 +82,7 @@ export const siteConfig: SiteConfig = {
   navLinks: [
     { title: '首页', href: '/' },
     { title: '机场品牌库', href: '/brands' },
+    { title: '免费试用', href: '/free' },
     { title: '实测实验室', href: '/speedtest' },
     { title: '客户端教程', href: '/clients' },
     { title: '专题指南', href: '/blog' },

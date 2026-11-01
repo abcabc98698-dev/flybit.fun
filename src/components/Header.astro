@@ -27,9 +27,16 @@ const showThemeSwitcher = features.themeSwitcher !== false;
     <nav class="nav" aria-label="Main Navigation">
       {siteConfig.navLinks.map((link) => {
         const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
+        const isHighlight = link.href === '/free';
         return (
-          <a href={link.href} class:list={['nav-link', { active: isActive }]} aria-current={isActive ? 'page' : undefined}>
-            {link.title}
+          <a
+            href={link.href}
+            class:list={['nav-link', { active: isActive, highlight: isHighlight }]}
+            aria-current={isActive ? 'page' : undefined}
+          >
+            {isHighlight && <span class="nav-badge-dot" aria-hidden="true"></span>}
+            <span>{link.title}</span>
+            {isHighlight && <span class="nav-hot-tag" aria-hidden="true">HOT</span>}
           </a>
         );
       })}
@@ -140,6 +147,40 @@ const showThemeSwitcher = features.themeSwitcher !== false;
     color: var(--accent);
     background: rgba(56, 189, 248, 0.1);
     font-weight: 600;
+  }
+
+  .nav-link.highlight {
+    color: #38bdf8;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .nav-badge-dot {
+    width: 6px;
+    height: 6px;
+    background-color: #10b981;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 6px #10b981;
+    animation: navPulse 2s infinite ease-in-out;
+  }
+
+  .nav-hot-tag {
+    font-size: 0.62rem;
+    font-weight: 800;
+    line-height: 1;
+    padding: 0.12rem 0.3rem;
+    background: linear-gradient(135deg, #ef4444, #f97316);
+    color: #ffffff;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+    box-shadow: 0 1px 3px rgba(239, 68, 68, 0.3);
+  }
+
+  @keyframes navPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.35; transform: scale(0.8); }
   }
 
   .header-actions {
