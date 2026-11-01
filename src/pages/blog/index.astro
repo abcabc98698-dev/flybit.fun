@@ -12,17 +12,17 @@ const allTags = Array.from(new Set(allPosts.flatMap((p) => p.data.tags || []))).
 const showTags = siteConfig.features?.tags !== false;
 ---
 
-<BaseLayout title="Blog — All Notes">
+<BaseLayout title="专题指南 — 机场选购、专线测速与客户端配置实战">
   <div class="blog-page">
     <header class="blog-header">
-      <h1 class="page-title">Articles &amp; Notes</h1>
+      <h1 class="page-title">专题指南与实战教程</h1>
       <p class="page-desc">
-        Explorations in software engineering, technical writing, and minimalist design.
+        汇集网络工程师视角的硬核测评与科普指南。涵盖 IEPL/IPLC 专线原理解析、4K 奈飞与 ChatGPT 5 解锁实测、Clash Verge 与 Shadowrocket 客户端分流配置实操。
       </p>
 
       {showTags && allTags.length > 0 && (
         <div class="tags-filter">
-          <span class="tags-label">Topics:</span>
+          <span class="tags-label">主题分类:</span>
           {allTags.map((tag) => (
             <a href={`/tags/${tag}`} class="tag-pill">#{tag}</a>
           ))}
@@ -33,7 +33,7 @@ const showTags = siteConfig.features?.tags !== false;
     <section class="articles-section">
       <div class="section-header">
         <h2 class="section-title">
-          <span>All Articles</span>
+          <span>精选专题</span>
           <span class="section-arrow">→</span>
         </h2>
 
@@ -47,8 +47,8 @@ const showTags = siteConfig.features?.tags !== false;
             <input
               type="text"
               id="search-input"
-              placeholder="Filter articles..."
-              aria-label="Filter articles"
+              placeholder="搜索专题文章与关键词..."
+              aria-label="搜索专题文章"
               autocomplete="off"
             />
           </div>
@@ -71,15 +71,15 @@ const showTags = siteConfig.features?.tags !== false;
 
       <!-- Bottom Pagination -->
       <div class="pagination-container pagination-bottom" id="pagination-bottom" style="display: none;">
-        <nav class="pagination-bar" aria-label="Bottom article pagination">
-          <button type="button" class="pagination-btn prev" id="page-prev-bottom" aria-label="Previous page">←</button>
+        <nav class="pagination-bar" aria-label="文章分页导航">
+          <button type="button" class="pagination-btn prev" id="page-prev-bottom" aria-label="上一页">←</button>
           <div class="pagination-pages" id="pagination-pages-bottom"></div>
-          <button type="button" class="pagination-btn next" id="page-next-bottom" aria-label="Next page">→</button>
+          <button type="button" class="pagination-btn next" id="page-next-bottom" aria-label="下一页">→</button>
         </nav>
       </div>
 
       <div id="no-results" class="no-results" style="display: none;">
-        <p>No articles found matching your filter.</p>
+        <p>未找到符合条件的专题文章。</p>
       </div>
     </section>
   </div>
@@ -96,7 +96,7 @@ const showTags = siteConfig.features?.tags !== false;
     const bottomPrev = document.getElementById('page-prev-bottom') as HTMLButtonElement | null;
     const bottomNext = document.getElementById('page-next-bottom') as HTMLButtonElement | null;
 
-    const PAGE_SIZE = 4;
+    const PAGE_SIZE = 10;
     let currentPage = 1;
     let matchingItems: HTMLElement[] = [...articleWrappers];
 
