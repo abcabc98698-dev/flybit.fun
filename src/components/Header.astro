@@ -28,13 +28,15 @@ const showThemeSwitcher = features.themeSwitcher !== false;
       {siteConfig.navLinks.map((link) => {
         const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
         const isHighlight = link.href === '/free';
+        const isRadar = link.href === '/radar';
         return (
           <a
             href={link.href}
-            class:list={['nav-link', { active: isActive, highlight: isHighlight }]}
+            class:list={['nav-link', { active: isActive, highlight: isHighlight, radar: isRadar }]}
             aria-current={isActive ? 'page' : undefined}
           >
             {isHighlight && <span class="nav-badge-dot" aria-hidden="true"></span>}
+            {isRadar && <span class="nav-radar-dot" aria-hidden="true"></span>}
             <span>{link.title}</span>
             {isHighlight && <span class="nav-hot-tag" aria-hidden="true">HOT</span>}
           </a>
@@ -154,6 +156,23 @@ const showThemeSwitcher = features.themeSwitcher !== false;
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
+  }
+
+  .nav-link.radar {
+    color: #f59e0b;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .nav-radar-dot {
+    width: 6px;
+    height: 6px;
+    background-color: #f59e0b;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 6px #f59e0b;
+    animation: navPulse 2s infinite ease-in-out;
   }
 
   .nav-badge-dot {

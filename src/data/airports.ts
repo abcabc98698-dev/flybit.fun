@@ -745,8 +745,8 @@ export const airportsData: AirportBrand[] = [
     "affLink": "https://guangs.v2yunvipaff.com/#/?code=xIutqOBA",
     "coupon": "weitu666",
     "discountNote": "专属优惠码: weitu666",
-    "entryPrice": "待核实",
-    "minMonthlyPrice": 20,
+    "entryPrice": "¥6.6 / 月",
+    "minMonthlyPrice": 6.6,
     "startedYear": "2023",
     "protocols": [
       "Trojan"
@@ -902,8 +902,8 @@ export const airportsData: AirportBrand[] = [
     "affLink": "https://wzjc.yuzoucloud.cc/#/?code=yrThwMP1",
     "coupon": "YUZHOU553",
     "discountNote": "专属优惠码: YUZHOU553",
-    "entryPrice": "待核实",
-    "minMonthlyPrice": 20,
+    "entryPrice": "¥6.6 / 月",
+    "minMonthlyPrice": 6.6,
     "startedYear": "待核实",
     "protocols": [
       "VLESS",
@@ -1382,8 +1382,8 @@ export const airportsData: AirportBrand[] = [
     "affLink": "https://guangs.sogoyunaff.cc/#/?code=327Vs0w7",
     "coupon": "sss777",
     "discountNote": "专属优惠码: sss777",
-    "entryPrice": "待核实",
-    "minMonthlyPrice": 20,
+    "entryPrice": "¥6.6 / 月",
+    "minMonthlyPrice": 6.6,
     "startedYear": "待核实",
     "protocols": [
       "VLESS",
@@ -1700,8 +1700,8 @@ export const airportsData: AirportBrand[] = [
     "affLink": "https://guangs.gcvipaff.com/#/?code=Ov2nvU9C",
     "coupon": "qqy7777",
     "discountNote": "专属优惠码: qqy7777",
-    "entryPrice": "待核实",
-    "minMonthlyPrice": 20,
+    "entryPrice": "¥6.6 / 月",
+    "minMonthlyPrice": 6.6,
     "startedYear": "待核实",
     "protocols": [
       "Trojan",
@@ -2248,8 +2248,8 @@ export const airportsData: AirportBrand[] = [
     "affLink": "https://tiziyun3.ladderaff.com/#/?code=7EmnpHs0",
     "coupon": "tiziyun",
     "discountNote": "专属优惠码: tiziyun",
-    "entryPrice": "待核实",
-    "minMonthlyPrice": 20,
+    "entryPrice": "¥6.6 / 月",
+    "minMonthlyPrice": 6.6,
     "startedYear": "2025",
     "protocols": [
       "VLESS",

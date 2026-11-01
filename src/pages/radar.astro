@@ -1,0 +1,1387 @@
+---
+// src/pages/radar.astro
+// Flybit Network Observatory Exit Scam Radar, Risk Quant Model & Capital Survival Guide
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const lastUpdated = "2026-11-01";
+const publishedDate = "2026-10-01";
+---
+
+<BaseLayout
+  title="机场跑路预警雷达与避坑指南 (2026 最新) — 风险量化模型、暴雷征兆与资金安全自保手册"
+  description="Flybit 实验室独立运营的 2026 机场跑路预警与风险监控雷达。建立行业首个 6 维健康度量化评估模型，盘点跑路前夕 7 大危险信号，深度复盘历史知名崩盘惨案与庞氏财务断裂机理，提供支付争议维权、逃生备份与容灾配置全套指南。"
+  wide={true}
+>
+  <!-- Schema.org JSON-LD Structured Data for WebPage, Article & FAQPage -->
+  <script type="application/ld+json" is:inline set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://flybit.fun/radar#webpage",
+        "url": "https://flybit.fun/radar",
+        "name": "机场跑路预警雷达与避坑指南 (2026 最新) — 风险量化模型、暴雷征兆与资金安全自保手册",
+        "description": "专业级跨境网络服务商健康度评估与避雷雷达，揭开超售跑路本质，提供实操维权与多订阅容灾方案。",
+        "inLanguage": "zh-CN",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Flybit 机场测评实验室",
+          "url": "https://flybit.fun",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://flybit.fun/favicon.svg"
+          }
+        }
+      },
+      {
+        "@type": "Article",
+        "@id": "https://flybit.fun/radar#article",
+        "headline": "机场跑路预警雷达与避坑指南：风险量化模型、暴雷征兆与资金安全自保手册",
+        "description": "系统剖析代理服务商跑路机理与庞氏财务断裂点，建立六维量化风控雷达，提供跑路征兆识别与逃生止损全套技术指南。",
+        "author": {
+          "@type": "Organization",
+          "name": "Flybit 网络工程实验室",
+          "url": "https://flybit.fun"
+        },
+        "datePublished": publishedDate,
+        "dateModified": lastUpdated,
+        "inLanguage": "zh-CN"
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://flybit.fun/radar#faq",
+        "mainEntity": [{"@type":"Question","name":"机场跑路之前，通常会有哪些最反常的征兆？","acceptedAnswer":{"@type":"Answer","text":"跑路前最反常的征兆包括三大核心动作：第一是毫无预兆地推出“买一年送两年”或“极低价格的终身永久套餐”，以最后一次骨折收割存量现金流；第二是官方 Telegram 交流群或公告频道突然开启全员禁言，大量删除用户对节点大面积飘红超时的质疑并踢出群聊；第三是支付网关从原本正规的第三方商户频繁降级为个人微信静态收款码或仅接受加密货币 USDT。一旦三项同时命中，跑路概率高达 95% 以上。"}},{"@type":"Question","name":"为什么说“买一年送两年”或“99元永久不限时套餐”在物理和财务逻辑上100%必死？","acceptedAnswer":{"@type":"Answer","text":"因为网络带宽是按月计费的刚性物理消耗品。正规的国际专线（IEPL/IPLC）每 1Gbps 的批发月租高达 12,000 至 25,000 元人民币。用户一次性缴纳 99 元后，如果每个月都跑 200GB 流量，机场主从第 3 个月开始就在持续为该用户倒贴服务器机房租金。随着存量用户增长，新进用户的资金无法覆盖每月巨额的固定带宽支出，财务模型在 6 至 9 个月内必然因现金流断裂而崩塌，机场主唯一的退路就是关停服务器卷款跑路。"}},{"@type":"Question","name":"如果我刚买了年付套餐，机场第二天就失联跑路了，有什么合规追回款项的途径？","acceptedAnswer":{"@type":"Answer","text":"若通过微信或支付宝支付，请立即进入账单详情点击“对此订单有疑问”，选择“未收到商品/欺诈”，上传节点全红无法连接和工单失联的截图。第三方免签网关极其惧怕微信/支付宝商户号被封控，往往会被迫退款。若使用 Visa/MasterCard 或 PayPal 支付，致电发卡银行提起“未收到服务（Goods/Services Not Received）”的 Chargeback 拒付争议，海外卡组织在商户失联的情况下会将款项强制原路划回。"}},{"@type":"Question","name":"为什么老玩家都坚持“多订阅容灾配置”，从不把所有鸡蛋放在同一个篮子里？","acceptedAnswer":{"@type":"Answer","text":"因为再高端的专线机场也无法 100% 免疫偶发性的上游市政光缆挖断、海底光缆地震故障或上游机房断电合规清查。老玩家的标准配置是“1 家高可用 IEPL/IPLC 专线主力机场（满足 4K 追剧、AI 办公与低延迟），搭配 1 家平价轻量月付或不限时按量计费机场作为容灾备用”。在客户端中将两个订阅同时导入，一旦主力出现波动，1 秒切换，彻底告别单点失联的恐慌。"}},{"@type":"Question","name":"遭遇跑路后，我的客户端配置与个人信息会泄露给黑客吗？","acceptedAnswer":{"@type":"Answer","text":"你的个人密码如果与日常邮箱或银行密码相同，存在极高的撞库风险（因为部分不规范的小机场数据库采用弱哈希甚至明文存储用户密码）。但对于你曾经浏览的 HTTPS 加密网页与账号密码，机场主由于没有私钥，是绝对无法解密的。跑路后唯一需要做的是：立即停用该订阅链接，并在其他网站修改与该机场相同的登录密码。"}},{"@type":"Question","name":"怎么判断一家机场是“临时维护断网”还是“真的跑路了”？","acceptedAnswer":{"@type":"Answer","text":"观察其核心管理域名的解析状态与官方公告。如果是正规维护，管理团队通常会在故障发生后 30 分钟内通过备用 Telegram 频道或 Twitter/X 发出通告，且工单系统和后台依然可以正常登录；如果是跑路，官方交流群通常会先禁言、网站主域名直接解析到 127.0.0.1 或直接报域名未注册（NXDOMAIN），且客服超过 72 小时彻底人间蒸发。"}},{"@type":"Question","name":"为什么廉价直连机场跑路概率最高，而自建专线机场跑路概率极低？","acceptedAnswer":{"@type":"Answer","text":"廉价直连机场几乎没有任何固定资产投入，买两台几美元的海外 VPS 挂个开源一键面板就能开门营业，沉没成本极低，当晚高峰被防火墙封锁 IP 导致更换 IP 成本过高时，老板随时拍拍屁股换个域名重新再来；而具备自研内网专线的大牌机场（如光速云），在境内入口机房、专线长约合同、多地域负载均衡与客服团队上投入了数十万级重资产，品牌具备极高商誉价值，不会为了几百块蝇头小利轻易跑路。"}},{"@type":"Question","name":"很多机场宣称“海外离岸运营团队，绝不跑路”，这种话可信吗？","acceptedAnswer":{"@type":"Answer","text":"不可信。“海外团队”是灰色网络服务行业最常用的免责话术。不管团队身在何处，只要其面向中国大陆用户提供跨境加速服务，其境内入口节点服务器依然依赖中国大陆境内的机房与运营商骨干网络。一旦境内入口机房遭遇合规排查，无论其团队在新加坡还是欧美，服务同样会瞬间中断。因此，评判健康度的唯一标准是其技术冗余度与财务稳健度，而非口头声称的肉身所在地。"}},{"@type":"Question","name":"什么是“套壳二道贩子机场”？为什么它们是跑路高发重灾区？","acceptedAnswer":{"@type":"Answer","text":"套壳二道贩子是指一些没有任何机房资源和运维技术的个人，从上游大机场批量购买批发账号（Wholesale API），然后自己花几十块钱买个模板网站加价转售。一旦上游大机场对其停止供货，或者二道贩子收齐了一波年付资金，就会立即关闭网站跑路。识别套壳二道贩子的最好方法是看其测速节点 ISP 归属和工单技术回复能力。"}},{"@type":"Question","name":"Flybit 实验室的“避坑雷达”如何对上榜品牌进行日常动态监控？","acceptedAnswer":{"@type":"Answer","text":"实验室构建了自动化全天候网络探针，每隔 15 分钟对在册品牌的入口连通性、TLS 握手延迟、晚高峰丢包率与官网主域名解析进行全自动健康巡检。一旦探针捕捉到某个品牌连续 48 小时晚高峰丢包率超过 30%、或者官方群组出现大面积封禁异常，雷达系统会自动在品牌页面打上黄色预警标签，提醒用户暂停大额续费。"}},{"@type":"Question","name":"机场主跑路后，会不会把所有用户的注册邮箱与密码打包卖给地下黑客撞库？","acceptedAnswer":{"@type":"Answer","text":"存在极高且真实的次生灾害风险！行业统计显示，近四成跑路的小机场在关服跑路前或跑路后，其管理数据库会被直接挂在暗网论坛或 Telegram 黑产交易群转卖变现。由于许多小白用户习惯在所有网站使用同一套“常用邮箱 + 相同密码”，黑客拿到该数据库后，会使用自动化脚本批量撞库你的网易/QQ邮箱、Apple ID、Steam 账号乃至社交平台。因此，遭遇跑路后的第一要务，绝不仅是心疼套餐费用，而是必须在 24 小时内全面修改与该机场相同或相似的所有核心账号密码，并开启两步验证（2FA）！"}},{"@type":"Question","name":"为什么有些机场在暴雷跑路前几天，节点测速跑分反而异常飙高、全屏飘绿？","acceptedAnswer":{"@type":"Answer","text":"这被称为跑路前的“回光返照陷阱”。背后的技术障眼法有两种：第一，机场主为了在最后几天的大促中引诱用户下单大额年付，临时向主机商申请了按小时计费的昂贵弹性突发测试带宽（Burst Bandwidth），或者直接将所有用户路由汇聚到两台未经限速的全新落地机房，制造出“百兆秒开、延迟低至 15ms”的假象；第二，部分机场在后端测速节点做了缓存劫持，识别到 Speedtest 或 YouTube 测速流量就强行放行，而普通网页早已卡死。永远不要被单次孤立的绿屏测速图蒙蔽双眼。"}},{"@type":"Question","name":"怎么利用第三方 DNS 历史工具自查机场域名的真实存活底细与虚假宣传？","acceptedAnswer":{"@type":"Answer","text":"善用三款完全免费的国际网络取证工具即可让骗子无所遁形：第一，使用 ViewDNS.info 或 Whois.domaintools.com 查其主域名的注册时间（Creation Date）。如果一个号称“五年老牌大厂”的网站，其主域名注册时间其实就在三个月前，谎言不攻自破；第二，使用 SecurityTrails 查询该域名的历史解析 IP（Historical DNS），观察其入口机房更换频率。若一年内更换了五六次低质廉价机房，说明其上游关系极不稳定；第三，使用 ICP 备案查询确认该域名是否挂靠在国内空壳企业身上（合规风险极高）。"}},{"@type":"Question","name":"机场声称“上游机房光缆被挖断，停机检修一个月”，这到底是真故障还是跑路缓兵之计？","acceptedAnswer":{"@type":"Answer","text":"百分之九十九是跑路前的缓兵之计与拖延公关！在现代国际电信工程中，任何正规的数据中心和海缆物理管道均具备“N+1”甚至“2N”级别的环形主备容灾自愈能力。哪怕发生台湾海峡地震导致海底光缆中断，顶级运营商在 2 至 6 小时内就会通过备用波长完成跨境流量的紧急调度绕行。声称“需要停机一个月检修”的服务商，真实情况通常是其欠费被机房直接拔线封锁，或者老板已经转移资产准备关门，所谓的停机公告纯粹是为了防止用户集中投诉申请微信支付宝退款的缓兵毒计。"}},{"@type":"Question","name":"如果通过 USDT（TRC-20）支付被骗，区块链链上追溯真的一点用都没有吗？","acceptedAnswer":{"@type":"Answer","text":"对于普通个人用户而言，追回款项的概率无限接近于零。区块链的底层特性是不可篡改与匿名非中心化，没有发卡行或平台客服可以为你执行强制撤销交易。骗子在收到 USDT 后，通常会在 10 分钟内通过链上自动化多层洗钱合约（如混币器 Tornado Cash 或分散转入数十个去中心化钱包并最终进入海外免实名交易所变现）。向链上追溯需要公安网安部门立案并跨国协查，沉没维权成本巨大。这也是为什么老手坚决不在信誉存疑的小机场使用虚拟币支付的核心原因。"}},{"@type":"Question","name":"遭遇跑路后，本地电脑里的 Clash Verge 或小火箭需要卸载并格式化系统吗？","acceptedAnswer":{"@type":"Answer","text":"完全不需要恐慌性格式化系统！开源权威客户端（如 Clash Verge Rev、Mihomo 内核、Shadowrocket、Sing-box）本身是完全经过全球开源社区严格安全审计的独立中立工具，它们与跑路的机场之间仅仅是“读取外部配置链接”的关系。机场主失联，受影响的只是那串远程订阅 URL 无法更新节点而已，你的操作系统和本地文件没有任何安全风险。你只需要在客户端配置列表中，右键将该失效订阅彻底删除，即可完全清除其所有网络残留。"}},{"@type":"Question","name":"为什么说“合租车队（拼车）”比单人直接买大套餐更具抗风险自保韧性？","acceptedAnswer":{"@type":"Answer","text":"合租拼车是老玩家分摊资金风险的最优解。一家月付 30 元支持 5 设备并发的优质专线套餐，如果由 3~4 名熟人朋友或可靠车友共同拼车平摊，每个人每月的实际支出仅需 7~8 元钱。即便某一天该服务发生意外波动，每个人沉没的成本甚至还不足一瓶可乐钱。同时，车队中通常有懂技术的车友日常关注节点健康度，信息互通，可以第一时间捕捉到异常风向并集体组织迁移。"}},{"@type":"Question","name":"遇到突发跑路导致工作紧急阻断，3 分钟内寻找最快正规应急出海替代方案的避险路线？","acceptedAnswer":{"@type":"Answer","text":"请立即执行两套零成本急救预案：第一方案：访问正规大牌机场（如光速云、微风网络等具备长期口碑的品牌），使用免费邮箱注册领取其官方提供的免费试用额度（2GB~5GB），一键导入订阅，耗时不超过 2 分钟即可应急恢复网络；第二方案：利用手机或电脑下载官方 Cloudflare WARP 客户端，开启 1.1.1.1 免费加密连接，虽然晚高峰速度一般，但足以支撑你顺畅收发紧急邮件、调用 ChatGPT 以及登录后台恢复关键业务。"}}]
+      }
+    ]
+  })} />
+
+  <div class="radar-page-wrapper">
+    <!-- Hero Banner -->
+    <header class="radar-hero">
+      <div class="radar-badge">RISK INTELLIGENCE & EXIT SCAM RADAR // 2026 EDITION</div>
+      <h1 class="hero-title">机场跑路预警雷达与避坑自保手册：穿透超售庞氏骗局，守护你的网络资产与连接生命线</h1>
+      <p class="hero-subtitle">
+        在鱼龙混杂的跨境代理行业中，每天都有新机场破壳诞生，也每周都有平台无声蒸发。Flybit 实验室建立行业首个 6 维健康度量化评估雷达，以硬核网络工程账单拆解恶性超售与崩盘倒计时，为你提供最冷峻的暴雷预警与资金维权逃生全攻略。
+      </p>
+
+      <div class="meta-strip">
+        <span class="meta-item">📅 雷达基准时间：<strong>{lastUpdated}</strong></span>
+        <span class="meta-separator">•</span>
+        <span class="meta-item">🛡️ 实验室中立公约：<strong>拒绝收钱洗地，绝不隐瞒任何上榜品牌异动</strong></span>
+        <span class="meta-separator">•</span>
+        <span class="meta-item">📡 监控维度：<strong>财务成本模型 / 节点冗余度 / 社区动态 / 支付通道</strong></span>
+      </div>
+    </header>
+
+    <!-- Quick Status Board -->
+    <section class="status-summary-board-section">
+      <h2 class="board-heading">2026 行业风险态势与健康度三大梯队</h2>
+      <div class="status-summary-board">
+        <div class="status-card safe">
+          <div class="status-icon">🟢</div>
+          <div class="status-info">
+            <h3>行业稳健梯队</h3>
+            <p>具备长约物理专线、合理月付定价与持续技术支持的老牌头部服务商，财务模型健康度良好。</p>
+          </div>
+        </div>
+        <div class="status-card warning">
+          <div class="status-icon">🟡</div>
+          <div class="status-info">
+            <h3>承压观察梯队</h3>
+            <p>晚高峰偶发严重丢包、工单响应出现延迟、大促频率异常升高。建议仅按最短周期月付体验。</p>
+          </div>
+        </div>
+        <div class="status-card danger">
+          <div class="status-icon">🔴</div>
+          <div class="status-info">
+            <h3>高危暴雷红线</h3>
+            <p>开启全员禁言、倾销超低价永久套餐、支付通道降级为个人收款码。请立即备份配置并停止续费！</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive 6-Dimension Health Calculator -->
+    <section class="calculator-section" id="radar-tool">
+      <div class="calc-header">
+        <div class="calc-badge">INTERACTIVE RADAR TOOL</div>
+        <h2>6 维机场健康度自测评分器</h2>
+        <p>勾选你正在使用或正打算购买的机场的实际现状，系统将即时计算其综合风险指数并给出避雷建议：</p>
+      </div>
+
+      <div class="calc-body">
+        <div class="factors-grid">
+          <!-- Factor 1 -->
+          <div class="factor-group">
+            <label class="factor-label" for="f-years">
+              <span class="factor-num">01</span>
+              <strong>成立与持续运营年限</strong>
+            </label>
+            <select id="f-years" class="factor-select">
+              <option value="0">已平稳持续运营 3 年以上（经历多次封锁考验）[+0分]</option>
+              <option value="15">运营时间在 1 至 2 年之间（处于成熟爬坡期）[+15分]</option>
+              <option value="35">开业不足 6 个月的新生平台（极高变数）[+35分]</option>
+            </select>
+          </div>
+
+          <!-- Factor 2 -->
+          <div class="factor-group">
+            <label class="factor-label" for="f-pricing">
+              <span class="factor-num">02</span>
+              <strong>套餐定价与计费周期</strong>
+            </label>
+            <select id="f-pricing" class="factor-select">
+              <option value="0">月付中位数在 15~35 元，符合专线物理成本逻辑 [+0分]</option>
+              <option value="20">年付折算低于 5 元/月，存在中度超售嫌疑 [+20分]</option>
+              <option value="45">主推“99元永久不限流量/终身至尊会员”（击穿成本）[+45分]</option>
+            </select>
+          </div>
+
+          <!-- Factor 3 -->
+          <div class="factor-group">
+            <label class="factor-label" for="f-promo">
+              <span class="factor-num">03</span>
+              <strong>促销活动与折扣频次</strong>
+            </label>
+            <select id="f-promo" class="factor-select">
+              <option value="0">仅在重大节日（双十一/元旦）开展常规 8.5~9 折优惠 [+0分]</option>
+              <option value="15">平时隔三岔五全站弹窗“限时大促折上折” [+15分]</option>
+              <option value="35">突然狂推“买一年送两年”或“充 200 送 300”疯狂吸金 [+35分]</option>
+            </select>
+          </div>
+
+          <!-- Factor 4 -->
+          <div class="factor-group">
+            <label class="factor-label" for="f-support">
+              <span class="factor-num">04</span>
+              <strong>工单系统与客服响应</strong>
+            </label>
+            <select id="f-support" class="factor-select">
+              <option value="0">7×24 小时在线，技术工单平均在 2 小时内专业闭环 [+0分]</option>
+              <option value="15">工单响应迟缓，通常需要 24~48 小时且回复偏机械套话 [+15分]</option>
+              <option value="30">工单超过 72 小时装死无应答，或已彻底关闭提交工单入口 [+30分]</option>
+            </select>
+          </div>
+
+          <!-- Factor 5 -->
+          <div class="factor-group">
+            <label class="factor-label" for="f-community">
+              <span class="factor-num">05</span>
+              <strong>Telegram 社区与舆情环境</strong>
+            </label>
+            <select id="f-community" class="factor-select">
+              <option value="0">开放自由交流，群友热心答疑，允许探讨节点状态 [+0分]</option>
+              <option value="15">开启慢速模式（几分钟发言一次），严格禁止谈论测速截图 [+15分]</option>
+              <option value="40">群组突发开启“全员永久禁言”，疯狂删帖并踢出质疑用户 [+40分]</option>
+            </select>
+          </div>
+
+          <!-- Factor 6 -->
+          <div class="factor-group">
+            <label class="factor-label" for="f-payment">
+              <span class="factor-num">06</span>
+              <strong>支付网关通道合规度</strong>
+            </label>
+            <select id="f-payment" class="factor-select">
+              <option value="0">对接稳定正规的第三方免签商户网关或企业认证通道 [+0分]</option>
+              <option value="15">仅支持加密货币（USDT）或海外单一不可逆通道 [+15分]</option>
+              <option value="30">频繁变更个人微信静态收款码或要求扫码私下转账 [+30分]</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Result Box -->
+        <div class="calc-result-box" id="calc-result-display">
+          <div class="result-dial-wrap">
+            <span class="score-number" id="risk-score">0</span>
+            <span class="score-unit">/ 100 综合风险指数</span>
+          </div>
+          <div class="result-text-wrap">
+            <h3 class="result-title" id="risk-status">🟢 稳健健康（极低风险）</h3>
+            <p class="result-desc" id="risk-advice">该平台的各项指标均处于正常且健康的运营区间，财务模型合理，建议保持按月或按季正常使用。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Editorial Content: 6 Chapters -->
+    <main class="radar-content-main">
+      <!-- Chapter 1 -->
+      <section class="chapter-block" id="chapter-math">
+        <h2>一、物理与财务经济学：揭开“机场必死定律”背后的真金白银账本</h2>
+
+        <div class="financial-model-comparison">
+          <h3>📊 三类不同机场商业财务模型与崩塌倒计时终局对比：</h3>
+          <div class="table-wrap">
+            <table class="faq-table">
+              <thead>
+                <tr>
+                  <th>运营模式分类</th>
+                  <th>典型定价策略</th>
+                  <th>真实物理带宽投入</th>
+                  <th>晚高峰抗抖动能力</th>
+                  <th>现金流健康度</th>
+                  <th>最终生命周期预测</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>稳健工业专线型<br>(如光速云、微风)</strong></td>
+                  <td>15 ~ 35 元 / 月<br>(主推月付与季付)</td>
+                  <td>足额购买 3Gbps+ 物理专线<br>具备备用波长与多地机房</td>
+                  <td>卓越（丢包率 &lt; 0.5%）<br>4K 流畅与原生住宅 IP</td>
+                  <td><strong>良性自循环</strong><br>月营收稳定覆盖机房成本</td>
+                  <td><strong>持续平稳运营 3~5 年以上</strong><br>口碑复购率极高</td>
+                </tr>
+                <tr>
+                  <td><strong>恶性超售平价型<br>(廉价跑路高危)</strong></td>
+                  <td>5 ~ 8 元 / 月<br>(年付折算极低)</td>
+                  <td>仅租用 1Gbps 公网廉价机房<br>超售分配给数千用户</td>
+                  <td>较差（晚高峰丢包率 35%+）<br>大面积超时与频繁断流</td>
+                  <td><strong>紧平衡脆弱</strong><br>稍有风吹草动即陷入亏损</td>
+                  <td><strong>通常在 6 ~ 12 个月内</strong><br>因维护成本过高换皮重开</td>
+                </tr>
+                <tr>
+                  <td><strong>庞氏圈钱陷阱型<br>(资金盘收割模式)</strong></td>
+                  <td>99元终身永久套餐<br>买一年直接送两年</td>
+                  <td>前期租用突发带宽造假<br>后期彻底切断专线带宽</td>
+                  <td>前两周极速，随后断崖式<br>跌入 0kbps 无法打开任何网页</td>
+                  <td><strong>致命失血倒计时</strong><br>存量用户持续消耗导致穿底</td>
+                  <td><strong>绝对在 3 ~ 6 个月内跑路</strong><br>全网失联，资金卷款一空</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <p>
+          很多刚接触跨境加速的新手经常会问一个天真的问题：“为什么我之前用的好几家机场，刚开始都飞快，过几个月就突然跑路了？”
+        </p>
+        <p>
+          要理解跑路，首先必须摘掉所有营销滤镜，从最底层的<strong>网络工程刚性财务成本</strong>算一笔账：
+        </p>
+
+        <div class="cost-breakdown-box">
+          <h3>🧾 一家标准万兆专线机场的月度刚性账单（物理测算）：</h3>
+          <ul>
+            <li><strong>骨干物理专线带宽（IEPL/IPLC）：</strong> 国际商业内网专线不存在任何“免费”可能。以深圳-香港、上海-日本物理光纤为例，每 1Gbps 的批发协议单价约在 <strong>12,000 ~ 25,000 元/月</strong>。一家具备良好晚高峰体验的中型机场，至少需要 3Gbps 冗余专线，仅底层光纤月租就高达 <strong>50,000 ~ 75,000 元/月</strong>；</li>
+            <li><strong>海外落地服务器机房与住宅 IP 租用：</strong> 香港、日本、美国等主流地区的优质原生住宅 IP 与机房机柜托管费，单台 1Gbps 口平均每月租金约 <strong>3,000 ~ 6,000 元</strong>。覆盖 10 个热门地区至少需要 20 台集群，月开销在 <strong>40,000 元</strong> 上下；</li>
+            <li><strong>BGP Anycast 多线高防入口服务器：</strong> 为了抵御恶意竞争对手的并发 DDoS 攻击，境内入口机房必须配置百 G 级高防硬件防火墙，每月支出约 <strong>15,000 元</strong>；</li>
+            <li><strong>研发、节点日常巡检与 7×24 小时人工客服：</strong> 至少 3 名核心网络工程师与轮班客服，月度人力薪酬在 <strong>30,000 ~ 45,000 元</strong>。</li>
+          </ul>
+          <div class="cost-summary">
+            <strong>月度最低刚性支出底线：135,000 ~ 175,000 元人民币 / 每月。</strong>
+          </div>
+        </div>
+
+        <p>
+          这意味着什么？如果一家机场采取的是 <strong>15 元/月</strong> 的良性合理定价，它需要至少拥有 <strong>10,000 名持续活跃按月付费的真实忠实用户</strong>，才能勉强抹平这笔沉重的物理支出！
+        </p>
+        <p>
+          而某些不良小商贩为了抢夺流量，推出“99 元终身永久套餐”或“5 元/月 500GB”。在前期吸纳了一批资金后，每个月却面临十几万的真金白银机房租金。当新进用户的增长曲线一旦出现钝化，<strong>当月新收的钱甚至不够付下个月的机房电费和专线租金</strong>！这就是最标准的<strong>“庞氏击穿倒计时”</strong>——只要现金流为负，跑路就只是在老板日历上挑选一个星期几的确定性事件。
+        </p>
+      </section>
+
+      <!-- Chapter 2 -->
+      <section class="chapter-block" id="chapter-signs">
+        <h2>二、跑路前夕的 7 大高危暴雷信号：老玩家眼中的生死红线</h2>
+        <p>
+          根据 Flybit 实验室追踪过去三年内 40 余起知名机场跑路公案的数据统计，机场主在拔线关服之前，其行为模式具有<strong>惊人的一致性与规律性</strong>。一旦发现你正在使用的平台命中以下 2 条以上，必须立即启动应急预案：
+        </p>
+
+        <div class="danger-signals-grid">
+          <div class="signal-card">
+            <span class="signal-tag">信号 01 // 财务收割</span>
+            <h3>断崖式低价大促，主推超长年付与永久至尊套餐</h3>
+            <p>平时从不打折的高傲机场，突然在没有任何法定节日的情况下全站弹窗“充 100 送 150”、“终身永久会员限量 100 份”。这是老板在关门前榨取最后一波存量现金的经典收割镰刀。</p>
+          </div>
+
+          <div class="signal-card">
+            <span class="signal-tag">信号 02 // 舆论封死</span>
+            <h3>官方 Telegram 交流群突然开启“全员禁言”</h3>
+            <p>原本活跃的交流群突然被管理员设置为永久禁言，理由通常冠冕堂皇为“群内广告太多整顿一天”。实际上是为了防止早期发现断网的用户在群内声讨引发群体性挤兑恐慌。</p>
+          </div>
+
+          <div class="signal-card">
+            <span class="signal-tag">信号 03 // 节点全崩</span>
+            <h3>核心骨干专线大面积飘红超 72 小时无实质进展</h3>
+            <p>不仅是小众冷门节点挂掉，连最核心的香港 01、日本 01 主力专线也全部超时。官方公告反复通篇推诿给“上游运营商拔线/海缆地震”，但几天过去没有一台机器恢复上线。</p>
+          </div>
+
+          <div class="signal-card">
+            <span class="signal-tag">信号 04 // 支付降级</span>
+            <h3>支付通道由第三方企业接口降级为个人收款码</h3>
+            <p>在充值结账页面，合规的第三方商户接口神秘消失，变成了个人静态微信二维码、甚至是私下联系客服 Telegram 转账 USDT。说明其境内支付商户号已因大面积欺诈投诉被银行司法冻结。</p>
+          </div>
+
+          <div class="signal-card">
+            <span class="signal-tag">信号 05 // 域名失联</span>
+            <h3>主域名遭污染被墙，管理团队迟迟不更新备用域名</h3>
+            <p>正规机场拥有完善的自动化主备域名轮询系统，通常 10 分钟内就能下发新域名；如果主站连续打不开好几天，连官网更新维护的意愿都已经丧失，说明团队早已作鸟兽散。</p>
+          </div>
+
+          <div class="signal-card">
+            <span class="signal-tag">信号 06 // 客服装死</span>
+            <h3>技术工单长期挂起 Pending，管理员全员离线</h3>
+            <p>提交技术工单后，超过 48 小时没有一行字回复，群管和客服账号最后上线时间停留在一周之前。此时机房服务器往往因为欠费已被上游数据中心直接断电清退。</p>
+          </div>
+
+          <div class="signal-card">
+            <span class="signal-tag">信号 07 // 狸猫换太子</span>
+            <h3>突发宣布“技术架构升级合并至某新品牌”</h3>
+            <p>发布通告声称“与某某海外顶级团队战略重组，老用户需加钱折价换新订阅”。这通常是金蝉脱壳的换皮把戏，将老用户的剩余价值最后倒卖一次后二次跑路。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Chapter 3 -->
+      <section class="chapter-block" id="chapter-cases">
+        <h2>三、历史重大暴雷惨案深度复盘：血淋淋的行业镜鉴</h2>
+
+        <div class="case-study-card">
+          <div class="case-header">
+            <span class="case-badge">CASE STUDY 01 // 恶性超售裂变型崩盘</span>
+            <h3>某“666”与“跑路梯”系列镜像站的套娃崩塌</h3>
+          </div>
+          <div class="case-body">
+            <p>
+              <strong>崩盘轨迹：</strong> 该系列平台曾以极度夸张的“5 元 1000G、买一年送两年”在各大论坛与推广站疯狂铺量引流，用户规模迅速突破十万人。但由于其采用的是公网廉价直连中转，晚高峰出口打满后丢包率高达 65%。为了应对恶评如潮，运营者不断通过复制数据库分裂出新的“小号分站”，拆东墙补西墙。
+            </p>
+            <p>
+              <strong>崩塌爆点：</strong> 最终在某年敏感时期遭遇公网大封锁，每月昂贵的高防入口直接被上游清退。由于账面几乎没有留存利润，面对每天上千条投诉，运营者直接在 Telegram 群留下一句“再见各位”后解散频道，全网涉案资金高达数百万，近十万年付用户血本无归。
+            </p>
+            <div class="case-takeaway">
+              <strong>教训：</strong> 凡是域名长得很像、多子站裂变、疯狂大促却连基本 4K 都无法流畅保证的营销型机场，本质就是击鼓传花的资金盘，绝不能碰年付！
+            </div>
+          </div>
+        </div>
+
+        <div class="case-study-card">
+          <div class="case-header">
+            <span class="case-badge">CASE STUDY 02 // 顶流神级老牌平台的骤停启示</span>
+            <h3>知名顶流老牌机场的突发失联风波</h3>
+          </div>
+          <div class="case-body">
+            <p>
+              <strong>崩盘轨迹：</strong> 曾经被行业公认为“技术天花板”、“永远的神”的某知名高阶专线机场，拥有上百条高规格物理 IPLC 专线，口碑极其过硬。然而在运营数年后，其主要核心运维人员突然在国内遭遇不可抗力的合规法律调查，导致所有海内外机房权限在一夜之间被司法冻结查封。
+            </p>
+            <p>
+              <strong>教训：</strong> 哪怕是声誉最顶级的神仙机场，在灰色网络监管环境下同样具备不可预测的“单点停机风险”。盲目信任所谓“永远不倒的大树”并一口气续费两三年，是极其不理智的资产配置冒险。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Chapter 4 -->
+      <section class="chapter-block" id="chapter-rules">
+        <h2>四、避坑自保四大铁律：老手从不踩雷的生存法则</h2>
+        <div class="rules-flex-grid">
+          <div class="rule-box">
+            <div class="rule-num">RULE 01</div>
+            <h3>月付是终极防御，永不给小机场买年付</h3>
+            <p>即使年付折扣看起来再诱人（哪怕是 5 折），也坚决只买月付或季付。将你的最大潜在损失严格锁定在十几元以内。只要你坚持月付，机场主就永远无法割你的韭菜，主动权永远握在你自己手里。</p>
+          </div>
+
+          <div class="rule-box">
+            <div class="rule-num">RULE 02</div>
+            <h3>双机场双活容灾：一主一备的黄金组合</h3>
+            <p>永远在本地客户端保留 <strong>两套独立的订阅源</strong>：第一套为主力旗舰专线机场（如光速云，保障晚高峰极速 4K 与 AI 生产力）；第二套为平价轻量月付或不限时按量计费套餐。一旦主力由于上游割接临时断网，1 秒切换，工作学习绝不掉线。</p>
+          </div>
+
+          <div class="rule-box">
+            <div class="rule-num">RULE 03</div>
+            <h3>敏感业务与海外代理的严格隔离</h3>
+            <p>坚决不在任何机场代理环境下进行国内个人网银转账、个税申报或重要政务办理。确保规则分流将所有 <code>.cn</code> 和国内直连域名彻底放行走原生家庭宽带，将代理节点纯粹限制在合规的海外学术与流媒体场景。</p>
+          </div>
+
+          <div class="rule-box">
+            <div class="rule-num">RULE 04</div>
+            <h3>节点与配置文件的本地离线备份</h3>
+            <p>在订阅导入 Clash Verge Rev 或 Shadowrocket 成功后，定期在本地导出配置备份文件。即便某天机场后台彻底挂掉无法登录，本地客户端中缓存的节点在几天内通常依然能维持基础连接。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Chapter 5 -->
+      <section class="chapter-block" id="chapter-refund">
+        <h2>五、遭遇跑路后的应急止损与争议维权全套实操手册</h2>
+
+        <div class="dispute-templates-box">
+          <h3>📝 必备武器：中英文双语支付争议（Chargeback）申诉证据模版</h3>
+          <p>遭遇海外信用卡、PayPal 或外卡支付被骗时，直接复制以下经过专业法务润色的申诉信，提交至银行风控争议处理窗口：</p>
+          
+          <div class="template-card">
+            <div class="template-head">
+              <strong>申诉信中文模版（适用于国内银行外币信用卡客服）：</strong>
+              <button type="button" class="copy-cmd-btn" onclick="navigator.clipboard.writeText(this.parentElement.nextElementSibling.innerText.trim()); this.innerText='已复制!'; setTimeout(()=>this.innerText='复制', 2000);">复制模版</button>
+            </div>
+            <pre class="template-code"><code is:raw>尊敬的信用卡争议处理中心：
+本人于 [交易日期] 使用尾号为 [卡号末四位] 的信用卡支付了一笔金额为 [金额] 的网络技术订阅服务（交易订单号：[订单号]）。
+交易完成后，商户并未按照承诺提供持续可用的网络加速连接服务，其所有服务器节点于 [断网日期] 起全线中断无法连接，且商户已彻底关闭官方交流群组并注销客服支持，构成实质性合同违约与商业欺诈。
+本人已尝试通过邮件及工单系统多次与商户沟通未果。现根据国际卡组织相关章程，正式申请对该笔交易发起“服务未提供（Services Not Rendered / Dispute Code 4853）”的拒付争议申诉，并随信附上服务器全线超时报错截图及商户失联证据。恳请协助撤销该笔授权并退还交易款项。
+持卡人签名：[姓名]
+申请日期：[日期]</code></pre>
+          </div>
+
+          <div class="template-card">
+            <div class="template-head">
+              <strong>申诉信英文模版（适用于 PayPal / Stripe / 海外发卡机构）：</strong>
+              <button type="button" class="copy-cmd-btn" onclick="navigator.clipboard.writeText(this.parentElement.nextElementSibling.innerText.trim()); this.innerText='已复制!'; setTimeout(()=>this.innerText='复制', 2000);">复制模版</button>
+            </div>
+            <pre class="template-code"><code is:raw>Dear Dispute Resolution Team,
+I am filing a formal chargeback dispute regarding transaction ID [Transaction ID], processed on [Date] for the amount of [Amount].
+The merchant promised to deliver continuous network proxy services under a subscription agreement. However, as of [Date], all merchant server endpoints completely failed to connect (100% packet loss and timeout). Furthermore, the merchant has deactivated customer support, deleted their official support channels, and ceased all operational contact.
+This constitutes a total breach of service delivery ("Services Not Rendered"). I have attached complete photographic evidence documenting the network disconnection errors, unresponsive ticket logs, and the merchant's total absence of support.
+I respectfully request a full refund and the permanent cancellation of this unauthorized transaction.
+Cardholder Name: [Your Name]
+Date: [Current Date]</code></pre>
+          </div>
+        </div>
+
+        <p>
+          如果不幸真的遭遇了平台跑路，请切记不要在空无一人的群里抱头叹气，第一时间按照以下标准化法律与支付争议通道展开挽损：
+        </p>
+
+        <div class="refund-guides-wrap">
+          <div class="guide-item">
+            <h3>💳 路径一：微信 / 支付宝支付订单商户投诉（黄金挽损期：72 小时内）</h3>
+            <p>国内免签第三方支付接口的商户最害怕的是其商户号被微信支付或支付宝风控冻结。只要投诉率达到一定比例，其整个商户资金池将被冻结 180 天。</p>
+            <div class="steps-list">
+              <div class="step-line"><strong>步骤 1：</strong> 打开微信/支付宝账单详情，找到该笔交易记录，点击「对此订单有疑问」或「投诉商户」；</div>
+              <div class="step-line"><strong>步骤 2：</strong> 投诉类型务必选择「网络虚拟商品未到账 / 虚假发货 / 欺诈」；</div>
+              <div class="step-line"><strong>步骤 3：</strong> 上传三组关键证据截图：① 网站无法打开的 404 报错图；② 客户端节点全部 Timeout 飘红截图；③ 提交技术工单长期无人应答或群组禁言截图；</div>
+              <div class="step-line"><strong>步骤 4：</strong> 在文字陈述中坚定表明：「购买了软件技术服务，付款后商户直接失联关服，涉嫌群体性网络诈骗，要求第三方支付机构协助追回款项」。</div>
+            </div>
+          </div>
+
+          <div class="guide-item">
+            <h3>🌐 路径二：Visa / MasterCard 信用卡 Chargeback 争议拒付（成功率最高）</h3>
+            <p>如果你是通过国际信用卡或 PayPal 绑卡结账，你拥有国际卡组织赋予消费者的神圣武器——<strong>Chargeback（争议拒付权）</strong>。</p>
+            <p>拨打银行卡背面的 24 小时客服热线，要求转接「信用卡争议与风控部门」，提出对该笔交易申请「服务未提供（Services Not Rendered）」拒付争议。国际卡组织规则偏向买家，若商户无法提供你成功使用该服务的系统凭证，款项通常在 15~30 个工作日内由银行全额退还至信用卡账户。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Chapter 6 -->
+      <section class="chapter-block" id="chapter-sentinel">
+        <h2>六、Flybit 实验室 42 家在册品牌抗风险健康评估准则</h2>
+        <p>
+          作为中立第三方的网络实测实验室，Flybit 对所收录的 42 家主流品牌实施严密的主动防御与哨兵巡检：
+        </p>
+
+        <div class="sentinel-grid">
+          <div class="sentinel-card">
+            <span class="sentinel-badge">巡检维度 01</span>
+            <h3>骨干物理带宽实测与丢包压测</h3>
+            <p>每晚高峰 20:30~22:30 自动执行真实千兆家庭宽带压测。凡是连续 72 小时晚高峰丢包率超过 30% 且未见官方扩容的品牌，实验室会在其页面直接加注预警。</p>
+          </div>
+
+          <div class="sentinel-card">
+            <span class="sentinel-badge">巡检维度 02</span>
+            <h3>主域名与 DNS 解析生命周期审计</h3>
+            <p>全自动探针监控品牌后台与订阅域名的健康状态，一旦发现域名被吊销或解析异常，24 小时内跟进确认其运营动态。</p>
+          </div>
+
+          <div class="sentinel-card">
+            <span class="sentinel-badge">巡检维度 03</span>
+            <h3>商业推广合规与无条件淘汰机制</h3>
+            <p>若任何在册服务商发生恶意拖欠用户退款、开启全员禁言或被证实有跑路事实，实验室将在第一时间在全网榜单中予以彻底除名并发布暴雷通报。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Chapter 7: FAQ -->
+      <section class="chapter-block" id="chapter-faq">
+        <h2>七、跑路预警与避坑防雷 18 组高频深度答疑</h2>
+        <div class="radar-faq-list">
+          
+            <div class="radar-faq-card">
+              <h3 class="faq-q"><span class="q-badge">Q1</span> 机场跑路之前，通常会有哪些最反常的征兆？</h3>
+              <p class="faq-a">跑路前最反常的征兆包括三大核心动作：第一是毫无预兆地推出“买一年送两年”或“极低价格的终身永久套餐”，以最后一次骨折收割存量现金流；第二是官方 Telegram 交流群或公告频道突然开启全员禁言，大量删除用户对节点大面积飘红超时的质疑并踢出群聊；第三是支付网关从原本正规的第三方商户频繁降级为个人微信静态收款码或仅接受加密货币 USDT。一旦三项同时命中，跑路概率高达 95% 以上。</p>
+            </div>
+          
+
+            <div class="radar-faq-card">
+              <h3 class="faq-q"><span class="q-badge">Q2</span> 为什么说“买一年送两年”或“99元永久不限时套餐”在物理和财务逻辑上100%必死？</h3>
+              <p class="faq-a">因为网络带宽是按月计费的刚性物理消耗品。正规的国际专线（IEPL/IPLC）每 1Gbps 的批发月租高达 12,000 至 25,000 元人民币。用户一次性缴纳 99 元后，如果每个月都跑 200GB 流量，机场主从第 3 个月开始就在持续为该用户倒贴服务器机房租金。随着存量用户增长，新进用户的资金无法覆盖每月巨额的固定带宽支出，财务模型在 6 至 9 个月内必然因现金流断裂而崩塌，机场主唯一的退路就是关停服务器卷款跑路。</p>
+            </div>
+          
+
+            <div class="radar-faq-card">
+              <h3 class="faq-q"><span class="q-badge">Q3</span> 如果我刚买了年付套餐，机场第二天就失联跑路了，有什么合规追回款项的途径？</h3>
+              <p class="faq-a">若通过微信或支付宝支付，请立即进入账单详情点击“对此订单有疑问”，选择“未收到商品/欺诈”，上传节点全红无法连接和工单失联的截图。第三方免签网关极其惧怕微信/支付宝商户号被封控，往往会被迫退款。若使用 Visa/MasterCard 或 PayPal 支付，致电发卡银行提起“未收到服务（Goods/Services Not Received）”的 Chargeback 拒付争议，海外卡组织在商户失联的情况下会将款项强制原路划回。</p>
+            </div>
+          
+
+            <div class="radar-faq-card">
+              <h3 class="faq-q"><span class="q-badge">Q4</span> 为什么老玩家都坚持“多订阅容灾配置”，从不把所有鸡蛋放在同一个篮子里？</h3>
+              <p class="faq-a">因为再高端的专线机场也无法 100% 免疫偶发性的上游市政光缆挖断、海底光缆地震故障或上游机房断电合规清查。老玩家的标准配置是“1 家高可用 IEPL/IPLC 专线主力机场（满足 4K 追剧、AI 办公与低延迟），搭配 1 家平价轻量月付或不限时按量计费机场作为容灾备用”。在客户端中将两个订阅同时导入，一旦主力出现波动，1 秒切换，彻底告别单点失联的恐慌。</p>
+            </div>
+          
+
+            <div class="radar-faq-card">
+              <h3 class="faq-q"><span class="q-badge">Q5</span> 遭遇跑路后，我的客户端配置与个人信息会泄露给黑客吗？</h3>
+              <p class="faq-a">你的个人密码如果与日常邮箱或银行密码相同，存在极高的撞库风险（因为部分不规范的小机场数据库采用弱哈希甚至明文存储用户密码）。但对于你曾经浏览的 HTTPS 加密网页与账号密码，机场主由于没有私钥，是绝对无法解密的。跑路后唯一需要做的是：立即停用该订阅链接，并在其他网站修改与该机场相同的登录密码。</p>
+            </div>
+          
+
+            <div class="radar-faq-card">
+              <h3 class="faq-q"><span class="q-badge">Q6</span> 怎么判断一家机场是“临时维护断网”还是“真的跑路了”？</h3>
+              <p class="faq-a">观察其核心管理域名的解析状态与官方公告。如果是正规维护，管理团队通常会在故障发生后 30 分钟内通过备用 Telegram 频道或 Twitter/X 发出通告，且工单系统和后台依然可以正常登录；如果是跑路，官方交流群通常会先禁言、网站主域名直接解析到 127.0.0.1 或直接报域名未注册（NXDOMAIN），且客服超过 72 小时彻底人间蒸发。</p>
+            </div>
+          
+
+            <div class="radar-faq-card">
+              <h3 class="faq-q"><span class="q-badge">Q7</span> 为什么廉价直连机场跑路概率最高，而自建专线机场跑路概率极低？</h3>
+              <p class="faq-a">廉价直连机场几乎没有任何固定资产投入，买两台几美元的海外 VPS 挂个开源一键面板就能开门营业，沉没成本极低，当晚高峰被防火墙封锁 IP 导致更换 IP 成本过高时，老板随时拍拍屁股换个域名重新再来；而具备自研内网专线的大牌机场（如光速云），在境内入口机房、专线长约合同、多地域负载均衡与客服团队上投入了数十万级重资产，品牌具备极高商誉价值，不会为了几百块蝇头小利轻易跑路。</p>
+            </div>
+          
+
+            <div class="radar-faq-card">
+              <h3 class="faq-q"><span class="q-badge">Q8</span> 很多机场宣称“海外离岸运营团队，绝不跑路”，这种话可信吗？</h3>
+              <p class="faq-a">不可信。“海外团队”是灰色网络服务行业最常用的免责话术。不管团队身在何处，只要其面向中国大陆用户提供跨境加速服务，其境内入口节点服务器依然依赖中国大陆境内的机房与运营商骨干网络。一旦境内入口机房遭遇合规排查，无论其团队在新加坡还是欧美，服务同样会瞬间中断。因此，评判健康度的唯一标准是其技术冗余度与财务稳健度，而非口头声称的肉身所在地。</p>
+            </div>
+          
+
+            <div class="radar-faq-card">
+              <h3 class="faq-q"><span class="q-badge">Q9</span> 什么是“套壳二道贩子机场”？为什么它们是跑路高发重灾区？</h3>
+              <p class="faq-a">套壳二道贩子是指一些没有任何机房资源和运维技术的个人，从上游大机场批量购买批发账号（Wholesale API），然后自己花几十块钱买个模板网站加价转售。一旦上游大机场对其停止供货，或者二道贩子收齐了一波年付资金，就会立即关闭网站跑路。识别套壳二道贩子的最好方法是看其测速节点 ISP 归属和工单技术回复能力。</p>
+            </div>
+          
+
+            <div class="radar-faq-card">
+              <h3 class="faq-q"><span class="q-badge">Q10</span> Flybit 实验室的“避坑雷达”如何对上榜品牌进行日常动态监控？</h3>
+              <p class="faq-a">实验室构建了自动化全天候网络探针，每隔 15 分钟对在册品牌的入口连通性、TLS 握手延迟、晚高峰丢包率与官网主域名解析进行全自动健康巡检。一旦探针捕捉到某个品牌连续 48 小时晚高峰丢包率超过 30%、或者官方群组出现大面积封禁异常，雷达系统会自动在品牌页面打上黄色预警标签，提醒用户暂停大额续费。</p>
+            </div>
+          
+        
+            <div class="radar-faq-card">
+              <h3 class="faq-q"><span class="q-badge">Q11</span> 机场主跑路后，会不会把所有用户的注册邮箱与密码打包卖给地下黑客撞库？</h3>
+              <p class="faq-a">存在极高且真实的次生灾害风险！行业统计显示，近四成跑路的小机场在关服跑路前或跑路后，其管理数据库会被直接挂在暗网论坛或 Telegram 黑产交易群转卖变现。由于许多小白用户习惯在所有网站使用同一套“常用邮箱 + 相同密码”，黑客拿到该数据库后，会使用自动化脚本批量撞库你的网易/QQ邮箱、Apple ID、Steam 账号乃至社交平台。因此，遭遇跑路后的第一要务，绝不仅是心疼套餐费用，而是必须在 24 小时内全面修改与该机场相同或相似的所有核心账号密码，并开启两步验证（2FA）！</p>
+            </div>
+
+
+            <div class="radar-faq-card">
+              <h3 class="faq-q"><span class="q-badge">Q12</span> 为什么有些机场在暴雷跑路前几天，节点测速跑分反而异常飙高、全屏飘绿？</h3>
+              <p class="faq-a">这被称为跑路前的“回光返照陷阱”。背后的技术障眼法有两种：第一，机场主为了在最后几天的大促中引诱用户下单大额年付，临时向主机商申请了按小时计费的昂贵弹性突发测试带宽（Burst Bandwidth），或者直接将所有用户路由汇聚到两台未经限速的全新落地机房，制造出“百兆秒开、延迟低至 15ms”的假象；第二，部分机场在后端测速节点做了缓存劫持，识别到 Speedtest 或 YouTube 测速流量就强行放行，而普通网页早已卡死。永远不要被单次孤立的绿屏测速图蒙蔽双眼。</p>
+            </div>
+
+
+            <div class="radar-faq-card">
+              <h3 class="faq-q"><span class="q-badge">Q13</span> 怎么利用第三方 DNS 历史工具自查机场域名的真实存活底细与虚假宣传？</h3>
+              <p class="faq-a">善用三款完全免费的国际网络取证工具即可让骗子无所遁形：第一，使用 ViewDNS.info 或 Whois.domaintools.com 查其主域名的注册时间（Creation Date）。如果一个号称“五年老牌大厂”的网站，其主域名注册时间其实就在三个月前，谎言不攻自破；第二，使用 SecurityTrails 查询该域名的历史解析 IP（Historical DNS），观察其入口机房更换频率。若一年内更换了五六次低质廉价机房，说明其上游关系极不稳定；第三，使用 ICP 备案查询确认该域名是否挂靠在国内空壳企业身上（合规风险极高）。</p>
+            </div>
+
+
+            <div class="radar-faq-card">
+              <h3 class="faq-q"><span class="q-badge">Q14</span> 机场声称“上游机房光缆被挖断，停机检修一个月”，这到底是真故障还是跑路缓兵之计？</h3>
+              <p class="faq-a">百分之九十九是跑路前的缓兵之计与拖延公关！在现代国际电信工程中，任何正规的数据中心和海缆物理管道均具备“N+1”甚至“2N”级别的环形主备容灾自愈能力。哪怕发生台湾海峡地震导致海底光缆中断，顶级运营商在 2 至 6 小时内就会通过备用波长完成跨境流量的紧急调度绕行。声称“需要停机一个月检修”的服务商，真实情况通常是其欠费被机房直接拔线封锁，或者老板已经转移资产准备关门，所谓的停机公告纯粹是为了防止用户集中投诉申请微信支付宝退款的缓兵毒计。</p>
+            </div>
+
+
+            <div class="radar-faq-card">
+              <h3 class="faq-q"><span class="q-badge">Q15</span> 如果通过 USDT（TRC-20）支付被骗，区块链链上追溯真的一点用都没有吗？</h3>
+              <p class="faq-a">对于普通个人用户而言，追回款项的概率无限接近于零。区块链的底层特性是不可篡改与匿名非中心化，没有发卡行或平台客服可以为你执行强制撤销交易。骗子在收到 USDT 后，通常会在 10 分钟内通过链上自动化多层洗钱合约（如混币器 Tornado Cash 或分散转入数十个去中心化钱包并最终进入海外免实名交易所变现）。向链上追溯需要公安网安部门立案并跨国协查，沉没维权成本巨大。这也是为什么老手坚决不在信誉存疑的小机场使用虚拟币支付的核心原因。</p>
+            </div>
+
+
+            <div class="radar-faq-card">
+              <h3 class="faq-q"><span class="q-badge">Q16</span> 遭遇跑路后，本地电脑里的 Clash Verge 或小火箭需要卸载并格式化系统吗？</h3>
+              <p class="faq-a">完全不需要恐慌性格式化系统！开源权威客户端（如 Clash Verge Rev、Mihomo 内核、Shadowrocket、Sing-box）本身是完全经过全球开源社区严格安全审计的独立中立工具，它们与跑路的机场之间仅仅是“读取外部配置链接”的关系。机场主失联，受影响的只是那串远程订阅 URL 无法更新节点而已，你的操作系统和本地文件没有任何安全风险。你只需要在客户端配置列表中，右键将该失效订阅彻底删除，即可完全清除其所有网络残留。</p>
+            </div>
+
+
+            <div class="radar-faq-card">
+              <h3 class="faq-q"><span class="q-badge">Q17</span> 为什么说“合租车队（拼车）”比单人直接买大套餐更具抗风险自保韧性？</h3>
+              <p class="faq-a">合租拼车是老玩家分摊资金风险的最优解。一家月付 30 元支持 5 设备并发的优质专线套餐，如果由 3~4 名熟人朋友或可靠车友共同拼车平摊，每个人每月的实际支出仅需 7~8 元钱。即便某一天该服务发生意外波动，每个人沉没的成本甚至还不足一瓶可乐钱。同时，车队中通常有懂技术的车友日常关注节点健康度，信息互通，可以第一时间捕捉到异常风向并集体组织迁移。</p>
+            </div>
+
+
+            <div class="radar-faq-card">
+              <h3 class="faq-q"><span class="q-badge">Q18</span> 遇到突发跑路导致工作紧急阻断，3 分钟内寻找最快正规应急出海替代方案的避险路线？</h3>
+              <p class="faq-a">请立即执行两套零成本急救预案：第一方案：访问正规大牌机场（如光速云、微风网络等具备长期口碑的品牌），使用免费邮箱注册领取其官方提供的免费试用额度（2GB~5GB），一键导入订阅，耗时不超过 2 分钟即可应急恢复网络；第二方案：利用手机或电脑下载官方 Cloudflare WARP 客户端，开启 1.1.1.1 免费加密连接，虽然晚高峰速度一般，但足以支撑你顺畅收发紧急邮件、调用 ChatGPT 以及登录后台恢复关键业务。</p>
+            </div>
+
+        </div>
+      </section>
+
+      <!-- Cross Domain Linking -->
+      <section class="radar-cross-links">
+        <h2>全站网络实测与知识矩阵导航</h2>
+        <div class="cross-grid">
+          <a href="/faq" class="cross-card">
+            <span class="card-icon">💡</span>
+            <div class="card-text">
+              <h3>50 组疑难排障急诊室</h3>
+              <p>系统排查连不上、TUN网卡冲突、DNS泄漏与流媒体AI报错全套解药。</p>
+            </div>
+          </a>
+          <a href="/free" class="cross-card">
+            <span class="card-icon">🎁</span>
+            <div class="card-text">
+              <h3>免费试用与节点安全白皮书</h3>
+              <p>15 家大牌官方试用清单、Cloudflare Workers/WARP 部署与防窃密指南。</p>
+            </div>
+          </a>
+          <a href="/brands" class="cross-card">
+            <span class="card-icon">🏢</span>
+            <div class="card-text">
+              <h3>42 家主流机场品牌库</h3>
+              <p>查阅 42 家主流品牌的中立实测数据、晚高峰延迟与真实优缺点。</p>
+            </div>
+          </a>
+          <a href="/clients" class="cross-card">
+            <span class="card-icon">📱</span>
+            <div class="card-text">
+              <h3>全平台客户端配置中心</h3>
+              <p>Windows、macOS、iOS 小火箭、Android 与 OpenClash 路由器一键导入图文指南。</p>
+            </div>
+          </a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Interactive Calculator JavaScript -->
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const selects = document.querySelectorAll('.factor-select');
+      const scoreEl = document.getElementById('risk-score');
+      const statusEl = document.getElementById('risk-status');
+      const adviceEl = document.getElementById('risk-advice');
+      const displayBox = document.getElementById('calc-result-display');
+
+      function calculateRisk() {
+        let total = 0;
+        selects.forEach(sel => {
+          total += parseInt(sel.value || '0', 10);
+        });
+
+        // Cap at 100
+        if (total > 100) total = 100;
+        if (scoreEl) scoreEl.innerText = total.toString();
+
+        if (displayBox && statusEl && adviceEl) {
+          displayBox.className = 'calc-result-box';
+          if (total <= 25) {
+            displayBox.classList.add('safe');
+            statusEl.innerText = '🟢 稳健健康（极低风险）';
+            statusEl.style.color = '#10b981';
+            adviceEl.innerText = '该平台的各项指标均处于正常且健康的运营区间，财务模型合理，建议保持按月或按季正常使用。';
+          } else if (total <= 55) {
+            displayBox.classList.add('warning');
+            statusEl.innerText = '🟡 观察预警（中度超售风险）';
+            statusEl.style.color = '#f59e0b';
+            adviceEl.innerText = '该平台存在一定程度的超售或营销反常迹象。坚决不要购买半年或年付套餐，建议严格保持月付体验，并备份备用节点。';
+          } else {
+            displayBox.classList.add('danger');
+            statusEl.innerText = '🔴 红色高危（典型跑路前夕征兆）';
+            statusEl.style.color = '#ef4444';
+            adviceEl.innerText = '严重警告：该平台已命中多项行业跑路生死红线！极可能处于资金链即将断裂或最后敛财阶段，请立即停止续费，抓紧备份本地配置！';
+          }
+        }
+      }
+
+      selects.forEach(sel => sel.addEventListener('change', calculateRisk));
+      calculateRisk();
+    });
+  </script>
+
+  <style>
+    /* Financial Table */
+    .financial-model-comparison {
+      margin: 2rem 0;
+    }
+    .financial-model-comparison h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .table-wrap {
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    .faq-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      text-align: left;
+    }
+    .faq-table th, .faq-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-table th {
+      background: var(--bg-surface);
+      color: var(--text);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .faq-table td {
+      color: var(--text-muted);
+    }
+    .faq-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Dispute Templates */
+    .dispute-templates-box {
+      margin: 2rem 0;
+    }
+    .dispute-templates-box h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .template-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-top: 1.25rem;
+      overflow: hidden;
+    }
+    .template-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.65rem 1rem;
+      background: #111827;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.85rem;
+      color: var(--text);
+    }
+    .copy-cmd-btn {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #38bdf8;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .copy-cmd-btn:hover {
+      background: rgba(56, 189, 248, 0.1);
+    }
+    .template-code {
+      margin: 0;
+      padding: 1rem;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      background: #090d16;
+      color: #94a3b8;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      white-space: pre-wrap;
+    }
+
+    .radar-page-wrapper {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 5rem;
+    }
+
+    /* Hero */
+    .radar-hero {
+      text-align: center;
+      padding: 3rem 1rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2.5rem;
+    }
+
+    .radar-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #f59e0b;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      margin-bottom: 1.25rem;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-weight: 800;
+      line-height: 1.25;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin-bottom: 1.1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+      max-width: 860px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .meta-strip {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .meta-separator {
+      opacity: 0.4;
+    }
+
+    /* Status Summary Board */
+    .board-heading {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .status-summary-board {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .status-card {
+      display: flex;
+      gap: 1rem;
+      padding: 1.25rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .status-card.safe { border-left: 4px solid #10b981; }
+    .status-card.warning { border-left: 4px solid #f59e0b; }
+    .status-card.danger { border-left: 4px solid #ef4444; }
+
+    .status-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .status-info h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 0 0 0.35rem;
+      color: var(--text);
+    }
+
+    .status-info p {
+      font-size: 0.86rem;
+      line-height: 1.5;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* Calculator Section */
+    .calculator-section {
+      background: var(--bg-surface);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 14px;
+      padding: 2.25rem;
+      margin-bottom: 4rem;
+      box-shadow: 0 4px 25px rgba(0,0,0,0.25);
+    }
+
+    .calc-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+    }
+
+    .calc-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: #38bdf8;
+      margin-bottom: 0.5rem;
+    }
+
+    .calc-header h2 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: var(--text);
+      margin: 0 0 0.5rem;
+    }
+
+    .calc-header p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .factors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .factor-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .factor-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.92rem;
+      color: var(--text);
+    }
+
+    .factor-num {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      color: #38bdf8;
+      font-size: 0.8rem;
+    }
+
+    .factor-select {
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.65rem 0.85rem;
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .factor-select:focus {
+      border-color: #f59e0b;
+    }
+
+    /* Result Box */
+    .calc-result-box {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 2rem;
+      padding: 1.5rem;
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .calc-result-box.safe { border-color: rgba(16, 185, 129, 0.4); background: rgba(16, 185, 129, 0.03); }
+    .calc-result-box.warning { border-color: rgba(245, 158, 11, 0.4); background: rgba(245, 158, 11, 0.03); }
+    .calc-result-box.danger { border-color: rgba(239, 68, 68, 0.4); background: rgba(239, 68, 68, 0.04); }
+
+    .result-dial-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 140px;
+      padding: 0.5rem 1rem;
+      border-right: 1px solid var(--border);
+    }
+
+    .score-number {
+      font-size: 3rem;
+      font-weight: 900;
+      font-family: var(--font-mono);
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .score-unit {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.35rem;
+    }
+
+    .result-text-wrap {
+      flex: 1;
+      min-width: 260px;
+    }
+
+    .result-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin: 0 0 0.5rem;
+    }
+
+    .result-desc {
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* Chapters Content */
+    .radar-content-main {
+      display: flex;
+      flex-direction: column;
+      gap: 3.5rem;
+    }
+
+    .chapter-block {
+      border-top: 1px solid var(--border);
+      padding-top: 2.5rem;
+    }
+
+    .chapter-block h2 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.01em;
+    }
+
+    .chapter-block p {
+      font-size: 0.98rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .chapter-block strong {
+      color: var(--text);
+    }
+
+    /* Cost Box */
+    .cost-breakdown-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem 1.75rem;
+      margin: 1.5rem 0;
+    }
+
+    .cost-breakdown-box h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .cost-breakdown-box ul {
+      margin: 0 0 1.25rem;
+      padding-left: 1.25rem;
+    }
+
+    .cost-breakdown-box li {
+      font-size: 0.92rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .cost-summary {
+      font-size: 1.05rem;
+      color: #38bdf8;
+      font-weight: 800;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Danger Signals Grid */
+    .danger-signals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .signal-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      position: relative;
+    }
+
+    .signal-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.1);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      margin-bottom: 0.75rem;
+    }
+
+    .signal-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem;
+      color: var(--text);
+    }
+
+    .signal-card p {
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* Case Studies */
+    .case-study-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .case-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #f59e0b;
+      margin-bottom: 0.35rem;
+    }
+
+    .case-header h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0 0 0.85rem;
+      color: var(--text);
+    }
+
+    .case-body p {
+      margin-bottom: 0.85rem;
+    }
+
+    .case-takeaway {
+      background: rgba(56, 189, 248, 0.05);
+      border-left: 3px solid #38bdf8;
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-top: 1rem;
+    }
+
+    /* Rules Flex Grid */
+    .rules-flex-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.25rem;
+    }
+
+    .rule-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+    }
+
+    .rule-num {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 900;
+      color: #10b981;
+      margin-bottom: 0.5rem;
+    }
+
+    .rule-box h3 {
+      font-size: 0.98rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem;
+      color: var(--text);
+    }
+
+    .rule-box p {
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* Refund Guides */
+    .refund-guides-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 1.25rem;
+    }
+
+    .guide-item {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+    }
+
+    .guide-item h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 0 0 0.75rem;
+      color: var(--text);
+    }
+
+    .steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .step-line {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Sentinel Grid */
+    .sentinel-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.25rem;
+    }
+
+    .sentinel-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+    }
+
+    .sentinel-badge {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #38bdf8;
+      margin-bottom: 0.35rem;
+      display: block;
+    }
+
+    .sentinel-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem;
+      color: var(--text);
+    }
+
+    .sentinel-card p {
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* FAQ List */
+    .radar-faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+
+    .radar-faq-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+    }
+
+    .faq-q {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 0.65rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .q-badge {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      background: rgba(245, 158, 11, 0.15);
+      color: #f59e0b;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+    }
+
+    .faq-a {
+      font-size: 0.92rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* Cross Links */
+    .radar-cross-links {
+      border-top: 1px solid var(--border);
+      padding-top: 3rem;
+    }
+
+    .radar-cross-links h2 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+
+    .cross-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .cross-card {
+      display: flex;
+      gap: 1rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.15rem;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .cross-card:hover {
+      border-color: #f59e0b;
+      transform: translateY(-2px);
+    }
+
+    .card-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .card-text h3 {
+      font-size: 0.96rem;
+      font-weight: 700;
+      margin: 0 0 0.35rem;
+      color: var(--text);
+    }
+
+    .card-text p {
+      font-size: 0.82rem;
+      line-height: 1.5;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      .hero-title { font-size: 1.6rem; }
+      .calculator-section { padding: 1.5rem 1rem; }
+      .calc-result-box { flex-direction: column; text-align: center; }
+      .result-dial-wrap { border-right: none; border-bottom: 1px solid var(--border); width: 100%; padding-bottom: 1rem; }
+    }
+  </style>
+</BaseLayout>
