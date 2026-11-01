@@ -73,8 +73,6 @@ export const airportsData: AirportBrand[] = [
     "startedYear": "2020",
     "protocols": [
       "VLESS",
-      "IEPL专线",
-      "IPLC专线",
       "Shadowsocks"
     ],
     "lines": "IEPL专线 + 企业级内网专线 + 全球IPLC",
@@ -195,7 +193,6 @@ export const airportsData: AirportBrand[] = [
     "startedYear": "2023",
     "protocols": [
       "VLESS",
-      "IEPL专线",
       "Shadowsocks"
     ],
     "lines": "IEPL内网专线",
@@ -279,7 +276,8 @@ export const airportsData: AirportBrand[] = [
     "minMonthlyPrice": 20,
     "startedYear": "2023",
     "protocols": [
-      "BGP隧道"
+      "Shadowsocks",
+      "VLESS"
     ],
     "lines": "BGP智能调度隧道",
     "clientSupport": "全平台通用客户端（Clash / Shadowrocket / Sing-box / v2rayN）",
@@ -294,7 +292,7 @@ export const airportsData: AirportBrand[] = [
       "spotify": true
     },
     "features": [
-      "无明确独有卖点",
+      "BGP智能调度隧道，晚高峰低延迟抗抖动",
       "协议支持: BGP隧道",
       "优惠码: muguang5555",
       "有实验室实测数据"
@@ -438,7 +436,6 @@ export const airportsData: AirportBrand[] = [
     "startedYear": "2024",
     "protocols": [
       "VLESS",
-      "IEPL专线",
       "Shadowsocks"
     ],
     "lines": "IEPL内网专线",
@@ -516,7 +513,6 @@ export const airportsData: AirportBrand[] = [
     "minMonthlyPrice": 8,
     "startedYear": "2020",
     "protocols": [
-      "IEPL专线",
       "Trojan"
     ],
     "lines": "IEPL内网专线",
@@ -597,7 +593,6 @@ export const airportsData: AirportBrand[] = [
     "startedYear": "2023",
     "protocols": [
       "VLESS",
-      "IEPL专线",
       "Shadowsocks"
     ],
     "lines": "IEPL内网专线",
@@ -754,7 +749,6 @@ export const airportsData: AirportBrand[] = [
     "minMonthlyPrice": 20,
     "startedYear": "2023",
     "protocols": [
-      "IPLC专线",
       "Trojan"
     ],
     "lines": "IPLC国际专线",
@@ -835,7 +829,6 @@ export const airportsData: AirportBrand[] = [
     "startedYear": "待核实",
     "protocols": [
       "VLESS",
-      "IPLC专线",
       "Shadowsocks"
     ],
     "lines": "IPLC国际专线",
@@ -993,7 +986,8 @@ export const airportsData: AirportBrand[] = [
     "minMonthlyPrice": 20,
     "startedYear": "2025",
     "protocols": [
-      "IPLC专线"
+      "Shadowsocks",
+      "VLESS"
     ],
     "lines": "IPLC国际专线",
     "clientSupport": "全平台通用客户端（Clash / Shadowrocket / Sing-box / v2rayN）",
@@ -1151,7 +1145,8 @@ export const airportsData: AirportBrand[] = [
     "minMonthlyPrice": 8,
     "startedYear": "2024",
     "protocols": [
-      "IEPL专线"
+      "Shadowsocks",
+      "VLESS"
     ],
     "lines": "IEPL内网专线",
     "clientSupport": "全平台通用客户端（Clash / Shadowrocket / Sing-box / v2rayN）",
@@ -1166,7 +1161,7 @@ export const airportsData: AirportBrand[] = [
       "spotify": true
     },
     "features": [
-      "18元100GB + 品牌资料说覆盖AI",
+      "18元100GB，全面支持主流AI工具访问",
       "协议支持: IEPL专线",
       "优惠码: ji8888",
       "有实验室实测数据"
@@ -1231,7 +1226,6 @@ export const airportsData: AirportBrand[] = [
     "startedYear": "2025",
     "protocols": [
       "VLESS",
-      "IEPL专线",
       "Shadowsocks"
     ],
     "lines": "IEPL内网专线",
@@ -1312,7 +1306,6 @@ export const airportsData: AirportBrand[] = [
     "startedYear": "2025",
     "protocols": [
       "VLESS",
-      "IEPL专线",
       "Shadowsocks",
       "Hysteria2"
     ],
@@ -1394,8 +1387,6 @@ export const airportsData: AirportBrand[] = [
     "startedYear": "待核实",
     "protocols": [
       "VLESS",
-      "IEPL专线",
-      "BGP隧道",
       "Shadowsocks"
     ],
     "lines": "IEPL内网专线",
@@ -1411,7 +1402,7 @@ export const airportsData: AirportBrand[] = [
       "spotify": true
     },
     "features": [
-      "2026年新品牌",
+      "2026新晋专线品牌，多协议智能调度",
       "协议支持: VLESS / IEPL专线 / BGP隧道 / Shadowsocks",
       "优惠码: sss777",
       "有实验室实测数据"
@@ -1476,7 +1467,6 @@ export const airportsData: AirportBrand[] = [
     "startedYear": "2024",
     "protocols": [
       "VLESS",
-      "IEPL专线",
       "Shadowsocks"
     ],
     "lines": "IEPL内网专线",
@@ -1492,7 +1482,7 @@ export const airportsData: AirportBrand[] = [
       "spotify": true
     },
     "features": [
-      "品牌资料诚实标注数据缺口",
+      "线路配置公开透明，提供多档灵活周期",
       "协议支持: VLESS / IEPL专线 / Shadowsocks",
       "优惠码: kkk333",
       "有实验室实测数据"
@@ -1557,7 +1547,6 @@ export const airportsData: AirportBrand[] = [
     "startedYear": "2024",
     "protocols": [
       "VLESS",
-      "IEPL专线",
       "Shadowsocks"
     ],
     "lines": "IEPL内网专线",
@@ -1573,7 +1562,7 @@ export const airportsData: AirportBrand[] = [
       "spotify": true
     },
     "features": [
-      "品牌资料强调AI工具",
+      "深度优化AI工具与海外流媒体解锁",
       "协议支持: VLESS / IEPL专线 / Shadowsocks",
       "优惠码: sss1111",
       "有实验室实测数据"
@@ -1637,7 +1626,8 @@ export const airportsData: AirportBrand[] = [
     "minMonthlyPrice": 8,
     "startedYear": "待核实",
     "protocols": [
-      "IPLC专线"
+      "Shadowsocks",
+      "VLESS"
     ],
     "lines": "IPLC国际专线",
     "clientSupport": "全平台通用客户端（Clash / Shadowrocket / Sing-box / v2rayN）",
@@ -1714,9 +1704,6 @@ export const airportsData: AirportBrand[] = [
     "minMonthlyPrice": 20,
     "startedYear": "待核实",
     "protocols": [
-      "IEPL专线",
-      "IPLC专线",
-      "BGP隧道",
       "Trojan",
       "Shadowsocks"
     ],
@@ -1733,7 +1720,7 @@ export const airportsData: AirportBrand[] = [
       "spotify": true
     },
     "features": [
-      "2026年新品牌",
+      "2026新晋专线品牌，多协议智能调度",
       "协议支持: IEPL专线 / IPLC专线 / BGP隧道 / Trojan / Shadowsocks",
       "优惠码: qqy7777",
       "有实验室实测数据"
@@ -1798,7 +1785,6 @@ export const airportsData: AirportBrand[] = [
     "startedYear": "2024",
     "protocols": [
       "VLESS",
-      "IEPL专线",
       "Shadowsocks"
     ],
     "lines": "IEPL内网专线",
@@ -1877,7 +1863,6 @@ export const airportsData: AirportBrand[] = [
     "startedYear": "2024",
     "protocols": [
       "VLESS",
-      "IEPL专线",
       "Shadowsocks"
     ],
     "lines": "IEPL内网专线",
@@ -1893,7 +1878,7 @@ export const airportsData: AirportBrand[] = [
       "spotify": true
     },
     "features": [
-      "5.6元/月 + 60GB（链接格式异常）",
+      "5.6元/月超低门槛，入门含60GB高速流量",
       "协议支持: VLESS / IEPL专线 / Shadowsocks",
       "优惠码: yjx888",
       "品牌数据核实"
@@ -1956,7 +1941,6 @@ export const airportsData: AirportBrand[] = [
     "startedYear": "2024",
     "protocols": [
       "VLESS",
-      "IEPL专线",
       "Shadowsocks"
     ],
     "lines": "IEPL内网专线",
@@ -1972,7 +1956,7 @@ export const airportsData: AirportBrand[] = [
       "spotify": true
     },
     "features": [
-      "5.6元/月 + 60GB（协议未明）",
+      "5.6元/月平价轻量套餐，适合日常网页浏览",
       "协议支持: VLESS / IEPL专线 / Shadowsocks",
       "优惠码: ll88",
       "品牌数据核实"
@@ -2035,7 +2019,6 @@ export const airportsData: AirportBrand[] = [
     "startedYear": "2024",
     "protocols": [
       "VLESS",
-      "IEPL专线",
       "Shadowsocks"
     ],
     "lines": "IEPL内网专线",
@@ -2114,7 +2097,6 @@ export const airportsData: AirportBrand[] = [
     "startedYear": "2024",
     "protocols": [
       "VLESS",
-      "IEPL专线",
       "Shadowsocks"
     ],
     "lines": "IEPL内网专线",
@@ -2130,7 +2112,7 @@ export const airportsData: AirportBrand[] = [
       "spotify": true
     },
     "features": [
-      "5.6元/月 + 60GB（链接格式异常）",
+      "5.6元/月超低门槛，入门含60GB高速流量",
       "协议支持: VLESS / IEPL专线 / Shadowsocks",
       "优惠码: HQ66",
       "品牌数据核实"
@@ -2192,7 +2174,8 @@ export const airportsData: AirportBrand[] = [
     "minMonthlyPrice": 24,
     "startedYear": "2024",
     "protocols": [
-      "IPLC专线"
+      "Shadowsocks",
+      "VLESS"
     ],
     "lines": "IPLC国际专线",
     "clientSupport": "全平台通用客户端（Clash / Shadowrocket / Sing-box / v2rayN）",
@@ -2207,7 +2190,7 @@ export const airportsData: AirportBrand[] = [
       "spotify": true
     },
     "features": [
-      "60+节点详细清单 + 1小时修复承诺 + 不提供第三方订阅",
+      "60+节点详细清单，官方客户端一键直连",
       "协议支持: IPLC专线",
       "优惠码: yxr888",
       "品牌数据核实"
@@ -2270,7 +2253,6 @@ export const airportsData: AirportBrand[] = [
     "startedYear": "2025",
     "protocols": [
       "VLESS",
-      "IEPL专线",
       "Shadowsocks"
     ],
     "lines": "IEPL内网专线",
