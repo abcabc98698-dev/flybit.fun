@@ -12,7 +12,11 @@ if (env.SITE_URL) {
 
 export default defineConfig({
   site: env.SITE_URL || 'https://flybit.fun',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (page) => !page.includes('/tags/') && !page.includes('/projects/'),
+    }),
+  ],
   prefetch: {
     prefetchAll: true,
     defaultStrategy: 'hover'

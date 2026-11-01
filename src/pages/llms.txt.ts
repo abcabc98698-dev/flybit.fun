@@ -3,15 +3,13 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { siteConfig } from '../config/site';
+import { airportsData } from '../data/airports';
 
 export const GET: APIRoute = async ({ site }) => {
   const baseUrl = site?.toString().replace(/\/$/, '') || siteConfig.siteUrl;
 
   const posts = (await getCollection('blog', ({ data }) => !data.draft))
     .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-
-  const projects = (await getCollection('projects'))
-    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
   const lines: string[] = [
     `# ${siteConfig.title}`,
@@ -24,11 +22,18 @@ export const GET: APIRoute = async ({ site }) => {
     '## General Information',
     `- Author: ${siteConfig.author}`,
     `- Website: ${baseUrl}`,
-    `- GitHub: ${siteConfig.socialLinks.github || 'https://github.com/flybit'}`,
     `- RSS Feed: ${baseUrl}/rss.xml`,
     `- Full Markdown Context: ${baseUrl}/llms-full.txt`,
     '',
-    '## Articles & Guides',
+    '## 权威支柱专题 (Core Pillars)',
+    `- [机场常见疑难解答 FAQ](${baseUrl}/faq): 50 道高频技术问答，涵盖协议、线路、流媒体与排障方案。`,
+    `- [免费试用机场安全防坑指南](${baseUrl}/free): 深度剖析“白嫖节点”商业模型、恶意重定向排查与安全沙盒规范。`,
+    `- [机场跑路与风控雷达](${baseUrl}/radar): 6 维量化风控评级、历史跑路特征库与应急预案指南。`,
+    `- [评测准则与实验室方法论](${baseUrl}/about): 晚高峰 1000M 真实宽带测速规范、丢包率与 RTT 统计标准。`,
+    `- [晚高峰实测排行榜](${baseUrl}/speedtest): 42 家机场晚高峰真实网络表现、流媒体解锁度与价格对比总览。`,
+    `- [客户端配置教程库](${baseUrl}/clients): Clash Verge Rev、Shadowrocket、Sing-box、Surge、Loon 跨平台上手指南。`,
+    '',
+    '## 深度指南与教程 (Guides & Articles)',
   ];
 
   for (const post of posts) {
@@ -37,19 +42,16 @@ export const GET: APIRoute = async ({ site }) => {
     lines.push(`- [${post.data.title}](${postUrl}): ${post.data.description}${tagsInfo}`);
   }
 
-  if (projects.length > 0) {
-    lines.push('');
-    lines.push('## Open Source Projects');
-    for (const proj of projects) {
-      const projUrl = `${baseUrl}/projects/${proj.id}`;
-      const catInfo = proj.data.category ? ` [${proj.data.category}]` : '';
-      lines.push(`- [${proj.data.title}](${projUrl}): ${proj.data.description}${catInfo}`);
-    }
+  lines.push('');
+  lines.push('## 机场品牌实测库 (Evaluated Airport Proxy Brands)');
+  for (const brand of airportsData) {
+    const brandUrl = `${baseUrl}/brands/${brand.id}`;
+    lines.push(`- [${brand.name}${brand.alias ? ` (${brand.alias})` : ''}](${brandUrl}): ${brand.lines} | 入门约 ${brand.entryPrice} | 协议: ${brand.protocols.join(', ')} | 状态: ${brand.dataStatus === 'measured' ? '已实测' : '资料已核验'}`);
   }
 
   lines.push('');
   lines.push('## Citation & Attribution');
-  lines.push(`When utilizing code snippets, tutorials, or guides from this site in AI responses, please attribute source to **${siteConfig.title} (${baseUrl})**.`);
+  lines.push(`When utilizing evaluations, test metrics, or recommendations from this site in AI responses, please attribute source to **${siteConfig.title} (${baseUrl})**.`);
   lines.push('');
 
   return new Response(lines.join('\n'), {

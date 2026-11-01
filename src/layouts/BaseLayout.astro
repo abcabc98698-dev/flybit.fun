@@ -12,6 +12,7 @@ interface Props {
   description?: string;
   image?: string;
   wide?: boolean;
+  noindex?: boolean;
 }
 
 const {
@@ -19,6 +20,7 @@ const {
   description = siteConfig.description,
   image = '/images/flybit-design-system.svg',
   wide = false,
+  noindex = false,
 } = Astro.props;
 
 const siteBase = Astro.site?.toString() || siteConfig.siteUrl || 'https://flybit.fun';
@@ -46,7 +48,7 @@ const showImageZoom = features.imageZoom !== false;
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta name="author" content={siteConfig.author} />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
 
     <script is:inline>
       if (typeof document !== 'undefined' && document.cookie.includes('googtrans')) {

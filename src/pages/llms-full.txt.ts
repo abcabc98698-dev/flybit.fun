@@ -3,6 +3,7 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { siteConfig } from '../config/site';
+import { airportsData } from '../data/airports';
 
 export const GET: APIRoute = async ({ site }) => {
   const baseUrl = site?.toString().replace(/\/$/, '') || siteConfig.siteUrl;
@@ -10,12 +11,9 @@ export const GET: APIRoute = async ({ site }) => {
   const posts = (await getCollection('blog', ({ data }) => !data.draft))
     .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
-  const projects = (await getCollection('projects'))
-    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-
   const lines: string[] = [
     `# ${siteConfig.title} — Full Knowledge Context`,
-    `> Complete compilation of published technical articles and documentation.`,
+    `> Complete compilation of published technical articles, evaluations, and airport benchmarks.`,
     `> Website: ${baseUrl}`,
     '',
     'This document is prepared for LLMs and AI agents requiring full-corpus context in a single request.',
@@ -24,6 +22,7 @@ export const GET: APIRoute = async ({ site }) => {
     '',
   ];
 
+  // Articles
   for (const post of posts) {
     const postUrl = `${baseUrl}/blog/${post.id}`;
     const dateFormatted = post.data.pubDate.toISOString().split('T')[0];
@@ -44,25 +43,21 @@ export const GET: APIRoute = async ({ site }) => {
     lines.push('');
   }
 
-  for (const proj of projects) {
-    const projUrl = `${baseUrl}/projects/${proj.id}`;
-    const dateFormatted = proj.data.date.toISOString().split('T')[0];
-    const tagsStr = proj.data.tags?.join(', ') || 'N/A';
-
-    lines.push(`## Project: ${proj.data.title}`);
-    lines.push(`- **URL:** ${projUrl}`);
-    lines.push(`- **Date:** ${dateFormatted}`);
-    lines.push(`- **Category:** ${proj.data.category}`);
-    lines.push(`- **Tags:** ${tagsStr}`);
-    lines.push(`- **Description:** ${proj.data.description}`);
-    if (proj.data.repoUrl) lines.push(`- **Repository:** ${proj.data.repoUrl}`);
-    if (proj.data.demoUrl) lines.push(`- **Live Demo:** ${proj.data.demoUrl}`);
-    lines.push('');
-    lines.push('### Content:');
-    lines.push('');
-    lines.push(proj.body || proj.data.description);
-    lines.push('');
-    lines.push('---');
+  // Brands Overview
+  lines.push('## Evaluated Airport Brands Directory');
+  lines.push('');
+  for (const brand of airportsData) {
+    const brandUrl = `${baseUrl}/brands/${brand.id}`;
+    lines.push(`### Brand: ${brand.name} (#${brand.rank})`);
+    lines.push(`- **URL:** ${brandUrl}`);
+    lines.push(`- **Lines:** ${brand.lines}`);
+    lines.push(`- **Protocols:** ${brand.protocols.join(', ')}`);
+    lines.push(`- **Entry Price:** ${brand.entryPrice}`);
+    lines.push(`- **Client Support:** ${brand.clientSupport}`);
+    lines.push(`- **Description:** ${brand.description}`);
+    lines.push(`- **Pros:** ${brand.pros.join('; ')}`);
+    lines.push(`- **Cons:** ${brand.cons.join('; ')}`);
+    lines.push(`- **Suitable For:** ${brand.suitableFor.join('; ')}`);
     lines.push('');
   }
 

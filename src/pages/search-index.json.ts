@@ -1,11 +1,9 @@
 import { getCollection } from 'astro:content';
+import { airportsData } from '../data/airports';
 
 export async function GET() {
   const posts = (await getCollection('blog', ({ data }) => !data.draft))
     .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-
-  const projects = (await getCollection('projects'))
-    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
   // Aggregate unique tags with counts
   const tagsMap = new Map<string, number>();
@@ -14,8 +12,8 @@ export async function GET() {
       tagsMap.set(tag, (tagsMap.get(tag) ?? 0) + 1);
     }
   }
-  for (const proj of projects) {
-    for (const tag of proj.data.tags || []) {
+  for (const airport of airportsData) {
+    for (const tag of [airport.lines, ...airport.protocols]) {
       tagsMap.set(tag, (tagsMap.get(tag) ?? 0) + 1);
     }
   }
@@ -35,27 +33,26 @@ export async function GET() {
       title: p.data.title,
       description: p.data.description,
       url: `/blog/${p.id}`,
-      date: p.data.pubDate.toLocaleDateString('en-US', {
+      date: p.data.pubDate.toLocaleDateString('zh-CN', {
+        year: 'numeric',
         month: 'short',
         day: 'numeric',
-        year: 'numeric',
       }),
       tags: p.data.tags || [],
     })),
-    projects: projects.map((p) => ({
-      id: p.id,
-      type: 'project' as const,
-      title: p.data.title,
-      description: p.data.description,
-      url: `/projects/${p.id}`,
-      date: p.data.date.toLocaleDateString('en-US', {
-        month: 'short',
-        year: 'numeric',
-      }),
-      tags: p.data.tags || [],
-      category: p.data.category || 'General',
-      emoji: p.data.emoji || '📦',
+    brands: airportsData.map((b) => ({
+      id: b.id,
+      type: 'brand' as const,
+      title: `${b.name}${b.alias ? ` (${b.alias})` : ''}`,
+      description: `${b.lines} · 入门约 ${b.entryPrice} · ${b.nodesSummary}`,
+      url: `/brands/${b.id}`,
+      date: b.startedYear ? `${b.startedYear} 运营` : '评测实验室收录',
+      tags: [b.lines, ...b.protocols.slice(0, 3)],
+      category: b.lines,
+      emoji: '🏢',
+      rank: b.rank,
     })),
+    projects: [],
     tags,
   };
 

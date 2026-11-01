@@ -38,27 +38,35 @@
     <!-- Results Area -->
     <div id="search-modal-results" class="search-dialog-body" tabindex="-1">
       <div class="search-initial-state">
-        <div class="initial-section-title">Quick Access &amp; Navigation</div>
+        <div class="initial-section-title">快捷直达 / 导航中心</div>
         <div class="initial-shortcuts">
+          <a href="/free" class="initial-pill">
+            <span class="pill-icon">🎁</span>
+            <span>免费试用</span>
+          </a>
+          <a href="/radar" class="initial-pill">
+            <span class="pill-icon">📡</span>
+            <span>避坑雷达</span>
+          </a>
+          <a href="/faq" class="initial-pill">
+            <span class="pill-icon">❓</span>
+            <span>常见问答</span>
+          </a>
+          <a href="/brands" class="initial-pill">
+            <span class="pill-icon">🏢</span>
+            <span>机场品牌库</span>
+          </a>
+          <a href="/speedtest" class="initial-pill">
+            <span class="pill-icon">⚡</span>
+            <span>实测实验室</span>
+          </a>
           <a href="/blog" class="initial-pill">
             <span class="pill-icon">📄</span>
-            <span>All Articles</span>
-          </a>
-          <a href="/projects" class="initial-pill">
-            <span class="pill-icon">📦</span>
-            <span>All Projects</span>
-          </a>
-          <a href="/tags" class="initial-pill">
-            <span class="pill-icon">🏷️</span>
-            <span>All Tags</span>
-          </a>
-          <a href="/about" class="initial-pill">
-            <span class="pill-icon">👤</span>
-            <span>About</span>
+            <span>专题指南</span>
           </a>
         </div>
         <div class="initial-hint">
-          Type any keyword (e.g., <code>obsidian</code>, <code>astro</code>, <code>typography</code>, <code>performance</code>) to filter in real-time.
+          输入任何关键词（如：<code>微风</code>、<code>IEPL</code>、<code>专线</code>、<code>奈飞</code>、<code>跑路</code>、<code>Clash</code>）即时检索。
         </div>
       </div>
     </div>
@@ -100,7 +108,8 @@
 
   interface SearchData {
     posts: SearchItem[];
-    projects: SearchItem[];
+    brands?: SearchItem[];
+    projects?: SearchItem[];
     tags: TagItem[];
   }
 
@@ -271,8 +280,31 @@
       .sort((a, b) => b.score - a.score)
       .map((e) => e.item);
 
-    // Filter Projects
-    const matchedProjects = searchData.projects
+        // Filter Brands (Airport Evaluations)
+    const brandsList = searchData.brands || [];
+    const matchedBrands = brandsList
+      .map((brand) => {
+        const titleNorm = normalizeStr(brand.title);
+        const descNorm = normalizeStr(brand.description);
+        const tagsNorm = (brand.tags || []).map((t) => normalizeStr(t));
+        const catNorm = brand.category ? normalizeStr(brand.category) : '';
+
+        let score = 0;
+        for (const token of queryTokens) {
+          if (titleNorm.includes(token)) score += 60;
+          if (titleNorm.startsWith(token)) score += 40;
+          if (tagsNorm.some((t) => t.includes(token))) score += 45;
+          if (catNorm.includes(token)) score += 30;
+          if (descNorm.includes(token)) score += 20;
+        }
+        return { item: brand, score };
+      })
+      .filter((e) => e.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .map((e) => e.item);
+
+    // Filter Projects (legacy fallback)
+    const matchedProjects = (searchData.projects || [])
       .map((proj) => {
         const titleNorm = normalizeStr(proj.title);
         const descNorm = normalizeStr(proj.description);
@@ -299,14 +331,14 @@
       return queryTokens.every((token) => tagNorm.includes(token));
     });
 
-    const totalMatches = matchedPosts.length + matchedProjects.length + matchedTags.length;
+    const totalMatches = matchedPosts.length + matchedBrands.length + matchedProjects.length + matchedTags.length;
 
     if (totalMatches === 0) {
       resultsContainer.innerHTML = `
         <div class="search-empty">
           <div class="search-empty-icon">🔍</div>
-          <div class="search-empty-title">No results found for "${escapeHtml(cleanQuery)}"</div>
-          <div class="search-empty-desc">Try searching for keywords like <code>obsidian</code>, <code>astro</code>, <code>vault</code> or <code>ssg</code>.</div>
+          <div class="search-empty-title">未找到与 "${escapeHtml(cleanQuery)}" 相关的内容</div>
+          <div class="search-empty-desc">尝试搜索如 <code>微风</code>、<code>IEPL</code>、<code>专线</code>、<code>奈飞</code> 或 <code>小火箭</code>。</div>
         </div>
       `;
       selectedIndex = -1;
@@ -316,12 +348,41 @@
 
     let html = '';
 
+        // Render Brands
+    if (matchedBrands.length > 0) {
+      html += `
+        <div class="search-category-group">
+          <div class="search-category-title">
+            <span>🏢 机场评测库 (Airports)</span>
+            <span class="search-category-count">${matchedBrands.length}</span>
+          </div>
+      `;
+      for (const brand of matchedBrands) {
+        html += `
+          <a href="${brand.url}" class="search-result-item" data-search-item>
+            <div class="search-result-icon">⚡</div>
+            <div class="search-result-content">
+              <div class="search-result-top">
+                <div class="search-result-title">${highlightText(brand.title, cleanQuery)}</div>
+                <div class="search-result-meta">${brand.date}</div>
+              </div>
+              <div class="search-result-desc">${highlightText(brand.description, cleanQuery)}</div>
+              <div class="search-result-tags">
+                ${brand.tags.slice(0, 4).map((t) => `<span class="search-result-badge">#${highlightText(t, cleanQuery)}</span>`).join('')}
+              </div>
+            </div>
+          </a>
+        `;
+      }
+      html += '</div>';
+    }
+
     // Render Posts
     if (matchedPosts.length > 0) {
       html += `
         <div class="search-category-group">
           <div class="search-category-title">
-            <span>📄 Blog Articles</span>
+            <span>📄 专题与教程 (Guides)</span>
             <span class="search-category-count">${matchedPosts.length}</span>
           </div>
       `;
